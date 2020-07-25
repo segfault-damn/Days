@@ -1,11 +1,12 @@
-# My Personal Project
+# Days
 
-## A subtitle
+## Record daily life and make todo list
 
-A *bulleted* list:
-- item 1
-- item 2
-- item 3
 
-An example of text with **bold** and *italic* fonts.  Note that the IntelliJ markdown previewer doesn't seem to render 
-the bold and italic fonts correctly but they will appear correctly on GitHub.
+This application is designed to **record users' daily life** and help users **make todo list** in the calender.
+Users can *write their diary* and *select their mood on that day*. The application allows user to *see the 
+the statistic of their mood in each month*. In addition, todo list allows user to *add or remove events 
+and habits* (which can be marked as done). Habits also has a statistic overview of each month. Some days 
+can also be marked as *Anniversary* and a *countdown* will be shown to remind users.
+
+
