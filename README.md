@@ -11,12 +11,12 @@ can also be marked as *Anniversary* and a *countdown* will be shown to remind us
 
 
 ## User stories
-- As a user, I want to be able to add diary to the list of entries.
-- As a user, I wnat to be able to add todo event to the list of entries
-- As a user, I want to be able to delete or edit diary in the list of entries.
-- As a user, I wnat to be able to delete todo event to the list of entries
+- As a user, I want to be able to add diary to one day.
+- As a user, I want to be able to add todo event to the list of events
+- As a user, I want to be able to delete or edit diary in one day.
+- As a user, I want to be able to delete todo event to the list of events
 - As a user, I want to view diaries in Calender.
-- As a user, I wnat to be able to view todo events to the list of entries
+- As a user, I want to be able to view todo events to the list of events
 - As a user, I want to be able to select my mood in each day.
 - As a user, I want to be able to view my mood in each day.
 - As a user, I want to view the statistic data of my mood in each month.
