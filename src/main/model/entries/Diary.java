@@ -26,8 +26,11 @@ public class Diary {
         return content;
     }
 
-
-    // getters
+    // MODIFIER: this
+    // EFFECT: add tag to diary
+    public void setTag(String s) {
+        tag = s;
+    }
 
     // MODIFIER: this
     // EFFECT: modify the diary
@@ -35,13 +38,10 @@ public class Diary {
         content = s;
     }
 
+    // getters
     public String getTag() {
         return tag;
     }
 
-    // MODIFIER: this
-    // EFFECT: add tag to diary
-    public void setTag(String s) {
-        tag = s;
-    }
+
 }

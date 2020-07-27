@@ -143,7 +143,7 @@ class DaySetTest {
     public void testRemoveDailyHabitList() {
         testdaySet.addDailyHabitList(habit1);
         testdaySet.addDailyHabitList(habit2);
-        testdaySet.removeDailyHabitList(habit2);
+        testdaySet.removeDailyHabitList(new Habit(habit2.getLabel()));
 
         assertEquals(1, testdaySet.getSetHabitList().getHabitList().size());
         assertTrue(testdaySet.getSetHabitList().getHabitList().contains(habit1));
@@ -153,6 +153,21 @@ class DaySetTest {
         assertTrue(testdaySet.getDay(date1).getDailyHabitList().getHabitLabel().contains(habit1.getLabel()));
         assertFalse(testdaySet.getDay(date1).getDailyHabitList().getHabitLabel().contains(habit2.getLabel()));
     }
+
+    @Test
+    // MODIFIER: day
+    // EFFECT: remove one habit and renew all habit in days
+    public void testEditDailyHabitList() {
+        testdaySet.addDailyHabitList(habit1);
+        testdaySet.addDailyHabitList(habit2);
+        testdaySet.editDailyHabitList(new Habit(habit2.getLabel()),"Play with Gregor");
+
+
+        assertTrue(testdaySet.getDay(date4).getDailyHabitList().getHabitLabel().contains(habit2.getLabel()));
+        assertFalse(testdaySet.getDay(date4).getDailyHabitList().getHabitLabel().contains("Study for final"));
+
+        assertTrue(testdaySet.getSetHabitList().getHabitLabel().contains(habit2.getLabel()));
+        assertFalse(testdaySet.getSetHabitList().getHabitLabel().contains("Study for final"));}
 
     @Test
     // EFFECT: count the numbers of completed habit in given month and year

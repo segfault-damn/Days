@@ -54,16 +54,16 @@ class DayTest {
 
     @Test
     // MODIFIER: this
-    // EFFECT: set mood to given mood
+    // EFFECT: set diary with given diary
     public void testSetDiary() {
         testDay.setDiary(diary);
         assertEquals(diary, testDay.getDiary());
-        assertEquals(diary.getDate(), testDay.getDate());
+        assertEquals(diary.getDate(),testDay.getDate());
     }
 
     @Test
     // MODIFIER: this
-    // EFFECT: set mood to given mood
+    // EFFECT: remove mood
     public void testRemoveMood() {
 
         testDay.setMood(testMood);
@@ -95,8 +95,8 @@ class DayTest {
     }
 
     @Test
-    // REQUIRE: l should be an exist habit label in the list
     // MODIFIER: flip one habit's status
+    // EFFECT: flip the chosen habit in the habit list
     public void testFlipOneHabit() {
         testDay.flipOneHabit(habit1);
         assertTrue(testDay.getDailyHabitList().getHabit("Play LOL").getIsDone());

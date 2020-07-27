@@ -67,14 +67,26 @@ public class DaySet {
 
 
     // MODIFIER: day
-    // EFFECT: add one habit and renew all habit in days
+    // EFFECT: remove one habit and renew all habit in days
     public void removeDailyHabitList(Habit h) {
         for (Day day : days) {
 
             day.getDailyHabitList().getHabitList().remove(day.getDailyHabitList().getHabit(h.getLabel()));
 
         }
-        setHabitList.removeHabit(h);
+        setHabitList.removeHabit(setHabitList.getHabit(h.getLabel()));
+    }
+
+
+    // MODIFIER: day
+    // EFFECT: remove one habit and renew all habit in days
+    public void editDailyHabitList(Habit h, String s) {
+        for (Day day : days) {
+
+            day.getDailyHabitList().editOneHabit(day.getDailyHabitList().getHabit(h.getLabel()), s);
+
+        }
+        setHabitList.editOneHabit(setHabitList.getHabit(h.getLabel()), s);
     }
 
 

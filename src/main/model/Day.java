@@ -10,11 +10,11 @@ public class Day {
 
 
     private final Date date;
+    private final HabitList dailyHabitList;
+    private final List<TodoEvent> todoEvents;
     private Anniversary anniversary;
     private Diary diary;
     private Mood mood;
-    private final HabitList dailyHabitList;
-    private final List<TodoEvent> todoEvents;
 
 
     public Day(Date date) {
@@ -30,7 +30,7 @@ public class Day {
     }
 
     // MODIFIER: this
-    // EFFECT: set mood to given mood
+    // EFFECT: remove mood
     public void removeMood() {
         mood = null;
     }
@@ -47,7 +47,6 @@ public class Day {
         anniversary = null;
     }
 
-    // REQUIRE: l should be an exist habit label in the list
     // MODIFIER: flip one habit's status
     // EFFECT: flip the chosen habit in the habit list
     public void flipOneHabit(Habit h) {
@@ -111,8 +110,10 @@ public class Day {
     }
 
     // MODIFIER: this
-    // EFFECT: set mood to given mood
+    // EFFECT: set diary with given diary
     public void setDiary(Diary d) {
         diary = d;
     }
+
+
 }
