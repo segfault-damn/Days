@@ -24,6 +24,6 @@ can also be marked as *Anniversary* and a *countdown* will be shown to remind us
 - As a user, I want to remove a habit from the habit list.
 - As a user, I want to select one or some habits from that list and mark it as done.
 - As a user, I want to view the statistic data of habit in each month.
-- As a user, I want to add anniversary to list of entries.
-- As a user, I want to be able to remove anniversary from the list of entries.
-- As a user, I want to view three of most recent anniversary countdowns.
+- As a user, I want to set anniversary in a particular day.
+- As a user, I want to be able to remove anniversary in one selected day.
+- As a user, I want to view a selected anniversary.

@@ -21,13 +21,15 @@ class DayTest {
     private TodoEvent event1;
     private TodoEvent event2;
     private TodoEvent event3;
+    private TodoEvent event4;
 
     @BeforeEach
     private void setTest() {
         testDay = new Day(testDate);
         event1 = new TodoEvent(testDate, "birthday party", 20, 00);
         event2 = new TodoEvent(testDate, "cpsc110 final", 18, 00);
-        event3 = new TodoEvent(testDate, "chat with Gregor", 12, 00);
+        event3 = new TodoEvent(testDate, "chat with Gregor", 12, 20);
+        event4 = new TodoEvent(testDate, "chat with Gregor", 18, 30);
         diary = new Diary(testDate);
         diary.setContent("Love Laisen");
         testMood = Cheerful;
@@ -134,10 +136,21 @@ class DayTest {
     public void testRemoveEvent() {
         testDay.addEvent(event1);
         testDay.addEvent(event2);
-        testDay.removeEvent(event1);
+        testDay.addEvent(event3);
+        testDay.addEvent(event4);
+        testDay.removeEvent(20,00);
         assertTrue(testDay.getTodoEvents().contains(event2));
+        assertTrue(testDay.getTodoEvents().contains(event4));
         assertFalse(testDay.getTodoEvents().contains(event1));
-        assertEquals(1, testDay.getTodoEvents().size());
+        assertTrue(testDay.getTodoEvents().contains(event3));
+        assertEquals(3, testDay.getTodoEvents().size());
+
+        testDay.removeEvent(18,00);
+        assertFalse(testDay.getTodoEvents().contains(event2));
+        assertTrue(testDay.getTodoEvents().contains(event4));
+        assertFalse(testDay.getTodoEvents().contains(event1));
+        assertTrue(testDay.getTodoEvents().contains(event3));
+        assertEquals(2, testDay.getTodoEvents().size());
     }
 
     @Test
@@ -150,7 +163,7 @@ class DayTest {
 
 
         testDay.addEvent(event3);
-        assertEquals(event3, testDay.getEvent(12, 00));
+        assertEquals(event3, testDay.getEvent(12, 20));
 
         assertNull(testDay.getEvent(12, 30));
     }

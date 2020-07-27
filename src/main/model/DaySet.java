@@ -35,7 +35,8 @@ public class DaySet {
     public Day getDay(Date d) {
 
         for (Day day : days) {
-            if (day.getDate() == d) {
+            if (day.getDate().getDay() == d.getDay() && day.getDate().getMonth() == d.getMonth()
+                    && day.getDate().getYear() == d.getYear()) {
                 return day;
             }
         }

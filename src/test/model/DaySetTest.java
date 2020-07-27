@@ -15,6 +15,7 @@ class DaySetTest {
     private Date date3; //2020.02.26
     private Date date4; //2020.03.20
     private Date date5; //2021.02.28
+    private Date date6;
 
     private Diary diary1;
     private Diary diary2;
@@ -43,9 +44,9 @@ class DaySetTest {
         date1 = new Date(2020, 02, 13);
         date2 = new Date(2020, 02, 17);
         date3 = new Date(2020, 02, 26);
-        date4 = new Date(2021, 02, 28);
-        date5 = new Date(2020, 03, 20);
-
+        date4 = new Date(2021, 02, 26);
+        date5 = new Date(2020, 03, 26);
+        date6 = new Date(2020, 02, 13);
 
         diary1 = new Diary(date1);
         diary2 = new Diary(date2);
@@ -75,6 +76,29 @@ class DaySetTest {
         assertEquals(02, testdaySet.getDay(date3).getDate().getMonth());
         assertEquals(26, testdaySet.getDay(date3).getDate().getDay());
         assertEquals(testHabitList.getHabitList(), testdaySet.getDay(date3).getDailyHabitList().getHabitList());
+
+
+        testdaySet.getDay(date4);
+        assertEquals(4, testdaySet.getDays().size());
+        assertEquals(2021, testdaySet.getDay(date4).getDate().getYear());
+        assertEquals(02, testdaySet.getDay(date4).getDate().getMonth());
+        assertEquals(26, testdaySet.getDay(date4).getDate().getDay());
+        assertEquals(testHabitList.getHabitList(), testdaySet.getDay(date4).getDailyHabitList().getHabitList());
+
+
+        testdaySet.getDay(date5);
+        assertEquals(5, testdaySet.getDays().size());
+        assertEquals(2020, testdaySet.getDay(date5).getDate().getYear());
+        assertEquals(03, testdaySet.getDay(date5).getDate().getMonth());
+        assertEquals(26, testdaySet.getDay(date5).getDate().getDay());
+        assertEquals(testHabitList.getHabitList(), testdaySet.getDay(date5).getDailyHabitList().getHabitList());
+        testdaySet.getDay(date6);
+
+        assertEquals(5, testdaySet.getDays().size());
+        assertEquals(2020, testdaySet.getDay(date6).getDate().getYear());
+        assertEquals(02, testdaySet.getDay(date6).getDate().getMonth());
+        assertEquals(13, testdaySet.getDay(date6).getDate().getDay());
+        assertEquals(testHabitList.getHabitList(), testdaySet.getDay(date6).getDailyHabitList().getHabitList());
     }
 
     @Test
@@ -138,10 +162,6 @@ class DaySetTest {
         testdaySet.addDailyHabitList(habit2);
         testdaySet.addDailyHabitList(habit3);
 
-//        testdaySet.getDay(date2);
-//        testdaySet.getDay(date3);
-//        testdaySet.getDay(date4);
-//        testdaySet.getDay(date5);
 
         testdaySet.getDay(date1).flipOneHabit(habit1);
         testdaySet.getDay(date1).flipOneHabit(habit2);

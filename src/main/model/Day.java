@@ -61,10 +61,11 @@ public class Day {
         todoEvents.add(e);
     }
 
+    // REQUIRE: the time input should be one of the event
     // MODIFIER: this
     // EFFECT: remove the given event from that list
-    public void removeEvent(TodoEvent e) {
-        todoEvents.remove(e);
+    public void removeEvent(int hour, int min) {
+        todoEvents.removeIf(event -> hour == event.getHour() && min == event.getMin());
     }
 
     // REQUIRE: the given hour and minute should correspond to one event in the list
