@@ -2,9 +2,10 @@ package model.entries;
 
 import model.Date;
 
+// A class that
 public class Anniversary {
-    private final Date date;
-    private final String label;
+    private Date date;
+    private String label;
     private String comment;
 
     public Anniversary(Date date, String label, String comment) {
@@ -20,6 +21,9 @@ public class Anniversary {
         comment = s;
 
     }
+
+
+
 
     //getters
 

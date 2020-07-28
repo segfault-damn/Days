@@ -1,24 +1,36 @@
 package model;
 
-import model.entries.Diary;
-import model.entries.Habit;
-import model.entries.HabitList;
-import model.entries.Mood;
+import model.entries.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+// A set of days
 public class DaySet {
-    private final Set<Day> days;
-    private final HabitList setHabitList;
+    private Set<Day> days;
+    private HabitList setHabitList;
 
     public DaySet() {
         days = new HashSet<>();
         setHabitList = new HabitList();
     }
 
+
+    // REQUIRE: the anniversary must be bigger than today
+    // EFFECT: calculate the anniversary
+    public int calAnniversary(Date today, Anniversary a) {
+        int result = 0;
+        if (a.getDate().getMonth() < today.getMonth()) {
+            result = today.getYear() - a.getDate().getYear();
+        } else if (a.getDate().getMonth() == today.getMonth() && a.getDate().getDay() <= today.getDay()) {
+            result = today.getYear() - a.getDate().getYear();
+        } else {
+            result = today.getYear() - a.getDate().getYear() - 1;
+        }
+        return result;
+    }
 
     // MODIFIER: this
     // EFFECT: add a day to the list and do nothing if that day is already in the list

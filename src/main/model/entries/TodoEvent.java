@@ -2,9 +2,11 @@ package model.entries;
 
 import model.Date;
 
+
+// A Event that has time and name and date
 public class TodoEvent {
-    private final Date date;
-    private final String label;
+    private Date date;
+    private String label;
     private int hour;
     private int min;
 

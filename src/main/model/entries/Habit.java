@@ -1,5 +1,7 @@
 package model.entries;
 
+
+// A habit with a name and a boolean indicates whether it is done
 public class Habit {
     private String label;
     private boolean isDone;

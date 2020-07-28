@@ -3,26 +3,28 @@ package model.entries;
 import java.util.ArrayList;
 import java.util.List;
 
+
+// A list of habit
 public class HabitList {
 
-    private final List<Habit> habitlist;
+    private List<Habit> habitList;
 
     public HabitList() {
-        habitlist = new ArrayList<>();
+        habitList = new ArrayList<>();
     }
 
     // REQUIRE: this habit list should not have duplicated habit
     // MODIFIER:this
     // EFFECT:add a habit to habit list
     public void addHabit(Habit habit) {
-        habitlist.add(habit);
+        habitList.add(habit);
     }
 
 
     // MODIFIER: this
     // EFFECT: remove the habit from the list
     public void removeHabit(Habit habit) {
-        habitlist.remove(habit);
+        habitList.remove(habit);
 
     }
 
@@ -30,7 +32,7 @@ public class HabitList {
     //REQUIRE: l should be an existing habit's label in the list
     //EFFECT: get habit with given label
     public Habit getHabit(String l) {
-        for (Habit habit : habitlist) {
+        for (Habit habit : habitList) {
             if (habit.getLabel().equals(l)) {
                 return habit;
             }
@@ -48,13 +50,13 @@ public class HabitList {
 
     //getter
     public List<Habit> getHabitList() {
-        return habitlist;
+        return habitList;
     }
 
 
     public List<String> getHabitLabel() {
         List<String> result = new ArrayList<>();
-        for (Habit h : habitlist) {
+        for (Habit h : habitList) {
             result.add(h.getLabel());
         }
         return result;

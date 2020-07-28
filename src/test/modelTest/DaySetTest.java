@@ -1,9 +1,8 @@
-package model;
+package modelTest;
 
-import model.entries.Diary;
-import model.entries.Habit;
-import model.entries.HabitList;
-import model.entries.Mood;
+import model.Date;
+import model.DaySet;
+import model.entries.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -33,6 +32,8 @@ class DaySetTest {
 
     private DaySet testdaySet;
 
+    private Anniversary testAnni;
+
     @BeforeEach
     public void setTest() {
         testHabitList = new HabitList();
@@ -61,6 +62,23 @@ class DaySetTest {
 
         mood1 = Mood.Cheerful;
         mood2 = Mood.Calm;
+
+        testAnni = new Anniversary(date3,"test","no comment");
+    }
+
+    @Test
+    // REQUIRE: the anniversary must be bigger than today
+    // EFFECT: calculate the anniversary
+    public void calAnniversary() {
+        testdaySet.getDay(date4);
+        assertEquals(1,testdaySet.calAnniversary(date4,testAnni));
+        testdaySet.getDay(date5);
+        assertEquals(0,testdaySet.calAnniversary(date5,testAnni));
+
+        assertEquals(2,
+                testdaySet.calAnniversary(new Date(2022,4,18),testAnni));
+        assertEquals(1,
+                testdaySet.calAnniversary(new Date(2022,2,10),testAnni));
 
     }
 

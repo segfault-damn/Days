@@ -1,4 +1,4 @@
-package model.entriesTest;
+package modelTest.entriesTest;
 
 import model.Date;
 import model.entries.Diary;

@@ -1,5 +1,7 @@
-package model;
+package modelTest;
 
+import model.Date;
+import model.Day;
 import model.entries.Diary;
 import model.entries.Habit;
 import model.entries.Mood;

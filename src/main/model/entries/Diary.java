@@ -2,8 +2,9 @@ package model.entries;
 
 import model.Date;
 
+// Record diary
 public class Diary {
-    private final Date date;
+    private Date date;
     private String content;
     private String tag;
 

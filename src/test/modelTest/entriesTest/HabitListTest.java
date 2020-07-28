@@ -1,4 +1,4 @@
-package model.entriesTest;
+package modelTest.entriesTest;
 
 import model.entries.Habit;
 import model.entries.HabitList;

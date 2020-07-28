@@ -3,14 +3,12 @@ package ui;
 import model.Date;
 import model.Day;
 import model.DaySet;
-import model.entries.Diary;
-import model.entries.Habit;
-import model.entries.Mood;
-import model.entries.TodoEvent;
+import model.entries.*;
 
 import java.util.Calendar;
 import java.util.Scanner;
 
+// The main app
 public class DaysApp {
     private final DaySet dayset = new DaySet();
     private Scanner input;
@@ -144,8 +142,12 @@ public class DaysApp {
 
             System.out.println(day.getAnniversary().getLabel());
             System.out.println("Comment: " + day.getAnniversary().getComment());
+            System.out.println("You have passed " + dayset.calAnniversary(today,day.getAnniversary())
+                    + " anniversary - start from " + day.getAnniversary().getDate().getYear());
         }
     }
+
+
 
     // remove one anniversary with given name
     private void removeAnniversary() {

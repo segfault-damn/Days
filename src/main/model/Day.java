@@ -6,12 +6,13 @@ import model.entries.*;
 import java.util.ArrayList;
 import java.util.List;
 
+// One day contains all information in it
 public class Day {
 
 
-    private final Date date;
-    private final HabitList dailyHabitList;
-    private final List<TodoEvent> todoEvents;
+    private Date date;
+    private HabitList dailyHabitList;
+    private List<TodoEvent> todoEvents;
     private Anniversary anniversary;
     private Diary diary;
     private Mood mood;
@@ -38,7 +39,7 @@ public class Day {
     // MODIFIER: this
     // EFFECT: set anniversary with given label and comment
     public void setAnniversary(String l, String c) {
-        anniversary = new Anniversary(date, l, c);
+        anniversary = new Anniversary(date,l, c);
     }
 
     // MODIFIER: this
