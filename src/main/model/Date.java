@@ -1,9 +1,15 @@
 package model;
 
-public class Date {
-    private final int year;
-    private final int month;
-    private final int day;
+import persistence.DateReader;
+import persistence.Saveable;
+
+import java.io.PrintWriter;
+import java.util.Objects;
+
+public class Date implements Saveable {
+    private int year;
+    private int month;
+    private int day;
 
     // year should be restricted from 2000 to 2100
     // month should be restricted from 01 to 12
@@ -12,6 +18,23 @@ public class Date {
         this.year = year;
         this.month = month;
         this.day = day;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) return false;
+        Date date = (Date) o;
+        return year == date.year
+                && month == date.month
+                && day == date.day;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(year, month, day);
     }
 
     //getters
@@ -25,5 +48,15 @@ public class Date {
 
     public int getDay() {
         return day;
+    }
+
+    @Override
+    public void save(PrintWriter printWriter) {
+        printWriter.print(year);
+        printWriter.print(DateReader.DELIMITER);
+        printWriter.print(month);
+        printWriter.print(DateReader.DELIMITER);
+        printWriter.print(day);
+        printWriter.print(DateReader.DELIMITER);
     }
 }

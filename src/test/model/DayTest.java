@@ -1,11 +1,6 @@
-package modelTest;
+package model;
 
-import model.Date;
-import model.Day;
-import model.entries.Diary;
-import model.entries.Habit;
-import model.entries.Mood;
-import model.entries.TodoEvent;
+import model.entries.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,18 +22,22 @@ class DayTest {
 
     @BeforeEach
     private void setTest() {
-        testDay = new Day(testDate);
+
         event1 = new TodoEvent(testDate, "birthday party", 20, 00);
         event2 = new TodoEvent(testDate, "cpsc110 final", 18, 00);
         event3 = new TodoEvent(testDate, "chat with Gregor", 12, 20);
         event4 = new TodoEvent(testDate, "chat with Gregor", 18, 30);
+
+        testDate = new Date(2020, 2, 13);
+        testDay = new Day(testDate);
+
         diary = new Diary(testDate);
         diary.setContent("Love Laisen");
         testMood = Cheerful;
         habit1 = new Habit("Play LOL");
         habit2 = new Habit("Study for final");
         habit3 = new Habit("Play Dr.racket");
-        testDate = new Date(2020, 2, 13);
+
         testDay.getDailyHabitList().addHabit(habit1);
         testDay.getDailyHabitList().addHabit(habit2);
         testDay.getDailyHabitList().addHabit(habit3);
@@ -84,6 +83,10 @@ class DayTest {
         testDay.setAnniversary("Confession to a man", "Love Gregor");
         assertEquals("Confession to a man", testDay.getAnniversary().getLabel());
         assertEquals("Love Gregor", testDay.getAnniversary().getComment());
+
+        testDay.setAnniversary("Hahaha","");
+        Anniversary check = new Anniversary(testDate,"Hahaha"," ");
+        assertEquals(check,testDay.getAnniversary());
     }
 
     @Test

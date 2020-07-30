@@ -1,7 +1,5 @@
-package modelTest;
+package model;
 
-import model.Date;
-import model.DaySet;
 import model.entries.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

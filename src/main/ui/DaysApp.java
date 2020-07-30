@@ -4,13 +4,19 @@ import model.Date;
 import model.Day;
 import model.DaySet;
 import model.entries.*;
+import persistence.DateWriter;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Scanner;
 
 // The main app
 public class DaysApp {
-    private final DaySet dayset = new DaySet();
+    private DaySet dayset = new DaySet();
     private Scanner input;
     private Date today;
 
@@ -62,6 +68,36 @@ public class DaysApp {
 
 
     }
+
+//    //TODO
+//    // MODIFIES: this
+//    // EFFECTS: loads accounts from ACCOUNTS_FILE, if that file exists;
+//    // otherwise initializes accounts with default values
+//    private void loadAccounts() {
+//        try {
+//            List<Date> accounts = Reader.readAccounts(new File(ACCOUNTS_FILE));
+//            cheq = accounts.get(0);
+//            sav = accounts.get(1);
+//        } catch (IOException e) {
+//            init();
+//        }
+//    }
+//
+//    // EFFECTS: saves state of chequing and savings accounts to ACCOUNTS_FILE
+//    private void saveAccounts() {
+//        try {
+//            DateWriter writer = new DateWriter(new File(dates_FILE));
+//            writer.write(dayset.getDays().);
+//            writer.close();
+//            System.out.println("Accounts saved to file " + ACCOUNTS_FILE);
+//        } catch (FileNotFoundException e) {
+//            System.out.println("Unable to save accounts to " + ACCOUNTS_FILE);
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//            // this is due to a programming error
+//        }
+//    }
+
 
     // control the days app
     private void processCommand(String command) {

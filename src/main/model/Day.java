@@ -39,7 +39,11 @@ public class Day {
     // MODIFIER: this
     // EFFECT: set anniversary with given label and comment
     public void setAnniversary(String l, String c) {
-        anniversary = new Anniversary(date,l, c);
+        if (c == "") {
+            anniversary = new Anniversary(this.date,l," ");
+        } else {
+            anniversary = new Anniversary(this.date, l, c);
+        }
     }
 
     // MODIFIER: this

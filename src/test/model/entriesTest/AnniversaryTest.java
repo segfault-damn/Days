@@ -1,4 +1,4 @@
-package modelTest.entriesTest;
+package model.entriesTest;
 
 import model.Date;
 import model.entries.Anniversary;

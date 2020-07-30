@@ -1,4 +1,4 @@
-package modelTest.entriesTest;
+package model.entriesTest;
 
 import model.entries.Habit;
 import org.junit.jupiter.api.BeforeEach;
