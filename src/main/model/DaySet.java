@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.DateEnterException;
 import model.entries.*;
 
 import java.util.ArrayList;
@@ -45,6 +46,10 @@ public class DaySet {
     // EFFECT: get a day from the daylist with given date
     //         if that day does not exist, creat a new date in that given list
     public Day getDay(Date d) {
+//        if (d.getYear() < 1900 || d.getMonth() > 12 || d.getMonth() < 1
+//                || d.getDay() > 31 ||d.getDay() < 1) {
+//            throw new DateEnterException();
+//        } else {
 
         for (Day day : days) {
             if (day.getDate().getDay() == d.getDay() && day.getDate().getMonth() == d.getMonth()
@@ -55,6 +60,7 @@ public class DaySet {
         Day targetDay = new Day(d);
         addDay(targetDay);
         return targetDay;
+//        }
     }
 
     // EFFECT: get all diary with tag "tag"

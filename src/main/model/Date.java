@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.DateEnterException;
 import persistence.DateReader;
 import persistence.Saveable;
 
@@ -39,6 +40,7 @@ public class Date implements Saveable {
 
     //getters
     public int getYear() {
+
         return year;
     }
 
@@ -57,6 +59,6 @@ public class Date implements Saveable {
         printWriter.print(month);
         printWriter.print(DateReader.DELIMITER);
         printWriter.print(day);
-        printWriter.print(DateReader.DELIMITER);
+        printWriter.println("");
     }
 }

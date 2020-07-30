@@ -14,30 +14,30 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class AnniversaryWriterTest {
-    private static final String TEST_FILE = "./data/testAnni.txt";
-    private AnniversaryWriter testWriter;
-    private Date date;
-    private Anniversary anniversary;
-
-    @BeforeEach
-    void runBefore() throws FileNotFoundException, UnsupportedEncodingException {
-        testWriter = new AnniversaryWriter(new File(TEST_FILE));
-        date = new Date(2000, 06, 27);
-        anniversary = new Anniversary(date,"Save","Good job Sakura!");
-    }
-
-    @Test
-    void testWriteAnni() {
-        // save date to file
-        testWriter.write(anniversary);
-        testWriter.close();
-
-        // read back
-        try {
-            Anniversary readBack = AnniversaryReader.readAnniversary(new File(TEST_FILE));
-            assertEquals(anniversary,readBack);
-        } catch (IOException e) {
-            fail("IOException should not have been thrown");
-        }
-    }
+//    private static final String TEST_FILE = "./data/testAnni.txt";
+//    private AnniversaryWriter testWriter;
+//    private Date date;
+//    private Anniversary anniversary;
+//
+//    @BeforeEach
+//    void runBefore() throws FileNotFoundException, UnsupportedEncodingException {
+//        testWriter = new AnniversaryWriter(new File(TEST_FILE));
+//        date = new Date(2000, 06, 27);
+//        anniversary = new Anniversary(date,"Save","Good job Sakura!");
+//    }
+//
+//    @Test
+//    void testWriteAnni() {
+//        // save date to file
+//        testWriter.write(anniversary);
+//        testWriter.close();
+//
+//        // read back
+//        try {
+//            Anniversary readBack = AnniversaryReader.readAnniversary(new File(TEST_FILE));
+//            assertEquals(anniversary,readBack);
+//        } catch (IOException e) {
+//            fail("IOException should not have been thrown");
+//        }
+//    }
 }

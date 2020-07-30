@@ -19,6 +19,7 @@ class DayTest {
     private TodoEvent event2;
     private TodoEvent event3;
     private TodoEvent event4;
+    private Anniversary testAnni;
 
     @BeforeEach
     private void setTest() {
@@ -41,6 +42,9 @@ class DayTest {
         testDay.getDailyHabitList().addHabit(habit1);
         testDay.getDailyHabitList().addHabit(habit2);
         testDay.getDailyHabitList().addHabit(habit3);
+
+        testAnni = new Anniversary(testDate,"Confession", "Love Laisen");
+
 
 
     }
@@ -69,33 +73,31 @@ class DayTest {
 
         testDay.setMood(testMood);
         testDay.removeMood();
-        assertNull(testDay.getMood());
+        assertEquals(Mood.Default,testDay.getMood());
     }
 
     @Test
     // MODIFIER: this
     // EFFECT: set anniversary with given label and comment
     public void testSetAnniversary() {
-        testDay.setAnniversary("Confession", "Love Laisen");
+
+        testDay.setDayAnniversary(testAnni);
         assertEquals("Confession", testDay.getAnniversary().getLabel());
         assertEquals("Love Laisen", testDay.getAnniversary().getComment());
-
-        testDay.setAnniversary("Confession to a man", "Love Gregor");
-        assertEquals("Confession to a man", testDay.getAnniversary().getLabel());
-        assertEquals("Love Gregor", testDay.getAnniversary().getComment());
-
-        testDay.setAnniversary("Hahaha","");
-        Anniversary check = new Anniversary(testDate,"Hahaha"," ");
-        assertEquals(check,testDay.getAnniversary());
+        assertFalse(testDay.getAnniversary().getIsAnniversary());
+        testDay.getAnniversary().setAnniversary();
+        assertTrue(testDay.getAnniversary().getIsAnniversary());
     }
 
     @Test
     // MODIFIER: this
     // EFFECT: remove anniversary
     public void testRemoveAnniversary() {
-        testDay.setAnniversary("Confession", "Love Laisen");
-        testDay.removeAnniversary();
-        assertNull(testDay.getAnniversary());
+        testDay.setDayAnniversary(testAnni);
+        testDay.removeDayAnniversary();
+        assertEquals(testDay.getAnniversary().getLabel(),"Confession");
+        assertEquals(testDay.getAnniversary().getComment(),"Love Laisen");
+        assertFalse(testDay.getAnniversary().getIsAnniversary());
 
     }
 

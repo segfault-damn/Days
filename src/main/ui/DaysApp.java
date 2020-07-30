@@ -4,21 +4,24 @@ import model.Date;
 import model.Day;
 import model.DaySet;
 import model.entries.*;
-import persistence.DateWriter;
+import persistence.*;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
 
 // The main app
 public class DaysApp {
-    private DaySet dayset = new DaySet();
+    private DaySet dayset;
     private Scanner input;
     private Date today;
+
+    private static final String DATE_FILE = "./data/dates.txt";
+    private static final String ANNI_FILE = "./data/anniversary.txt";
+    private static final String DIARY_FILE = "./data/diary.txt";
+    private static final String MOOD_FILE = "./data/mood.txt";
+
 
     public DaysApp() {
         runDays();
@@ -31,6 +34,7 @@ public class DaysApp {
 
         input = new Scanner(System.in);
 
+        loadDays();
 
         while (keepGoing) {
             setToday();
@@ -50,6 +54,7 @@ public class DaysApp {
 
             if (command.equals("q")) {
                 keepGoing = false;
+                saveDays();
             } else {
                 processCommand(command);
             }
@@ -69,35 +74,64 @@ public class DaysApp {
 
     }
 
-//    //TODO
-//    // MODIFIES: this
-//    // EFFECTS: loads accounts from ACCOUNTS_FILE, if that file exists;
-//    // otherwise initializes accounts with default values
-//    private void loadAccounts() {
-//        try {
-//            List<Date> accounts = Reader.readAccounts(new File(ACCOUNTS_FILE));
-//            cheq = accounts.get(0);
-//            sav = accounts.get(1);
-//        } catch (IOException e) {
-//            init();
-//        }
-//    }
-//
-//    // EFFECTS: saves state of chequing and savings accounts to ACCOUNTS_FILE
-//    private void saveAccounts() {
-//        try {
-//            DateWriter writer = new DateWriter(new File(dates_FILE));
-//            writer.write(dayset.getDays().);
-//            writer.close();
-//            System.out.println("Accounts saved to file " + ACCOUNTS_FILE);
-//        } catch (FileNotFoundException e) {
-//            System.out.println("Unable to save accounts to " + ACCOUNTS_FILE);
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//            // this is due to a programming error
-//        }
-//    }
+    // MODIFIES: this
+    // EFFECTS: loads accounts from ACCOUNTS_FILE, if that file exists;
+    // otherwise initializes accounts with default values
+    private void loadDays() {
+        try {
+            DaySet savedDayset = new DaySet();
 
+            List<Date> dates = DateReader.readDates(new File(DATE_FILE));
+            List<Anniversary> anniversaries = AnniversaryReader.readAnniversary(new File(ANNI_FILE));
+            List<Diary> diaries = DiaryReader.readDiary(new File(DIARY_FILE));
+            List<Mood> moods = MoodReader.readMood(new File(MOOD_FILE));
+            int daysSize = dates.size();
+            for (int i = 0; i < daysSize; i++) {
+                Day day = new Day(dates.get(i));
+                day.setDayAnniversary(anniversaries.get(i));
+                day.setDiary(diaries.get(i));
+                day.setMood(moods.get(i));
+
+
+                savedDayset.getDays().add(day);
+            }
+
+            dayset = savedDayset;
+        } catch (IOException e) {
+            init();
+        }
+    }
+
+    // EFFECTS: saves state of chequing and savings accounts to ACCOUNTS_FILE
+    private void saveDays() {
+        try {
+            DateWriter dateWriter = new DateWriter(new File(DATE_FILE));
+            AnniversaryWriter anniWriter = new AnniversaryWriter(new File(ANNI_FILE));
+            DiaryWriter diaryWriter = new DiaryWriter(new File(DIARY_FILE));
+            MoodWriter moodWriter = new MoodWriter(new File(MOOD_FILE));
+            for (Day day : dayset.getDays()) {
+                dateWriter.write(day.getDate());
+                anniWriter.write(day.getAnniversary());
+                diaryWriter.write(day.getDiary());
+                moodWriter.write(day.getMood());
+            }
+            dateWriter.close();
+            anniWriter.close();
+            diaryWriter.close();
+            moodWriter.close();
+            System.out.println("Days has been saved to file!");
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to save file...");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            // this is due to a programming error
+        }
+    }
+
+    private void init() {
+
+        dayset = new DaySet();
+    }
 
     // control the days app
     private void processCommand(String command) {
@@ -160,26 +194,33 @@ public class DaysApp {
 
         Date anniDate = new Date(inputYear, inputMonth, inputDay);
         System.out.println("Enter Anniversary Name:");
-        String l = input.next();
+        input = new Scanner(System.in);
+        String l = input.nextLine();
+        if (l == "") {
+            l = "No label";
+        }
 
         System.out.println("Enter Anniversary Comment:");
-        input = new Scanner(System.in);
         String c = input.nextLine();
-        dayset.getDay(anniDate).setAnniversary(l, c);
-
+        if (c == "") {
+            c = " ";
+        }
+        Anniversary anniversary = new Anniversary(anniDate, l, c);
+        dayset.getDay(anniDate).setDayAnniversary(anniversary);
     }
 
     // view all anniversary
     private void viewAnniversary() {
-        input = new Scanner(System.in);
         for (Day day : dayset.getDays()) {
-            System.out.println(day.getAnniversary().getDate().getMonth() + "."
-                    + day.getAnniversary().getDate().getDay());
+            if (day.getAnniversary().getIsAnniversary()) {
+                System.out.println(day.getAnniversary().getDate().getMonth() + "."
+                        + day.getAnniversary().getDate().getDay());
 
-            System.out.println(day.getAnniversary().getLabel());
-            System.out.println("Comment: " + day.getAnniversary().getComment());
-            System.out.println("You have passed " + dayset.calAnniversary(today,day.getAnniversary())
-                    + " anniversary - start from " + day.getAnniversary().getDate().getYear());
+                System.out.println(day.getAnniversary().getLabel());
+                System.out.println("Comment: " + day.getAnniversary().getComment());
+                System.out.println("You have passed " + dayset.calAnniversary(today, day.getAnniversary())
+                        + " anniversary - start from " + day.getAnniversary().getDate().getYear());
+            }
         }
     }
 
@@ -188,15 +229,17 @@ public class DaysApp {
     // remove one anniversary with given name
     private void removeAnniversary() {
         input = new Scanner(System.in);
-        System.out.println("Enter Anniversary's name: ");
-        String s = input.next();
-        for (Day day : dayset.getDays()) {
-            if (day.getAnniversary().getLabel().equals(s)) {
-                day.removeAnniversary();
-                System.out.println("Anniversary" + s + "has been removed!");
+        System.out.println("Enter Anniversary's date: ");
+        String commend = input.next();
+        int inputYear = Integer.parseInt(commend);
 
-            }
-        }
+        commend = input.next();
+        int inputMonth = Integer.parseInt(commend);
+
+        commend = input.next();
+        int inputDay = Integer.parseInt(commend);
+        Date date = new Date(inputYear,inputMonth,inputDay);
+        dayset.getDay(date).removeDayAnniversary();
     }
 
     // edit the Anniversary's comment with given name
@@ -557,7 +600,7 @@ public class DaysApp {
             String s = input.next();
             if (s.equals("today")) {
                 setTodayMood();
-            } else if (s.equals("set")) {
+            } else if (s.equals("modify")) {
                 setMood();
             } else if (s.equals("remove")) {
                 removeMood();

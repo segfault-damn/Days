@@ -21,35 +21,34 @@ public class Day {
     public Day(Date date) {
 
         this.date = date;
-        anniversary = null;
+        anniversary = new Anniversary(this.date, " ", " ");
         diary = new Diary(date);
         todoEvents = new ArrayList<>();
 
-        mood = null;
+        mood = Mood.Default;
 
         dailyHabitList = new HabitList();
     }
 
-    // MODIFIER: this
-    // EFFECT: remove mood
-    public void removeMood() {
-        mood = null;
-    }
+
 
     // MODIFIER: this
-    // EFFECT: set anniversary with given label and comment
-    public void setAnniversary(String l, String c) {
-        if (c == "") {
-            anniversary = new Anniversary(this.date,l," ");
-        } else {
-            anniversary = new Anniversary(this.date, l, c);
-        }
+    // EFFECT: set anniversary
+    public void setDayAnniversary(Anniversary anniversary) {
+
+        this.anniversary = anniversary;
     }
 
     // MODIFIER: this
     // EFFECT: remove anniversary
-    public void removeAnniversary() {
-        anniversary = null;
+    public void removeDayAnniversary() {
+        anniversary.removeAnniversary();
+    }
+
+    // MODIFIER: this
+    // EFFECT: set diary with given diary
+    public void setDiary(Diary d) {
+        diary = d;
     }
 
     // MODIFIER: flip one habit's status
@@ -83,6 +82,19 @@ public class Day {
         return null;
     }
 
+    // MODIFIER: this
+    // EFFECT: set mood to given mood
+    public void setMood(Mood m) {
+        mood = m;
+    }
+
+    // MODIFIER: this
+    // EFFECT: remove mood
+    public void removeMood() {
+        mood = Mood.Default;
+    }
+
+
     // getter
     public Date getDate() {
         return date;
@@ -96,11 +108,7 @@ public class Day {
         return mood;
     }
 
-    // MODIFIER: this
-    // EFFECT: set mood to given mood
-    public void setMood(Mood m) {
-        mood = m;
-    }
+
 
     public HabitList getDailyHabitList() {
         return dailyHabitList;
@@ -114,11 +122,7 @@ public class Day {
         return diary;
     }
 
-    // MODIFIER: this
-    // EFFECT: set diary with given diary
-    public void setDiary(Diary d) {
-        diary = d;
-    }
+
 
 
 }

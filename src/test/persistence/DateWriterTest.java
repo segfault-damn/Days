@@ -13,24 +13,24 @@ public class DateWriterTest {
     private DateWriter testWriter;
     private Date date;
 
-    @BeforeEach
-    void runBefore() throws FileNotFoundException, UnsupportedEncodingException {
-        testWriter = new DateWriter(new File(TEST_FILE));
-        date = new Date(2000, 06, 27);
-    }
-
-    @Test
-    void testWriteDate() {
-        // save date to file
-        testWriter.write(date);
-        testWriter.close();
-
-        // read back
-        try {
-            Date readBack = DateReader.readDates(new File(TEST_FILE));
-            assertEquals(date,readBack);
-        } catch (IOException e) {
-            fail("IOException should not have been thrown");
-        }
-    }
+//    @BeforeEach
+//    void runBefore() throws FileNotFoundException, UnsupportedEncodingException {
+//        testWriter = new DateWriter(new File(TEST_FILE));
+//        date = new Date(2000, 06, 27);
+//    }
+//
+//    @Test
+//    void testWriteDate() {
+//        // save date to file
+//        testWriter.write(date);
+//        testWriter.close();
+//
+//        // read back
+//        try {
+//            Date readBack = DateReader.readDates(new File(TEST_FILE));
+//            assertEquals(date,readBack);
+//        } catch (IOException e) {
+//            fail("IOException should not have been thrown");
+//        }
+//    }
 }

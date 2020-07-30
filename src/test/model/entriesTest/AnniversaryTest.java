@@ -22,7 +22,7 @@ public class AnniversaryTest {
         testAnni.editComment("Love Daisy");
         assertEquals("Love Daisy", testAnni.getComment());
         testAnni.editComment("");
-        assertEquals("", testAnni.getComment());
+        assertEquals(" ", testAnni.getComment());
     }
 
     @Test

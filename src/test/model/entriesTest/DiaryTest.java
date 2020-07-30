@@ -23,7 +23,9 @@ public class DiaryTest {
     // MODIFIER: this
     // EFFECT: add tag to diary
     public void testSetTag() {
-        assertNull(testDiary.getTag());
+        assertEquals(" ",testDiary.getTag());
+        testDiary.setTag("");
+        assertEquals(" ",testDiary.getTag());
         testDiary.setTag("Daisy");
         assertEquals("Daisy", testDiary.getTag());
         testDiary.setTag("Laisen");
@@ -36,7 +38,7 @@ public class DiaryTest {
     public void testRemoveTag() {
         testDiary.setTag("Daisy");
         testDiary.removeTag();
-        assertNull(testDiary.getTag());
+        assertEquals(" ",testDiary.getTag());
     }
 
     @Test
@@ -45,6 +47,8 @@ public class DiaryTest {
     public void testSetContent() {
         testDiary.setContent("Programming is tired!");
         assertEquals("Programming is tired!", testDiary.getContent());
+        testDiary.setContent("");
+        assertEquals(" ", testDiary.getContent());
     }
 
     @Test
