@@ -5,6 +5,7 @@ import model.Day;
 import model.DaySet;
 import model.entries.*;
 import persistence.*;
+import persistence.Writer;
 
 import java.io.*;
 import java.util.Calendar;
@@ -21,7 +22,8 @@ public class DaysApp {
     private static final String ANNI_FILE = "./data/anniversary.txt";
     private static final String DIARY_FILE = "./data/diary.txt";
     private static final String MOOD_FILE = "./data/mood.txt";
-
+    private static final String HABIT_FILE = "./data/habit.txt";
+    private static final String SETHABIT_FILE = "./data/sethabit.txt";
 
     public DaysApp() {
         runDays();
@@ -38,6 +40,9 @@ public class DaysApp {
 
         while (keepGoing) {
             setToday();
+
+            System.out.println("Today is: ");
+            System.out.println(today.getYear() + "." + today.getMonth() + "." + today.getDay());
 
             System.out.println("You want days to: ");
             System.out.println("a: anniversary");
@@ -68,8 +73,6 @@ public class DaysApp {
         int tdMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
         int tdDay = Calendar.getInstance().get(Calendar.DATE);
         today = new Date(tdYear, tdMonth, tdDay);
-        System.out.println("Today is: ");
-        System.out.println(today.getYear() + "." + today.getMonth() + "." + today.getDay());
 
 
     }
@@ -85,17 +88,26 @@ public class DaysApp {
             List<Anniversary> anniversaries = AnniversaryReader.readAnniversary(new File(ANNI_FILE));
             List<Diary> diaries = DiaryReader.readDiary(new File(DIARY_FILE));
             List<Mood> moods = MoodReader.readMood(new File(MOOD_FILE));
+            List<HabitList> habitLists = HabitListReader.readHabitLists(new File(HABIT_FILE));
+
+            List<Habit> setHabitList = SetHabitListReader.readHabit(new File(SETHABIT_FILE));
+
+
             int daysSize = dates.size();
+
+
             for (int i = 0; i < daysSize; i++) {
                 Day day = new Day(dates.get(i));
                 day.setDayAnniversary(anniversaries.get(i));
                 day.setDiary(diaries.get(i));
                 day.setMood(moods.get(i));
+                day.setDailyHabitList(habitLists.get(i));
 
 
                 savedDayset.getDays().add(day);
             }
 
+            savedDayset.setSetHabitList(setHabitList);
             dayset = savedDayset;
         } catch (IOException e) {
             init();
@@ -105,20 +117,33 @@ public class DaysApp {
     // EFFECTS: saves state of chequing and savings accounts to ACCOUNTS_FILE
     private void saveDays() {
         try {
-            DateWriter dateWriter = new DateWriter(new File(DATE_FILE));
-            AnniversaryWriter anniWriter = new AnniversaryWriter(new File(ANNI_FILE));
-            DiaryWriter diaryWriter = new DiaryWriter(new File(DIARY_FILE));
-            MoodWriter moodWriter = new MoodWriter(new File(MOOD_FILE));
+            Writer dateWriter = new Writer(new File(DATE_FILE));
+            Writer anniWriter = new Writer(new File(ANNI_FILE));
+            Writer diaryWriter = new Writer(new File(DIARY_FILE));
+            Writer writer = new Writer(new File(MOOD_FILE));
+            Writer habitWriter = new Writer(new File(HABIT_FILE));
+            Writer setHabitWriter = new Writer(new File(SETHABIT_FILE));
+
+
             for (Day day : dayset.getDays()) {
                 dateWriter.write(day.getDate());
                 anniWriter.write(day.getAnniversary());
                 diaryWriter.write(day.getDiary());
-                moodWriter.write(day.getMood());
+                writer.write(day.getMood());
+                habitWriter.write(day.getDailyHabitList());
+
             }
+
+            for (Habit habit : dayset.getSetHabitList().getHabitList()) {
+                setHabitWriter.write(habit);
+            }
+
             dateWriter.close();
             anniWriter.close();
             diaryWriter.close();
-            moodWriter.close();
+            writer.close();
+            habitWriter.close();
+            setHabitWriter.close();
             System.out.println("Days has been saved to file!");
         } catch (FileNotFoundException e) {
             System.out.println("Unable to save file...");
@@ -129,8 +154,9 @@ public class DaysApp {
     }
 
     private void init() {
-
+        setToday();
         dayset = new DaySet();
+        dayset.getDay(today);
     }
 
     // control the days app
@@ -206,6 +232,7 @@ public class DaysApp {
             c = " ";
         }
         Anniversary anniversary = new Anniversary(anniDate, l, c);
+        anniversary.setAnniversary();
         dayset.getDay(anniDate).setDayAnniversary(anniversary);
     }
 

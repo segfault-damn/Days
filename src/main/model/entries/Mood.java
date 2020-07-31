@@ -1,6 +1,7 @@
 package model.entries;
 
-import persistence.AnniversaryReader;
+
+import persistence.MoodReader;
 import persistence.Saveable;
 
 import java.io.PrintWriter;
@@ -13,7 +14,7 @@ public enum Mood implements Saveable {
     public void save(PrintWriter printWriter) {
 
         printWriter.print(this.name());
-        printWriter.print(AnniversaryReader.DELIMITER);
+        printWriter.print(MoodReader.DELIMITER);
         printWriter.println("");
     }
 }

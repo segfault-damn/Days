@@ -57,6 +57,14 @@ public class Day {
         dailyHabitList.getHabit(h.getLabel()).flipDone();
     }
 
+
+    // MODIFIER: this
+    // EFFECT: set habitlist
+    public void setDailyHabitList(HabitList hl) {
+        dailyHabitList = hl;
+    }
+
+
     // REQUIRE: the event added can not have the same time as other events
     // MODIFIER: this
     // EFFECT: add a todoEvent to the list

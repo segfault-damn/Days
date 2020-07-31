@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class DateWriterTest {
     private static final String TEST_FILE = "./data/testDate.txt";
-    private DateWriter testWriter;
+    private Writer testWriter;
     private Date date;
 
 //    @BeforeEach

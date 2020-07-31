@@ -1,11 +1,16 @@
 package model.entries;
 
+import persistence.AnniversaryReader;
+import persistence.HabitListReader;
+import persistence.Saveable;
+
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 
 // A list of habit
-public class HabitList {
+public class HabitList implements Saveable {
 
     private List<Habit> habitList;
 
@@ -62,4 +67,14 @@ public class HabitList {
         return result;
     }
 
+    @Override
+    public void save(PrintWriter printWriter) {
+        for (Habit h : habitList) {
+            printWriter.print(h.getLabel());
+            printWriter.print(HabitListReader.DELIMITER1);
+            printWriter.print(h.getIsDone());
+            printWriter.print(HabitListReader.DELIMITER2);
+        }
+        printWriter.println("");
+    }
 }

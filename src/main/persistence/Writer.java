@@ -5,12 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
-public class DiaryWriter {
-
+public class Writer {
     private PrintWriter printWriter;
 
     // EFFECTS: constructs a writer that will write data to file
-    public DiaryWriter(File file) throws FileNotFoundException, UnsupportedEncodingException {
+    public Writer(File file) throws FileNotFoundException, UnsupportedEncodingException {
         printWriter = new PrintWriter(file, "UTF-8");
     }
 
