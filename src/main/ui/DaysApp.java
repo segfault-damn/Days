@@ -41,8 +41,7 @@ public class DaysApp {
         while (keepGoing) {
             setToday();
 
-            System.out.println("Today is: ");
-            System.out.println(today.getYear() + "." + today.getMonth() + "." + today.getDay());
+            System.out.println("Today is: " + today.getYear() + "." + today.getMonth() + "." + today.getDay());
 
             System.out.println("You want days to: ");
             System.out.println("a: anniversary");
@@ -74,8 +73,8 @@ public class DaysApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: loads accounts from ACCOUNTS_FILE, if that file exists;
-    // otherwise initializes accounts with default values
+    // EFFECTS: loads accounts from XXXX_FILE, if that file exists;
+    // otherwise initializes dayset with default values
     private void loadDays() {
         try {
             DaySet savedDayset = new DaySet();
@@ -89,9 +88,7 @@ public class DaysApp {
 
             List<Habit> setHabitList = SetHabitListReader.readHabit(new File(SETHABIT_FILE));
 
-
             int daysSize = dates.size();
-
 
             for (int i = 0; i < daysSize; i++) {
                 Day day = new Day(dates.get(i));
@@ -105,14 +102,20 @@ public class DaysApp {
                 savedDayset.getDays().add(day);
             }
 
-            savedDayset.setSetHabitList(setHabitList);
-            dayset = savedDayset;
+            initLoading(savedDayset,setHabitList);
+
         } catch (IOException e) {
             init();
         }
     }
 
-    // EFFECTS: saves state of chequing and savings accounts to ACCOUNTS_FILE
+    // Additional function created due to checkstyle
+    private void initLoading(DaySet savedDayset, List<Habit> setHabitList) {
+        savedDayset.setSetHabitList(setHabitList);
+        dayset = savedDayset;
+    }
+
+    // EFFECTS: saves state of chequing and savings accounts to XXXX_FILE
     private void saveDays() {
         try {
             Writer dateWriter = new Writer(new File(DATE_FILE));
@@ -135,26 +138,30 @@ public class DaysApp {
                 todoEventWriter.write(day);
             }
 
-            for (Habit habit : dayset.getSetHabitList().getHabitList()) {
-                setHabitWriter.write(habit);
-            }
+            saveDaysHelper(dateWriter,anniWriter,diaryWriter,moodWriter,habitWriter,todoEventWriter,setHabitWriter);
 
-            dateWriter.close();
-            anniWriter.close();
-            diaryWriter.close();
-            moodWriter.close();
-            habitWriter.close();
-            todoEventWriter.close();
-
-
-            setHabitWriter.close();
-            System.out.println("Days has been saved to file!");
         } catch (FileNotFoundException e) {
             System.out.println("Unable to save file...");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             // this is due to a programming error
         }
+    }
+
+    private void saveDaysHelper(Writer dateWriter, Writer anniWriter, Writer diaryWriter, Writer moodWriter,
+                                Writer habitWriter, Writer todoEventWriter, Writer setHabitWriter) {
+        for (Habit habit : dayset.getSetHabitList().getHabitList()) {
+            setHabitWriter.write(habit);
+        }
+
+        dateWriter.close();
+        anniWriter.close();
+        diaryWriter.close();
+        moodWriter.close();
+        habitWriter.close();
+        todoEventWriter.close();
+        setHabitWriter.close();
+        System.out.println("Days has been saved to file!");
     }
 
     private void init() {
@@ -193,46 +200,49 @@ public class DaysApp {
         boolean keepGoing = true;
         input = new Scanner(System.in);
         while (keepGoing) {
-
             System.out.println("Select Anniversary function:");
             String s = input.next();
-            switch (s) {
-                case "set":
-                    setAnniversary();
-                    break;
-                case "view":
-                    viewAnniversary();
-                    break;
-                case "remove":
-                    removeAnniversary();
-                    break;
-                case "edit":
-                    editAnniversary();
-                    break;
-                case "q":
-
-                    keepGoing = false;
-                    break;
-                default:
-                    System.out.println("Selection not valid...");
-                    break;
+            if (s.equals("q")) {
+                keepGoing = false;
+            } else {
+                doAnniversaryHelper(s);
             }
-        }
 
+        }
+    }
+
+    // checkstyle
+    private void doAnniversaryHelper(String s) {
+
+        switch (s) {
+            case "set":
+                setAnniversary();
+                break;
+            case "view":
+                viewAnniversary();
+                break;
+            case "remove":
+                removeAnniversary();
+                break;
+            case "edit":
+                editAnniversary();
+                break;
+            default:
+                System.out.println("Selection not valid...");
+                break;
+        }
     }
 
     // set anniversary in given day
     private void setAnniversary() {
         input = new Scanner(System.in);
-        System.out.println("Enter Anniversary Year:");
+        System.out.println("Enter Anniversary Date:");
         String commend = input.next();
         int inputYear = Integer.parseInt(commend);
 
-        System.out.println("Enter Anniversary Month:");
         commend = input.next();
         int inputMonth = Integer.parseInt(commend);
 
-        System.out.println("Enter Anniversary Date:");
         commend = input.next();
         int inputDay = Integer.parseInt(commend);
 
@@ -308,29 +318,36 @@ public class DaysApp {
         boolean keepGoing = true;
         input = new Scanner(System.in);
         while (keepGoing) {
-
             System.out.println("Select Diary function:");
             String s = input.next();
-            switch (s) {
-                case "write":
-                    writeDiary();
-                    break;
-                case "modify":
-                    modifyDiary();
-                    break;
-                case "view":
-                    viewDiary();
-                    break;
-                case "tag":
-                    diaryTag();
-                    break;
-                case "q":
-                    keepGoing = false;
-                    break;
-                default:
-                    System.out.println("Selection not valid...");
-                    break;
+            if (s.equals("q")) {
+                keepGoing = false;
+            } else {
+                doDiaryHelper(s);
             }
+
+        }
+    }
+
+    //checkstyle
+    private void doDiaryHelper(String s) {
+
+        switch (s) {
+            case "write":
+                writeDiary();
+                break;
+            case "modify":
+                modifyDiary();
+                break;
+            case "view":
+                viewDiary();
+                break;
+            case "tag":
+                diaryTag();
+                break;
+            default:
+                System.out.println("Selection not valid...");
+                break;
         }
     }
 
@@ -473,31 +490,38 @@ public class DaysApp {
         while (keepGoing) {
             System.out.println("Select Habit function:");
             String s = input.next();
-            switch (s) {
-                case "list":
-                    habitList();
-                    viewHabit();
-                    break;
-                case "mark":
-                    markHabit();
-                    break;
-                case "view":
-
-                    searchDateHabit();
-                    break;
-                case "edit":
-                    editHabit();
-                    break;
-                case "month":
-                    monthHabit();
-                    break;
-                case "q":
-                    keepGoing = false;
-                    break;
-                default:
-                    System.out.println("Selection not valid...");
-                    break;
+            if (s.equals("q")) {
+                keepGoing = false;
+            } else {
+                doHabitHelper(s);
             }
+
+        }
+    }
+
+    //checkstyle
+    private void doHabitHelper(String s) {
+
+        switch (s) {
+            case "list":
+                habitList();
+                viewHabit();
+                break;
+            case "mark":
+                markHabit();
+                break;
+            case "view":
+                searchDateHabit();
+                break;
+            case "edit":
+                editHabit();
+                break;
+            case "month":
+                monthHabit();
+                break;
+            default:
+                System.out.println("Selection not valid...");
+                break;
         }
     }
 
@@ -668,29 +692,37 @@ public class DaysApp {
 
             System.out.println("Select Mood function:");
             String s = input.next();
-            switch (s) {
-                case "today":
-                    setTodayMood();
-                    break;
-                case "modify":
-                    setMood();
-                    break;
-                case "remove":
-                    removeMood();
-                    break;
-                case "view":
-                    viewMood();
-                    break;
-                case "month":
-                    viewMonthMood();
-                    break;
-                case "q":
-                    keepGoing = false;
-                    break;
-                default:
-                    System.out.println("Selection not valid...");
-                    break;
+            if (s.equals("q")) {
+                keepGoing = false;
+            } else {
+                doMoodHelper(s);
             }
+
+        }
+    }
+
+    //checkstyle
+    private void doMoodHelper(String s) {
+
+        switch (s) {
+            case "today":
+                setTodayMood();
+                break;
+            case "modify":
+                setMood();
+                break;
+            case "remove":
+                removeMood();
+                break;
+            case "view":
+                viewMood();
+                break;
+            case "month":
+                viewMonthMood();
+                break;
+            default:
+                System.out.println("Selection not valid...");
+                break;
         }
     }
 
@@ -819,28 +851,36 @@ public class DaysApp {
 
             System.out.println("Select TodoEvent function:");
             String s = input.next();
-            switch (s) {
-                case "set":
-                    setEvent();
-                    break;
-                case "view":
-                    viewEvent();
-                    break;
-                case "remove":
-                    removeEvent();
-                    break;
-                case "edit":
-                    editEventTime();
-                    break;
-                case "q":
-                    keepGoing = false;
-                    break;
-                default:
-                    System.out.println("Selection not valid...");
-                    break;
+            if (s.equals("q")) {
+                keepGoing = false;
+            } else {
+                doEventHelper(s);
             }
+
         }
 
+    }
+
+    //checkstyle
+    private void doEventHelper(String s) {
+
+        switch (s) {
+            case "set":
+                setEvent();
+                break;
+            case "view":
+                viewEvent();
+                break;
+            case "remove":
+                removeEvent();
+                break;
+            case "edit":
+                editEventTime();
+                break;
+            default:
+                System.out.println("Selection not valid...");
+                break;
+        }
     }
 
     // add an event in a particular day and particular time

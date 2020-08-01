@@ -23,23 +23,6 @@ public class Date implements Saveable {
         this.day = day;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) return false;
-        Date date = (Date) o;
-        return year == date.year
-                && month == date.month
-                && day == date.day;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(year, month, day);
-    }
-
     //getters
     public int getYear() {
 
