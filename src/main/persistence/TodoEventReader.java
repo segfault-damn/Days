@@ -70,7 +70,7 @@ public class TodoEventReader {
         int hour = Integer.parseInt(components.get(4));
         int min = Integer.parseInt(components.get(5));
 
-        Date date = new Date(year,month,day);
-        return new TodoEvent(date,label,hour,min);
+        Date date = new Date(year, month, day);
+        return new TodoEvent(date, label, hour, min);
     }
 }

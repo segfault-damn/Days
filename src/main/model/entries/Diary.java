@@ -26,7 +26,6 @@ public class Diary implements Saveable {
     }
 
 
-
     // MODIFIER: this
     // EFFECT: add tag to diary
     public void setTag(String s) {

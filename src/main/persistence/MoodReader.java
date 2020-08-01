@@ -51,29 +51,33 @@ public class MoodReader {
     private static Mood parseDiary(List<String> components) {
         String s = components.get(0);
         Mood mood = Mood.Default;
+        parseDiaryHelper(s,mood);
+        return mood;
+    }
+
+    private static void parseDiaryHelper(String s, Mood mood) {
         switch (s) {
-            case("Cheerful") :
+            case ("Cheerful"):
                 mood = Mood.Cheerful;
                 break;
-            case("Sad") :
+            case ("Sad"):
                 mood = Mood.Sad;
                 break;
-            case("Angry") :
+            case ("Angry"):
                 mood = Mood.Angry;
                 break;
-            case("Depressed") :
+            case ("Depressed"):
                 mood = Mood.Depressed;
                 break;
-            case("Calm") :
+            case ("Calm"):
                 mood = Mood.Calm;
                 break;
-            case("Energetic") :
+            case ("Energetic"):
                 mood = Mood.Energetic;
                 break;
-            case("Default") :
+            case ("Default"):
                 mood = Mood.Default;
                 break;
         }
-        return mood;
     }
 }

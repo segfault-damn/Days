@@ -1,6 +1,5 @@
 package model.entries;
 
-import persistence.AnniversaryReader;
 import persistence.HabitListReader;
 import persistence.Saveable;
 

@@ -1,11 +1,10 @@
 package model.entries;
 
 import model.Date;
-import persistence.Saveable;
 import persistence.AnniversaryReader;
+import persistence.Saveable;
 
 import java.io.PrintWriter;
-import java.util.Objects;
 
 // the class represents a anniversary with its date,label,comment and
 // whether it is an anniversary
@@ -46,8 +45,6 @@ public class Anniversary implements Saveable {
         }
 
     }
-
-
 
 
     //getters

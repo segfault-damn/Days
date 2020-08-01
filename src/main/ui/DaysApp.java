@@ -5,9 +5,11 @@ import model.Day;
 import model.DaySet;
 import model.entries.*;
 import persistence.*;
-import persistence.Writer;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
@@ -102,7 +104,7 @@ public class DaysApp {
                 savedDayset.getDays().add(day);
             }
 
-            initLoading(savedDayset,setHabitList);
+            initLoading(savedDayset, setHabitList);
 
         } catch (IOException e) {
             init();
@@ -128,7 +130,6 @@ public class DaysApp {
             Writer setHabitWriter = new Writer(new File(SETHABIT_FILE));
 
 
-
             for (Day day : dayset.getDays()) {
                 dateWriter.write(day.getDate());
                 anniWriter.write(day.getAnniversary());
@@ -138,7 +139,8 @@ public class DaysApp {
                 todoEventWriter.write(day);
             }
 
-            saveDaysHelper(dateWriter,anniWriter,diaryWriter,moodWriter,habitWriter,todoEventWriter,setHabitWriter);
+            saveDaysHelper(dateWriter, anniWriter, diaryWriter, moodWriter,
+                    habitWriter, todoEventWriter, setHabitWriter);
 
         } catch (FileNotFoundException e) {
             System.out.println("Unable to save file...");
@@ -280,7 +282,6 @@ public class DaysApp {
     }
 
 
-
     // remove one anniversary with given name
     private void removeAnniversary() {
         input = new Scanner(System.in);
@@ -293,7 +294,7 @@ public class DaysApp {
 
         commend = input.next();
         int inputDay = Integer.parseInt(commend);
-        Date date = new Date(inputYear,inputMonth,inputDay);
+        Date date = new Date(inputYear, inputMonth, inputDay);
         dayset.getDay(date).removeDayAnniversary();
     }
 

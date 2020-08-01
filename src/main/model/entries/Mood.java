@@ -8,7 +8,7 @@ import java.io.PrintWriter;
 
 // a enumeration of mood
 public enum Mood implements Saveable {
-    Cheerful, Sad, Angry, Depressed, Calm, Energetic,Default;
+    Cheerful, Sad, Angry, Depressed, Calm, Energetic, Default;
 
     @Override
     public void save(PrintWriter printWriter) {

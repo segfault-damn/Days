@@ -1,6 +1,5 @@
 package persistence;
 
-import model.Date;
 import model.entries.Habit;
 import model.entries.HabitList;
 

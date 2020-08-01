@@ -96,7 +96,6 @@ public class Day implements Saveable {
     }
 
 
-
     // MODIFIER: this
     // EFFECT: remove mood
     public void removeMood() {

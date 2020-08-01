@@ -4,7 +4,6 @@ import persistence.Saveable;
 import persistence.SetHabitListReader;
 
 import java.io.PrintWriter;
-import java.util.Objects;
 
 // A class of habit with a name and a boolean indicates whether it is done
 public class Habit implements Saveable {

@@ -58,8 +58,8 @@ public class AnniversaryReader {
         String label = components.get(3);
         String comment = components.get(4);
         boolean isAnni = Boolean.parseBoolean(components.get(5));
-        Date date = new Date(year,month,day);
-        Anniversary anniversary = new Anniversary(date,label,comment);
+        Date date = new Date(year, month, day);
+        Anniversary anniversary = new Anniversary(date, label, comment);
         if (isAnni) {
             anniversary.setAnniversary();
         }

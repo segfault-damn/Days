@@ -1,6 +1,5 @@
 package model;
 
-import exceptions.DateEnterException;
 import model.entries.*;
 
 import java.util.ArrayList;
@@ -32,7 +31,6 @@ public class DaySet {
         }
         return result;
     }
-
 
 
     // MODIFIER: this

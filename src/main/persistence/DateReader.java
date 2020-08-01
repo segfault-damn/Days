@@ -1,7 +1,6 @@
 package persistence;
 
 import model.Date;
-import model.entries.Anniversary;
 
 import java.io.File;
 import java.io.IOException;

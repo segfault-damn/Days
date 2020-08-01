@@ -1,7 +1,6 @@
 package persistence;
 
 import model.entries.Habit;
-import model.entries.Mood;
 
 import java.io.File;
 import java.io.IOException;

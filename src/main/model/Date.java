@@ -1,11 +1,9 @@
 package model;
 
-import exceptions.DateEnterException;
 import persistence.DateReader;
 import persistence.Saveable;
 
 import java.io.PrintWriter;
-import java.util.Objects;
 
 // Date represents a date with year,month and day
 public class Date implements Saveable {
