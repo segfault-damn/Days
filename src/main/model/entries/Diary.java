@@ -6,12 +6,13 @@ import persistence.Saveable;
 
 import java.io.PrintWriter;
 
-// Record diary with its date content and tag
+// the class represents the diary with date, content and its tag
 public class Diary implements Saveable {
     private Date date;
     private String content;
     private String tag;
 
+    // construct diary with given date
     public Diary(Date date) {
         this.date = date;
         this.content = " ";

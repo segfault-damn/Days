@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
+// Write any kind of object and save them
 public class Writer {
     private PrintWriter printWriter;
 

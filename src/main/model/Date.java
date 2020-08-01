@@ -7,11 +7,13 @@ import persistence.Saveable;
 import java.io.PrintWriter;
 import java.util.Objects;
 
+// Date represents a date with year,month and day
 public class Date implements Saveable {
     private int year;
     private int month;
     private int day;
 
+    // construct a date
     // year should be restricted from 2000 to 2100
     // month should be restricted from 01 to 12
     // day should be restricted from 01 to 31

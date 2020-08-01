@@ -1,7 +1,6 @@
 package persistence;
 
-import model.Date;
-import model.entries.Diary;
+
 import model.entries.Mood;
 
 import java.io.File;
@@ -11,10 +10,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+// MoodReader reads moods from saved file
 public class MoodReader {
     public static final String DELIMITER = ",";
 
-    // EFFECTS: returns  a list of diaries parsed from file; throws
+    // EFFECTS: returns  a list of moods parsed from file; throws
     // IOException if an exception is raised when opening / reading from file
     public static List<Mood> readMood(File file) throws IOException {
         List<String> fileContent = readFile(file);
@@ -27,7 +27,7 @@ public class MoodReader {
         return Files.readAllLines(file.toPath());
     }
 
-    // EFFECTS: returns a list of diary
+    // EFFECTS: returns a list of moods
     private static List<Mood> parseContent(List<String> fileContent) {
 
         List<Mood> moods = new ArrayList<>();
@@ -46,10 +46,8 @@ public class MoodReader {
     }
 
 
-    // REQUIRES: components has size 3 where element 0 represents the
-    // year, element 1 represents the month, elements 2 represents the
-    // day, element 3 represents the content, elements 4 represents the tag
-    // EFFECTS: returns an diary constructed from components
+    // REQUIRES: components has size 1 which represents the mood using string
+    // EFFECTS: returns an mood constructed from components
     private static Mood parseDiary(List<String> components) {
         String s = components.get(0);
         Mood mood = Mood.Default;

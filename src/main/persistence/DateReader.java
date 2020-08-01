@@ -10,10 +10,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+// DateReader reads dates from saved file
 public class DateReader {
     public static final String DELIMITER = ",";
 
-    // EFFECTS: returns a list of date parsed from file; throws
+    // EFFECTS: returns a list of dates parsed from file; throws
     // IOException if an exception is raised when opening / reading from file
     public static List<Date> readDates(File file) throws IOException {
         List<String> fileContent = readFile(file);
@@ -26,7 +27,7 @@ public class DateReader {
         return Files.readAllLines(file.toPath());
     }
 
-    // EFFECTS: returns a list of date
+    // EFFECTS: returns a list of dates
     private static List<Date> parseContent(List<String> fileContent) {
 
         List<Date> dates = new ArrayList<>();
@@ -48,7 +49,7 @@ public class DateReader {
     // REQUIRES: components has size 3 where element 0 represents the
     // year, element 1 represents the month, elements 2 represents the
     // day
-    // EFFECTS: returns an account constructed from components
+    // EFFECTS: returns a date constructed from components
     private static Date parseDate(List<String> components) {
         int year = Integer.parseInt(components.get(0));
         int month = Integer.parseInt(components.get(1));

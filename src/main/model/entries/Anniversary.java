@@ -7,13 +7,15 @@ import persistence.AnniversaryReader;
 import java.io.PrintWriter;
 import java.util.Objects;
 
-// A class of anniversary with its date, name, comment and whether it's working.
+// the class represents a anniversary with its date,label,comment and
+// whether it is an anniversary
 public class Anniversary implements Saveable {
     private Date date;
     private String label;
     private String comment;
     private boolean isAnniversary;
 
+    // construct anniversary with given date, name, comment
     public Anniversary(Date date, String label, String comment) {
         this.date = date;
         this.label = label;
@@ -22,18 +24,20 @@ public class Anniversary implements Saveable {
     }
 
 
-    // set anniversary
+    // MODIFIER: this
+    // EFFECT: set anniversary
     public void setAnniversary() {
         isAnniversary = true;
     }
 
-    // remove anniversary
+    // MODIFIER: this
+    // EFFECT: remove anniversary
     public void removeAnniversary() {
         isAnniversary = false;
     }
 
     // MODIFIER: this
-    // EFFECT: change the comment
+    // EFFECT: change the comment, to avoid save "" into file, all empty input will switch to " "
     public void editComment(String s) {
         if (s == "") {
             comment = " ";
@@ -80,26 +84,5 @@ public class Anniversary implements Saveable {
         printWriter.print(isAnniversary);
         printWriter.print(AnniversaryReader.DELIMITER);
         printWriter.println("");
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Anniversary that = (Anniversary) o;
-        return isAnniversary == that.isAnniversary
-                && date.equals(that.date)
-                && label.equals(that.label)
-                && comment.equals(that.comment);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(date, label, comment, isAnniversary);
     }
 }

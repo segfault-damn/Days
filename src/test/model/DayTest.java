@@ -4,6 +4,9 @@ import model.entries.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static model.entries.Mood.Cheerful;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,20 +17,16 @@ class DayTest {
     private Habit habit2; // Study for final
     private Habit habit3; // Play Dr.racket
     private Diary diary;
-    private Mood testMood;
     private TodoEvent event1;
     private TodoEvent event2;
     private TodoEvent event3;
     private TodoEvent event4;
+    private Mood testMood;
+
     private Anniversary testAnni;
 
     @BeforeEach
     private void setTest() {
-
-        event1 = new TodoEvent(testDate, "birthday party", 20, 00);
-        event2 = new TodoEvent(testDate, "cpsc110 final", 18, 00);
-        event3 = new TodoEvent(testDate, "chat with Gregor", 12, 20);
-        event4 = new TodoEvent(testDate, "chat with Gregor", 18, 30);
 
         testDate = new Date(2020, 2, 13);
         testDay = new Day(testDate);
@@ -38,6 +37,12 @@ class DayTest {
         habit1 = new Habit("Play LOL");
         habit2 = new Habit("Study for final");
         habit3 = new Habit("Play Dr.racket");
+
+        event1 = new TodoEvent(testDate, "birthday party", 20, 00);
+        event2 = new TodoEvent(testDate, "cpsc110 final", 18, 00);
+        event3 = new TodoEvent(testDate, "chat with Gregor", 12, 20);
+        event4 = new TodoEvent(testDate, "chat with Gregor", 18, 30);
+
 
         testDay.getDailyHabitList().addHabit(habit1);
         testDay.getDailyHabitList().addHabit(habit2);
@@ -75,6 +80,20 @@ class DayTest {
         testDay.removeMood();
         assertEquals(Mood.Default,testDay.getMood());
     }
+
+    @Test
+    // MODIFIER: this
+    // EFFECT: set habitlist
+    public void testSetDailyHabitList() {
+        HabitList testHabitList = new HabitList();
+        testHabitList.addHabit(habit1);
+        testHabitList.addHabit(habit2);
+        testHabitList.addHabit(habit3);
+
+        testDay.setDailyHabitList(testHabitList);
+        assertEquals(testHabitList,testDay.getDailyHabitList());
+    }
+
 
     @Test
     // MODIFIER: this
@@ -123,18 +142,30 @@ class DayTest {
     }
 
     @Test
+    // MODIFIER: this
+    // EFFECT: set todoEvent list
+    public void testSetTodoEvents() {
+        List<TodoEvent> todoEvents = new ArrayList<>();
+        todoEvents.add(event1);
+        todoEvents.add(event2);
+        todoEvents.add(event3);
+        testDay.setTodoEvents(todoEvents);
+        assertEquals(todoEvents,testDay.getTodoEventList());
+    }
+
+    @Test
     // REQUIRE: the event added can not have the same time as other events
     // MODIFIER: this
     // EFFECT: add a todoEvent to the list
     public void testAddEvent() {
 
         testDay.addEvent(event1);
-        assertTrue(testDay.getTodoEvents().contains(event1));
-        assertEquals(1, testDay.getTodoEvents().size());
+        assertTrue(testDay.getTodoEventList().contains(event1));
+        assertEquals(1, testDay.getTodoEventList().size());
 
         testDay.addEvent(event2);
-        assertTrue(testDay.getTodoEvents().contains(event2));
-        assertEquals(2, testDay.getTodoEvents().size());
+        assertTrue(testDay.getTodoEventList().contains(event2));
+        assertEquals(2, testDay.getTodoEventList().size());
     }
 
     @Test
@@ -146,19 +177,34 @@ class DayTest {
         testDay.addEvent(event3);
         testDay.addEvent(event4);
         testDay.removeEvent(20,00);
-        assertTrue(testDay.getTodoEvents().contains(event2));
-        assertTrue(testDay.getTodoEvents().contains(event4));
-        assertFalse(testDay.getTodoEvents().contains(event1));
-        assertTrue(testDay.getTodoEvents().contains(event3));
-        assertEquals(3, testDay.getTodoEvents().size());
+        assertTrue(testDay.getTodoEventList().contains(event2));
+        assertTrue(testDay.getTodoEventList().contains(event4));
+        assertFalse(testDay.getTodoEventList().contains(event1));
+        assertTrue(testDay.getTodoEventList().contains(event3));
+        assertEquals(3, testDay.getTodoEventList().size());
 
         testDay.removeEvent(18,00);
-        assertFalse(testDay.getTodoEvents().contains(event2));
-        assertTrue(testDay.getTodoEvents().contains(event4));
-        assertFalse(testDay.getTodoEvents().contains(event1));
-        assertTrue(testDay.getTodoEvents().contains(event3));
-        assertEquals(2, testDay.getTodoEvents().size());
+        assertFalse(testDay.getTodoEventList().contains(event2));
+        assertTrue(testDay.getTodoEventList().contains(event4));
+        assertFalse(testDay.getTodoEventList().contains(event1));
+        assertTrue(testDay.getTodoEventList().contains(event3));
+        assertEquals(2, testDay.getTodoEventList().size());
     }
+
+    // MODIFIER: this
+    // EFFECT: set todoEvent list
+    public void TestSetTodoEvents() {
+        List<TodoEvent> todoEvents = new ArrayList<>();
+        todoEvents.add(event1);
+        todoEvents.add(event2);
+        testDay.setTodoEvents(todoEvents);
+        assertEquals(2,testDay.getTodoEventList().size());
+        assertEquals(event1,testDay.getTodoEventList().get(0));
+        assertEquals(event1,testDay.getTodoEventList().get(1));
+    }
+
+
+
 
     @Test
     // REQUIRE: the given hour and minute should correspond to one event in the list
@@ -174,4 +220,14 @@ class DayTest {
 
         assertNull(testDay.getEvent(12, 30));
     }
+
+    @Test
+    public void testGetTodoEventList() {
+        testDay.addEvent(event1);
+        List<TodoEvent> testEventList = testDay.getTodoEventList();
+        assertEquals(event1,testEventList.get(0));
+        assertTrue(testEventList.contains(event1));
+    }
+
+
 }

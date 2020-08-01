@@ -8,7 +8,7 @@ import java.io.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DateWriterTest {
+public class WriterTest {
     private static final String TEST_FILE = "./data/testDate.txt";
     private Writer testWriter;
     private Date date;

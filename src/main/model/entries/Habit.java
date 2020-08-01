@@ -1,18 +1,17 @@
 package model.entries;
 
-
-import persistence.HabitListReader;
 import persistence.Saveable;
 import persistence.SetHabitListReader;
 
 import java.io.PrintWriter;
 import java.util.Objects;
 
-// A habit with a name and a boolean indicates whether it is done
+// A class of habit with a name and a boolean indicates whether it is done
 public class Habit implements Saveable {
     private String label;
     private boolean isDone;
 
+    // construct a habit with given label
     public Habit(String label) {
 
         this.label = label;
@@ -33,23 +32,6 @@ public class Habit implements Saveable {
         label = s;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Habit habit = (Habit) o;
-        return isDone == habit.isDone
-                && label.equals(habit.label);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(label, isDone);
-    }
 
     //getters
     public String getLabel() {
@@ -59,6 +41,7 @@ public class Habit implements Saveable {
     public boolean getIsDone() {
         return isDone;
     }
+
 
     @Override
     public void save(PrintWriter printWriter) {

@@ -33,11 +33,7 @@ public class DaySet {
         return result;
     }
 
-    public void setSetHabitList(List<Habit> hl) {
-        for (Habit habit : hl) {
-            setHabitList.addHabit(habit);
-        }
-    }
+
 
     // MODIFIER: this
     // EFFECT: add a day to the list and do nothing if that day is already in the list
@@ -140,6 +136,14 @@ public class DaySet {
             }
         }
         return result;
+    }
+
+    // MODIFIER: this
+    // EFFECT: set SetHabitList with given list of habit
+    public void setSetHabitList(List<Habit> hl) {
+        for (Habit habit : hl) {
+            setHabitList.addHabit(habit);
+        }
     }
 
 

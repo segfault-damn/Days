@@ -5,7 +5,7 @@ import model.entries.Anniversary;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AnniversaryTest {
     private Date testDate;
@@ -26,6 +26,18 @@ public class AnniversaryTest {
     }
 
     @Test
+    public void testSetAnniversary() {
+        testAnni.setAnniversary();
+        assertTrue(testAnni.getIsAnniversary());
+    }
+
+    @Test
+    public void testRemoveAnniversary() {
+        testAnni.removeAnniversary();
+        assertFalse(testAnni.getIsAnniversary());
+    }
+
+    @Test
     public void testGetDate() {
         assertEquals(testDate, testAnni.getDate());
     }
@@ -34,5 +46,6 @@ public class AnniversaryTest {
     public void testGetLabel() {
         assertEquals("confession", testAnni.getLabel());
     }
+
 
 }

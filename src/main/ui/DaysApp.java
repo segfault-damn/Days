@@ -23,6 +23,8 @@ public class DaysApp {
     private static final String DIARY_FILE = "./data/diary.txt";
     private static final String MOOD_FILE = "./data/mood.txt";
     private static final String HABIT_FILE = "./data/habit.txt";
+    private static final String EVENTS_FILE = "./data/events.txt";
+
     private static final String SETHABIT_FILE = "./data/sethabit.txt";
 
     public DaysApp() {
@@ -35,9 +37,7 @@ public class DaysApp {
         String command;
 
         input = new Scanner(System.in);
-
         loadDays();
-
         while (keepGoing) {
             setToday();
 
@@ -52,10 +52,8 @@ public class DaysApp {
             System.out.println("e: event");
             System.out.println("q: quit");
 
-
             command = input.next();
             command = command.toLowerCase();
-
 
             if (command.equals("q")) {
                 keepGoing = false;
@@ -73,8 +71,6 @@ public class DaysApp {
         int tdMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
         int tdDay = Calendar.getInstance().get(Calendar.DATE);
         today = new Date(tdYear, tdMonth, tdDay);
-
-
     }
 
     // MODIFIES: this
@@ -89,6 +85,7 @@ public class DaysApp {
             List<Diary> diaries = DiaryReader.readDiary(new File(DIARY_FILE));
             List<Mood> moods = MoodReader.readMood(new File(MOOD_FILE));
             List<HabitList> habitLists = HabitListReader.readHabitLists(new File(HABIT_FILE));
+            List<List<TodoEvent>> todoEventLists = TodoEventReader.readEvent(new File(EVENTS_FILE));
 
             List<Habit> setHabitList = SetHabitListReader.readHabit(new File(SETHABIT_FILE));
 
@@ -103,6 +100,7 @@ public class DaysApp {
                 day.setMood(moods.get(i));
                 day.setDailyHabitList(habitLists.get(i));
 
+                day.setTodoEvents(todoEventLists.get(i));
 
                 savedDayset.getDays().add(day);
             }
@@ -120,18 +118,21 @@ public class DaysApp {
             Writer dateWriter = new Writer(new File(DATE_FILE));
             Writer anniWriter = new Writer(new File(ANNI_FILE));
             Writer diaryWriter = new Writer(new File(DIARY_FILE));
-            Writer writer = new Writer(new File(MOOD_FILE));
+            Writer moodWriter = new Writer(new File(MOOD_FILE));
             Writer habitWriter = new Writer(new File(HABIT_FILE));
+            Writer todoEventWriter = new Writer(new File(EVENTS_FILE));
+
             Writer setHabitWriter = new Writer(new File(SETHABIT_FILE));
+
 
 
             for (Day day : dayset.getDays()) {
                 dateWriter.write(day.getDate());
                 anniWriter.write(day.getAnniversary());
                 diaryWriter.write(day.getDiary());
-                writer.write(day.getMood());
+                moodWriter.write(day.getMood());
                 habitWriter.write(day.getDailyHabitList());
-
+                todoEventWriter.write(day);
             }
 
             for (Habit habit : dayset.getSetHabitList().getHabitList()) {
@@ -141,8 +142,11 @@ public class DaysApp {
             dateWriter.close();
             anniWriter.close();
             diaryWriter.close();
-            writer.close();
+            moodWriter.close();
             habitWriter.close();
+            todoEventWriter.close();
+
+
             setHabitWriter.close();
             System.out.println("Days has been saved to file!");
         } catch (FileNotFoundException e) {
@@ -162,18 +166,25 @@ public class DaysApp {
     // control the days app
     private void processCommand(String command) {
 
-        if (command.equals("a")) {
-            doAnniversary();
-        } else if (command.equals("d")) {
-            doDiary();
-        } else if (command.equals("h")) {
-            doHabit();
-        } else if (command.equals("m")) {
-            doMood();
-        } else if (command.equals("e")) {
-            doEvent();
-        } else {
-            System.out.println("Selection not valid...");
+        switch (command) {
+            case "a":
+                doAnniversary();
+                break;
+            case "d":
+                doDiary();
+                break;
+            case "h":
+                doHabit();
+                break;
+            case "m":
+                doMood();
+                break;
+            case "e":
+                doEvent();
+                break;
+            default:
+                System.out.println("Selection not valid...");
+                break;
         }
     }
 
@@ -185,19 +196,26 @@ public class DaysApp {
 
             System.out.println("Select Anniversary function:");
             String s = input.next();
-            if (s.equals("set")) {
-                setAnniversary();
-            } else if (s.equals("view")) {
-                viewAnniversary();
-            } else if (s.equals("remove")) {
-                removeAnniversary();
-            } else if (s.equals("edit")) {
-                editAnniversary();
-            } else if (s.equals("q")) {
+            switch (s) {
+                case "set":
+                    setAnniversary();
+                    break;
+                case "view":
+                    viewAnniversary();
+                    break;
+                case "remove":
+                    removeAnniversary();
+                    break;
+                case "edit":
+                    editAnniversary();
+                    break;
+                case "q":
 
-                keepGoing = false;
-            } else {
-                System.out.println("Selection not valid...");
+                    keepGoing = false;
+                    break;
+                default:
+                    System.out.println("Selection not valid...");
+                    break;
             }
         }
 
@@ -222,13 +240,13 @@ public class DaysApp {
         System.out.println("Enter Anniversary Name:");
         input = new Scanner(System.in);
         String l = input.nextLine();
-        if (l == "") {
+        if (l.equals("")) {
             l = "No label";
         }
 
         System.out.println("Enter Anniversary Comment:");
         String c = input.nextLine();
-        if (c == "") {
+        if (c.equals("")) {
             c = " ";
         }
         Anniversary anniversary = new Anniversary(anniDate, l, c);
@@ -293,18 +311,25 @@ public class DaysApp {
 
             System.out.println("Select Diary function:");
             String s = input.next();
-            if (s.equals("write")) {
-                writeDiary();
-            } else if (s.equals("modify")) {
-                modifyDiary();
-            } else if (s.equals("view")) {
-                viewDiary();
-            } else if (s.equals("tag")) {
-                diaryTag();
-            } else if (s.equals("q")) {
-                keepGoing = false;
-            } else {
-                System.out.println("Selection not valid...");
+            switch (s) {
+                case "write":
+                    writeDiary();
+                    break;
+                case "modify":
+                    modifyDiary();
+                    break;
+                case "view":
+                    viewDiary();
+                    break;
+                case "tag":
+                    diaryTag();
+                    break;
+                case "q":
+                    keepGoing = false;
+                    break;
+                default:
+                    System.out.println("Selection not valid...");
+                    break;
             }
         }
     }
@@ -386,14 +411,19 @@ public class DaysApp {
             System.out.println("2: view diary with selected tag");
 
             String s = input.next();
-            if (s.equals("1")) {
-                changeTag();
-            } else if (s.equals("2")) {
-                viewTag();
-            } else if (s.equals("q")) {
-                keepGoing = false;
-            } else {
-                System.out.println("Selection not valid...");
+            switch (s) {
+                case "1":
+                    changeTag();
+                    break;
+                case "2":
+                    viewTag();
+                    break;
+                case "q":
+                    keepGoing = false;
+                    break;
+                default:
+                    System.out.println("Selection not valid...");
+                    break;
             }
         }
 
@@ -443,22 +473,30 @@ public class DaysApp {
         while (keepGoing) {
             System.out.println("Select Habit function:");
             String s = input.next();
-            if (s.equals("list")) {
-                habitList();
-                viewHabit();
-            } else if (s.equals("mark")) {
-                markHabit();
-            } else if (s.equals("view")) {
+            switch (s) {
+                case "list":
+                    habitList();
+                    viewHabit();
+                    break;
+                case "mark":
+                    markHabit();
+                    break;
+                case "view":
 
-                searchDateHabit();
-            } else if (s.equals("edit")) {
-                editHabit();
-            } else if (s.equals("month")) {
-                monthHabit();
-            } else if (s.equals("q")) {
-                keepGoing = false;
-            } else {
-                System.out.println("Selection not valid...");
+                    searchDateHabit();
+                    break;
+                case "edit":
+                    editHabit();
+                    break;
+                case "month":
+                    monthHabit();
+                    break;
+                case "q":
+                    keepGoing = false;
+                    break;
+                default:
+                    System.out.println("Selection not valid...");
+                    break;
             }
         }
     }
@@ -471,14 +509,19 @@ public class DaysApp {
 
             System.out.println("Select add or remove habit: ");
             String s = input.next();
-            if (s.equals("add")) {
-                addHabit();
-            } else if (s.equals("remove")) {
-                removeHabit();
-            } else if (s.equals("q")) {
-                keepGoing = false;
-            } else {
-                System.out.println("Selection not valid...");
+            switch (s) {
+                case "add":
+                    addHabit();
+                    break;
+                case "remove":
+                    removeHabit();
+                    break;
+                case "q":
+                    keepGoing = false;
+                    break;
+                default:
+                    System.out.println("Selection not valid...");
+                    break;
             }
         }
     }
@@ -625,20 +668,28 @@ public class DaysApp {
 
             System.out.println("Select Mood function:");
             String s = input.next();
-            if (s.equals("today")) {
-                setTodayMood();
-            } else if (s.equals("modify")) {
-                setMood();
-            } else if (s.equals("remove")) {
-                removeMood();
-            } else if (s.equals("view")) {
-                viewMood();
-            } else if (s.equals("month")) {
-                viewMonthMood();
-            } else if (s.equals("q")) {
-                keepGoing = false;
-            } else {
-                System.out.println("Selection not valid...");
+            switch (s) {
+                case "today":
+                    setTodayMood();
+                    break;
+                case "modify":
+                    setMood();
+                    break;
+                case "remove":
+                    removeMood();
+                    break;
+                case "view":
+                    viewMood();
+                    break;
+                case "month":
+                    viewMonthMood();
+                    break;
+                case "q":
+                    keepGoing = false;
+                    break;
+                default:
+                    System.out.println("Selection not valid...");
+                    break;
             }
         }
     }
@@ -680,18 +731,25 @@ public class DaysApp {
     private Mood selectMood(String commend) {
 
         Mood mood = Mood.Default;
-        if (commend.equals("1")) {
-            mood = Mood.Cheerful;
-        } else if (commend.equals("2")) {
-            mood = Mood.Calm;
-        } else if (commend.equals("3")) {
-            mood = Mood.Angry;
-        } else if (commend.equals("4")) {
-            mood = Mood.Depressed;
-        } else if (commend.equals("5")) {
-            mood = Mood.Energetic;
-        } else if (commend.equals("6")) {
-            mood = Mood.Sad;
+        switch (commend) {
+            case "1":
+                mood = Mood.Cheerful;
+                break;
+            case "2":
+                mood = Mood.Calm;
+                break;
+            case "3":
+                mood = Mood.Angry;
+                break;
+            case "4":
+                mood = Mood.Depressed;
+                break;
+            case "5":
+                mood = Mood.Energetic;
+                break;
+            case "6":
+                mood = Mood.Sad;
+                break;
         }
         return mood;
 
@@ -761,18 +819,25 @@ public class DaysApp {
 
             System.out.println("Select TodoEvent function:");
             String s = input.next();
-            if (s.equals("set")) {
-                setEvent();
-            } else if (s.equals("view")) {
-                viewEvent();
-            } else if (s.equals("remove")) {
-                removeEvent();
-            } else if (s.equals("edit")) {
-                editEventTime();
-            } else if (s.equals("q")) {
-                keepGoing = false;
-            } else {
-                System.out.println("Selection not valid...");
+            switch (s) {
+                case "set":
+                    setEvent();
+                    break;
+                case "view":
+                    viewEvent();
+                    break;
+                case "remove":
+                    removeEvent();
+                    break;
+                case "edit":
+                    editEventTime();
+                    break;
+                case "q":
+                    keepGoing = false;
+                    break;
+                default:
+                    System.out.println("Selection not valid...");
+                    break;
             }
         }
 
@@ -826,7 +891,7 @@ public class DaysApp {
         int inputDay = Integer.parseInt(commend);
         Date eventDate = new Date(inputYear, inputMonth, inputDay);
 
-        for (TodoEvent event : dayset.getDay(eventDate).getTodoEvents()) {
+        for (TodoEvent event : dayset.getDay(eventDate).getTodoEventList()) {
             System.out.println(event.getLabel());
             System.out.println(event.getHour() + ":" + event.getMin());
             System.out.println();

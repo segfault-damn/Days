@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class DiaryTest {
-    private Date testDate;
+   private Date testDate;
     private Diary testDiary;
 
     @BeforeEach
@@ -23,9 +23,9 @@ public class DiaryTest {
     // MODIFIER: this
     // EFFECT: add tag to diary
     public void testSetTag() {
-        assertEquals(" ",testDiary.getTag());
+        assertEquals("No tag",testDiary.getTag());
         testDiary.setTag("");
-        assertEquals(" ",testDiary.getTag());
+        assertEquals("No tag",testDiary.getTag());
         testDiary.setTag("Daisy");
         assertEquals("Daisy", testDiary.getTag());
         testDiary.setTag("Laisen");
@@ -38,7 +38,7 @@ public class DiaryTest {
     public void testRemoveTag() {
         testDiary.setTag("Daisy");
         testDiary.removeTag();
-        assertEquals(" ",testDiary.getTag());
+        assertEquals("No tag",testDiary.getTag());
     }
 
     @Test

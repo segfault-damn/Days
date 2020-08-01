@@ -9,11 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-// A list of habit
+// This class represents a list of habit and its method will be used
+// in both day and dayset class. It's used to record user's habits.
 public class HabitList implements Saveable {
 
     private List<Habit> habitList;
 
+    // construct a list of habits
     public HabitList() {
         habitList = new ArrayList<>();
     }

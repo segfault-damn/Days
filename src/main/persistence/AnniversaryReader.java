@@ -10,10 +10,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+// AnniversaryReader reads anniversaries from saved file
 public class AnniversaryReader {
     public static final String DELIMITER = ",";
 
-    // EFFECTS: returns a list of diary parsed from file; throws
+    // EFFECTS: returns a list of anniversaries parsed from file; throws
     // IOException if an exception is raised when opening / reading from file
     public static List<Anniversary> readAnniversary(File file) throws IOException {
         List<String> fileContent = readFile(file);
@@ -26,7 +27,7 @@ public class AnniversaryReader {
         return Files.readAllLines(file.toPath());
     }
 
-    // EFFECTS: returns a list of anniversary
+    // EFFECTS: returns a list of anniversaries
     private static List<Anniversary> parseContent(List<String> fileContent) {
 
         List<Anniversary> anniversaries = new ArrayList<>();

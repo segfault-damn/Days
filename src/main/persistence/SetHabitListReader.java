@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+// SetHabitListReader reads sethabitlist from saved file
 public class SetHabitListReader {
     public static final String DELIMITER = ",";
 
@@ -33,7 +34,9 @@ public class SetHabitListReader {
 
         for (String line : fileContent) {
             ArrayList<String> lineComponents = splitString(line);
-            setHabits.add(parseDiary(lineComponents));
+            if (lineComponents.size() == 2) {
+                setHabits.add(parseHabit(lineComponents));
+            }
         }
 
         return setHabits;
@@ -45,11 +48,10 @@ public class SetHabitListReader {
     }
 
 
-    // REQUIRES: components has size 3 where element 0 represents the
-    // year, element 1 represents the month, elements 2 represents the
-    // day, element 3 represents the content, elements 4 represents the tag
-    // EFFECTS: returns an diary constructed from components
-    private static Habit parseDiary(List<String> components) {
+    // REQUIRES: components has size 2 where element 0 represents the
+    // label, element 1 represents the whether it is done.
+    // EFFECTS: returns an habit constructed from components
+    private static Habit parseHabit(List<String> components) {
         String label = components.get(0);
         boolean isDone = Boolean.getBoolean(components.get(1));
         Habit h = new Habit(label);

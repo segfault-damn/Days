@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+// DiaryReader reads diaries from saved file
 public class DiaryReader {
     public static final String DELIMITER = ",";
 
@@ -26,7 +27,7 @@ public class DiaryReader {
         return Files.readAllLines(file.toPath());
     }
 
-    // EFFECTS: returns a list of diary
+    // EFFECTS: returns a list of diaries
     private static List<Diary> parseContent(List<String> fileContent) {
 
         List<Diary> diaries = new ArrayList<>();

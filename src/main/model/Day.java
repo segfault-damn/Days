@@ -2,14 +2,15 @@ package model;
 
 
 import model.entries.*;
+import persistence.Saveable;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-// One day contains all information in it
-public class Day {
-
-
+// Day represents each day with date, daily habitlist, todoEvents diary, anniversary
+// and mood.
+public class Day implements Saveable {
     private Date date;
     private HabitList dailyHabitList;
     private List<TodoEvent> todoEvents;
@@ -17,7 +18,7 @@ public class Day {
     private Diary diary;
     private Mood mood;
 
-
+    // Construct day with given date and initiate all fields
     public Day(Date date) {
 
         this.date = date;
@@ -31,11 +32,9 @@ public class Day {
     }
 
 
-
     // MODIFIER: this
     // EFFECT: set anniversary
     public void setDayAnniversary(Anniversary anniversary) {
-
         this.anniversary = anniversary;
     }
 
@@ -46,22 +45,15 @@ public class Day {
     }
 
     // MODIFIER: this
-    // EFFECT: set diary with given diary
-    public void setDiary(Diary d) {
-        diary = d;
+    // EFFECT: set habitlist
+    public void setDailyHabitList(HabitList hl) {
+        dailyHabitList = hl;
     }
 
     // MODIFIER: flip one habit's status
     // EFFECT: flip the chosen habit in the habit list
     public void flipOneHabit(Habit h) {
         dailyHabitList.getHabit(h.getLabel()).flipDone();
-    }
-
-
-    // MODIFIER: this
-    // EFFECT: set habitlist
-    public void setDailyHabitList(HabitList hl) {
-        dailyHabitList = hl;
     }
 
 
@@ -91,17 +83,25 @@ public class Day {
     }
 
     // MODIFIER: this
+    // EFFECT: set todoEvent list
+    public void setTodoEvents(List<TodoEvent> todoEvents) {
+        this.todoEvents = todoEvents;
+    }
+
+
+    // MODIFIER: this
     // EFFECT: set mood to given mood
     public void setMood(Mood m) {
         mood = m;
     }
+
+
 
     // MODIFIER: this
     // EFFECT: remove mood
     public void removeMood() {
         mood = Mood.Default;
     }
-
 
     // getter
     public Date getDate() {
@@ -116,13 +116,11 @@ public class Day {
         return mood;
     }
 
-
-
     public HabitList getDailyHabitList() {
         return dailyHabitList;
     }
 
-    public List<TodoEvent> getTodoEvents() {
+    public List<TodoEvent> getTodoEventList() {
         return todoEvents;
     }
 
@@ -130,7 +128,19 @@ public class Day {
         return diary;
     }
 
+    // MODIFIER: this
+    // EFFECT: set diary with given diary
+    public void setDiary(Diary d) {
+        diary = d;
+    }
 
+    @Override
+    public void save(PrintWriter printWriter) {
+        for (TodoEvent event : todoEvents) {
+            event.save(printWriter);
+        }
+        printWriter.println();
+    }
 
 
 }
