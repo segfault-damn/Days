@@ -14,6 +14,10 @@ import java.util.List;
 public class AnniversaryReader {
     public static final String DELIMITER = ",";
 
+    public AnniversaryReader() {
+
+    }
+
     // EFFECTS: returns a list of anniversaries parsed from file; throws
     // IOException if an exception is raised when opening / reading from file
     public static List<Anniversary> readAnniversary(File file) throws IOException {

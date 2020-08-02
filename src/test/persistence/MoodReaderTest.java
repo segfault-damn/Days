@@ -1,6 +1,5 @@
 package persistence;
 
-import model.Date;
 import model.entries.Mood;
 import org.junit.jupiter.api.Test;
 
@@ -33,8 +32,6 @@ public class MoodReaderTest {
             assertEquals(Mood.Depressed,mood6);
             assertEquals(Mood.Sad,mood7);
             assertEquals(Mood.Default, mood8);
-
-
         } catch (IOException e) {
             fail("IOException should not have been thrown");
         }

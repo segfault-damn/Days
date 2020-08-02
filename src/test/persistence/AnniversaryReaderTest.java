@@ -1,6 +1,7 @@
 package persistence;
 
 import model.entries.Anniversary;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -10,6 +11,12 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AnniversaryReaderTest {
+
+    @BeforeEach
+    void setUp() {
+        AnniversaryReader anniversaryReader = new AnniversaryReader();
+    }
+
     @Test
     void testParseAnniFile1() {
         try {
