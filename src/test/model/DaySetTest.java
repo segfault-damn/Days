@@ -71,7 +71,7 @@ class DaySetTest {
         testHabitList.addHabit(habit1);
         testHabitList.addHabit(habit2);
         testHabitList.addHabit(habit3);
-        testdaySet.setSetHabitList(testHabitList.getHabitList());
+        testdaySet.setSetHabitList(testHabitList);
         assertEquals(habit1,testdaySet.getSetHabitList().getHabitList().get(0));
         assertEquals(habit2,testdaySet.getSetHabitList().getHabitList().get(1));
         assertEquals(habit3,testdaySet.getSetHabitList().getHabitList().get(2));

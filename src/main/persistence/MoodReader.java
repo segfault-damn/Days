@@ -51,11 +51,12 @@ public class MoodReader {
     private static Mood parseDiary(List<String> components) {
         String s = components.get(0);
         Mood mood = Mood.Default;
-        parseDiaryHelper(s,mood);
+        mood = parseDiaryHelper(s, mood);
         return mood;
     }
 
-    private static void parseDiaryHelper(String s, Mood mood) {
+    private static Mood parseDiaryHelper(String s, Mood mood) {
+
         switch (s) {
             case ("Cheerful"):
                 mood = Mood.Cheerful;
@@ -75,9 +76,9 @@ public class MoodReader {
             case ("Energetic"):
                 mood = Mood.Energetic;
                 break;
-            case ("Default"):
-                mood = Mood.Default;
+            default:
                 break;
         }
+        return mood;
     }
 }

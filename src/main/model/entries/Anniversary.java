@@ -38,7 +38,7 @@ public class Anniversary implements Saveable {
     // MODIFIER: this
     // EFFECT: change the comment, to avoid save "" into file, all empty input will switch to " "
     public void editComment(String s) {
-        if (s == "") {
+        if (s.equals("")) {
             comment = " ";
         } else {
             comment = s;

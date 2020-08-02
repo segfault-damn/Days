@@ -55,10 +55,13 @@ public class HabitListTest {
     public void getHabit() {
         testHabitList.addHabit(habit1);
         testHabitList.addHabit(habit2);
-        assertNull(testHabitList.getHabit("Play Dr.racket"));
+        assertEquals("",testHabitList.getHabit("Play Dr.racket").getLabel());
+        assertFalse(testHabitList.getHabit("Play Dr.racket").getIsDone());
         testHabitList.addHabit(habit3);
         assertEquals(habit3, testHabitList.getHabit("Play Dr.racket"));
         assertEquals(habit1, testHabitList.getHabit("Play LOL"));
+
+
     }
 
     @Test

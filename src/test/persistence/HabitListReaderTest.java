@@ -1,6 +1,5 @@
 package persistence;
 
-import model.entries.Habit;
 import model.entries.HabitList;
 import org.junit.jupiter.api.Test;
 
@@ -8,8 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class HabitListReaderTest {
     @Test
@@ -17,24 +15,51 @@ public class HabitListReaderTest {
         try {
             List<HabitList> habitlists = HabitListReader.readHabitLists(new File("./data/testHabitListFile1"));
             HabitList habitList1 = habitlists.get(0);
-            Habit habit1 = new Habit("do");
-            Habit habit2 = new Habit("play");
-            habit2.flipDone();
-            Habit habit3 = new Habit("listen");
-            assertEquals(habit1, habitList1.getHabitList().get(0));
-            assertEquals(habit2, habitList1.getHabitList().get(1));
-            assertEquals(habit3, habitList1.getHabitList().get(2));
+
+
+            assertEquals("do", habitList1.getHabitList().get(0).getLabel());
+            assertFalse(habitList1.getHabitList().get(0).getIsDone());
+            assertEquals("play", habitList1.getHabitList().get(1).getLabel());
+            assertTrue(habitList1.getHabitList().get(1).getIsDone());
+            assertEquals("listen", habitList1.getHabitList().get(2).getLabel());
+            assertFalse(habitList1.getHabitList().get(2).getIsDone());
 
             HabitList habitList2 = habitlists.get(1);
-            habit1 = new Habit("do");
-            habit1.flipDone();
-            habit2 = new Habit("play");
-            habit3 = new Habit("listen");
-            assertEquals(habit1, habitList2.getHabitList().get(0));
-            assertEquals(habit2, habitList2.getHabitList().get(1));
-            assertEquals(habit3, habitList2.getHabitList().get(2));
+            assertEquals("do", habitList2.getHabitList().get(0).getLabel());
+            assertTrue(habitList2.getHabitList().get(0).getIsDone());
+            assertEquals("play", habitList2.getHabitList().get(1).getLabel());
+            assertFalse(habitList2.getHabitList().get(1).getIsDone());
+            assertEquals("listen", habitList2.getHabitList().get(2).getLabel());
+            assertFalse(habitList2.getHabitList().get(2).getIsDone());
+
         } catch (IOException e) {
             fail("IOException should not have been thrown");
+        }
+    }
+
+    // Read the habitlist file when sethabitlist is empty
+    @Test
+    void testHabitListReaderFile2() {
+        try {
+            List<HabitList> habitlists = HabitListReader.readHabitLists(new File("./data/testHabitListFile2"));
+            HabitList habitList1 = habitlists.get(0);
+
+
+            assertTrue(habitList1.getHabitList().isEmpty());
+
+            HabitList habitList2 = habitlists.get(1);
+            assertTrue(habitList2.getHabitList().isEmpty());
+        } catch (IOException e) {
+            fail("IOException should not have been thrown");
+        }
+    }
+
+    @Test
+    void testIOException() {
+        try {
+            HabitListReader.readHabitLists(new File("./path/does/not/exist/testHabitLists.txt"));
+        } catch (IOException e) {
+            // expected
         }
     }
 

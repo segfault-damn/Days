@@ -29,7 +29,7 @@ public class Diary implements Saveable {
     // MODIFIER: this
     // EFFECT: add tag to diary
     public void setTag(String s) {
-        if (s == "") {
+        if (s.equals("")) {
             removeTag();
         } else {
             tag = s;
@@ -39,7 +39,7 @@ public class Diary implements Saveable {
     // MODIFIER: this
     // EFFECT: modify the diary
     public void setContent(String s) {
-        if (s == "") {
+        if (s.equals("")) {
             content = " ";
         } else {
             content = s;

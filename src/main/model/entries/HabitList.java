@@ -38,12 +38,13 @@ public class HabitList implements Saveable {
     //REQUIRE: l should be an existing habit's label in the list
     //EFFECT: get habit with given label
     public Habit getHabit(String l) {
+        Habit resultHabit = new Habit("");
         for (Habit habit : habitList) {
             if (habit.getLabel().equals(l)) {
-                return habit;
+                resultHabit = habit;
             }
         }
-        return null;
+        return resultHabit;
     }
 
     // REQUIRE: habit label can not pre-exist in the list and habit should exist in that list

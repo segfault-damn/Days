@@ -88,7 +88,7 @@ public class DaysApp {
             List<HabitList> habitLists = HabitListReader.readHabitLists(new File(HABIT_FILE));
             List<List<TodoEvent>> todoEventLists = TodoEventReader.readEvent(new File(EVENTS_FILE));
 
-            List<Habit> setHabitList = SetHabitListReader.readHabit(new File(SETHABIT_FILE));
+            HabitList setHabitList = SetHabitListReader.readHabit(new File(SETHABIT_FILE));
 
             int daysSize = dates.size();
 
@@ -112,7 +112,7 @@ public class DaysApp {
     }
 
     // Additional function created due to checkstyle
-    private void initLoading(DaySet savedDayset, List<Habit> setHabitList) {
+    private void initLoading(DaySet savedDayset, HabitList setHabitList) {
         savedDayset.setSetHabitList(setHabitList);
         dayset = savedDayset;
     }

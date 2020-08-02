@@ -21,7 +21,7 @@ public class DaySet {
     // REQUIRE: the anniversary must be bigger than today
     // EFFECT: calculate the anniversary
     public int calAnniversary(Date today, Anniversary a) {
-        int result = 0;
+        int result;
         if (a.getDate().getMonth() < today.getMonth()) {
             result = today.getYear() - a.getDate().getYear();
         } else if (a.getDate().getMonth() == today.getMonth() && a.getDate().getDay() <= today.getDay()) {
@@ -138,8 +138,8 @@ public class DaySet {
 
     // MODIFIER: this
     // EFFECT: set SetHabitList with given list of habit
-    public void setSetHabitList(List<Habit> hl) {
-        for (Habit habit : hl) {
+    public void setSetHabitList(HabitList hl) {
+        for (Habit habit : hl.getHabitList()) {
             setHabitList.addHabit(habit);
         }
     }
