@@ -13,6 +13,10 @@ import java.util.List;
 public class DateReader {
     public static final String DELIMITER = ",";
 
+    // construct a date reader
+    public DateReader() {
+    }
+
     // EFFECTS: returns a list of dates parsed from file; throws
     // IOException if an exception is raised when opening / reading from file
     public static List<Date> readDates(File file) throws IOException {
@@ -39,6 +43,7 @@ public class DateReader {
         return dates;
     }
 
+    // split the given String
     private static ArrayList<String> splitString(String line) {
         String[] splits = line.split(DELIMITER);
         return new ArrayList<>(Arrays.asList(splits));

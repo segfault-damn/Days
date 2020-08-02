@@ -1,6 +1,7 @@
 package persistence;
 
 import model.entries.HabitList;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -10,6 +11,12 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class HabitListReaderTest {
+
+    @BeforeEach
+    void setUp() {
+        HabitListReader habitListReader = new HabitListReader();
+    }
+
     @Test
     void testHabitListReaderFile1() {
         try {

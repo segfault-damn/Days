@@ -27,7 +27,6 @@ public class Habit implements Saveable {
     // MODIFIER: this
     // EFFECT: edit habit
     public void editHabit(String s) {
-
         label = s;
     }
 

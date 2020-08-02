@@ -14,6 +14,10 @@ import java.util.List;
 public class SetHabitListReader {
     public static final String DELIMITER = ",";
 
+    // construct a set habit list
+    public SetHabitListReader() {
+    }
+
     // EFFECTS: returns  a list of diaries parsed from file; throws
     // IOException if an exception is raised when opening / reading from file
     public static HabitList readHabit(File file) throws IOException {
@@ -42,14 +46,15 @@ public class SetHabitListReader {
         return setHabits;
     }
 
+    // split the given String
     private static ArrayList<String> splitString(String line) {
         String[] splits = line.split(DELIMITER);
         return new ArrayList<>(Arrays.asList(splits));
     }
 
 
-    // REQUIRES: components has size 2 where element 0 represents the
-    // label, element 1 represents the whether it is done.
+    // REQUIRES: components has size 1 where element 0 represents the
+    // label
     // EFFECTS: returns an habit constructed from components
     private static Habit parseHabit(List<String> components) {
         String label = components.get(0);

@@ -15,6 +15,9 @@ public class HabitListReader {
     public static final String DELIMITER1 = ",";
     public static final String DELIMITER2 = ";";
 
+    // constuct a habit list reader
+    public HabitListReader() {
+    }
 
     // EFFECTS: returns a list of habitlists parsed from file; throws
     // IOException if an exception is raised when opening / reading from file
@@ -49,11 +52,13 @@ public class HabitListReader {
         return habitLists;
     }
 
+    // split the given String with Delimiter2
     private static ArrayList<String> splitHabit(String line) {
         String[] splits = line.split(DELIMITER2);
         return new ArrayList<>(Arrays.asList(splits));
     }
 
+    // split the given String with Delimiter1
     private static ArrayList<String> splitString(String line) {
         String[] splits = line.split(DELIMITER1);
         return new ArrayList<>(Arrays.asList(splits));

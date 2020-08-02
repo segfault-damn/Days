@@ -14,8 +14,8 @@ import java.util.List;
 public class AnniversaryReader {
     public static final String DELIMITER = ",";
 
+    // construct an anniversary Reader
     public AnniversaryReader() {
-
     }
 
     // EFFECTS: returns a list of anniversaries parsed from file; throws
@@ -44,13 +44,14 @@ public class AnniversaryReader {
         return anniversaries;
     }
 
+    // split the given String
     private static ArrayList<String> splitString(String line) {
         String[] splits = line.split(DELIMITER);
         return new ArrayList<>(Arrays.asList(splits));
     }
 
 
-    // REQUIRES: components has size 5 where element 0 represents the
+    // REQUIRES: components has size 6 where element 0 represents the
     // year, element 1 represents the month, elements 2 represents the
     // day, elements 3 represent the label, elements 4 represent the comment
     // elements 5 represent the whether the anniversary is working.

@@ -30,8 +30,8 @@ public class TodoEvent implements Saveable {
         this.hour = hour;
         this.min = min;
     }
-    //getters
 
+    //getters
     public String getLabel() {
         return label;
     }

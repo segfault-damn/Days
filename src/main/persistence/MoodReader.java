@@ -14,6 +14,10 @@ import java.util.List;
 public class MoodReader {
     public static final String DELIMITER = ",";
 
+    // construct mood reader
+    public MoodReader() {
+    }
+
     // EFFECTS: returns  a list of moods parsed from file; throws
     // IOException if an exception is raised when opening / reading from file
     public static List<Mood> readMood(File file) throws IOException {
@@ -40,6 +44,7 @@ public class MoodReader {
         return moods;
     }
 
+    // split the given String
     private static ArrayList<String> splitString(String line) {
         String[] splits = line.split(DELIMITER);
         return new ArrayList<>(Arrays.asList(splits));
@@ -55,6 +60,7 @@ public class MoodReader {
         return mood;
     }
 
+    // A helper for parseDiary due to checkstyle
     private static Mood parseDiaryHelper(String s, Mood mood) {
 
         switch (s) {

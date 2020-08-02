@@ -2,6 +2,7 @@ package persistence;
 
 
 import model.entries.Diary;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -12,6 +13,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class DiaryReaderTest {
+
+    @BeforeEach
+    void setUp() {
+        DiaryReader diaryReader = new DiaryReader();
+    }
+
+
     @Test
     void testParseDiaryFile1() {
         try {

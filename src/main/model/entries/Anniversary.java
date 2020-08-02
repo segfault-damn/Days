@@ -48,7 +48,6 @@ public class Anniversary implements Saveable {
 
 
     //getters
-
     public Date getDate() {
         return date;
     }

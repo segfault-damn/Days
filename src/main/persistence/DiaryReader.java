@@ -14,6 +14,10 @@ import java.util.List;
 public class DiaryReader {
     public static final String DELIMITER = ",";
 
+    // construct a diary reader
+    public DiaryReader() {
+    }
+
     // EFFECTS: returns  a list of diaries parsed from file; throws
     // IOException if an exception is raised when opening / reading from file
     public static List<Diary> readDiary(File file) throws IOException {
@@ -40,13 +44,14 @@ public class DiaryReader {
         return diaries;
     }
 
+    // split the given String
     private static ArrayList<String> splitString(String line) {
         String[] splits = line.split(DELIMITER);
         return new ArrayList<>(Arrays.asList(splits));
     }
 
 
-    // REQUIRES: components has size 3 where element 0 represents the
+    // REQUIRES: components has size 5 where element 0 represents the
     // year, element 1 represents the month, elements 2 represents the
     // day, element 3 represents the content, elements 4 represents the tag
     // EFFECTS: returns an diary constructed from components

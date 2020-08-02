@@ -23,7 +23,6 @@ public class Date implements Saveable {
 
     //getters
     public int getYear() {
-
         return year;
     }
 

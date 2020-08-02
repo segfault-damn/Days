@@ -50,7 +50,6 @@ public class DaySet {
 //                || d.getDay() > 31 ||d.getDay() < 1) {
 //            throw new DateEnterException();
 //        } else {
-
         for (Day day : days) {
             if (day.getDate().getDay() == d.getDay() && day.getDate().getMonth() == d.getMonth()
                     && day.getDate().getYear() == d.getYear()) {
@@ -145,9 +144,7 @@ public class DaySet {
     }
 
 
-    // getter
-
-
+    // getters
     public Set<Day> getDays() {
         return days;
     }

@@ -45,6 +45,12 @@ public class Day implements Saveable {
     }
 
     // MODIFIER: this
+    // EFFECT: set diary with given diary
+    public void setDiary(Diary d) {
+        diary = d;
+    }
+
+    // MODIFIER: this
     // EFFECT: set habitlist
     public void setDailyHabitList(HabitList hl) {
         dailyHabitList = hl;
@@ -102,7 +108,7 @@ public class Day implements Saveable {
         mood = Mood.Default;
     }
 
-    // getter
+    // getters
     public Date getDate() {
         return date;
     }
@@ -125,12 +131,6 @@ public class Day implements Saveable {
 
     public Diary getDiary() {
         return diary;
-    }
-
-    // MODIFIER: this
-    // EFFECT: set diary with given diary
-    public void setDiary(Diary d) {
-        diary = d;
     }
 
     @Override

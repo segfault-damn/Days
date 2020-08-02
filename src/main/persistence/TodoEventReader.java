@@ -10,9 +10,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+// TodoEvent reads list of events from saved file
 public class TodoEventReader {
     public static final String DELIMITER1 = ",";
     public static final String DELIMITER2 = ";";
+
+    // construct TodoEvent Reader
+    public TodoEventReader() {
+    }
 
     // EFFECTS: returns  a list of diaries parsed from file; throws
     // IOException if an exception is raised when opening / reading from file
@@ -47,20 +52,24 @@ public class TodoEventReader {
         return todoEventLists;
     }
 
+    // split the given String with delimiter2
     private static ArrayList<String> splitHabit(String line) {
         String[] splits = line.split(DELIMITER2);
         return new ArrayList<>(Arrays.asList(splits));
     }
 
+    // split the given String with delimiter1
     private static ArrayList<String> splitString(String line) {
         String[] splits = line.split(DELIMITER1);
         return new ArrayList<>(Arrays.asList(splits));
     }
 
 
-    // REQUIRES: components has size 2 where element 0 represents the
-    // label, element 1 represents the whether it is done.
-    // EFFECTS: returns an habit constructed from components
+    // REQUIRES: components has size 6 where element 0 represents the
+    // year, element 1 represents the month, element 2 represents the day,
+    // element 3 represents the label, element 4 represents the hour,
+    // element 5 represents the minute.
+    // EFFECTS: returns a todoEvent constructed from components
     private static TodoEvent parseTodoEvent(List<String> components) {
         int year = Integer.parseInt(components.get(0));
         int month = Integer.parseInt(components.get(1));
