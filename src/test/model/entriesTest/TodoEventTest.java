@@ -13,6 +13,7 @@ public class TodoEventTest {
 
     @BeforeEach
     public void setUp() {
+
         date = new Date(2020, 10, 20);
         testEvent = new TodoEvent(date, "Play LOL", 20, 00);
     }

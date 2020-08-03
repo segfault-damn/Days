@@ -1,5 +1,6 @@
 package persistence;
 
+import exceptions.DateErrorException;
 import model.Date;
 import model.entries.Diary;
 

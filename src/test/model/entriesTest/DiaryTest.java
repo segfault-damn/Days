@@ -1,12 +1,12 @@
 package model.entriesTest;
 
+import exceptions.DateErrorException;
 import model.Date;
 import model.entries.Diary;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DiaryTest {
    private Date testDate;
@@ -15,6 +15,7 @@ public class DiaryTest {
     @BeforeEach
     public void setUp() {
         testDate = new Date(2020, 02, 13);
+
         testDiary = new Diary(testDate);
     }
 

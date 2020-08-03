@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.DateErrorException;
 import model.entries.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,12 +43,16 @@ class DaySetTest {
         habit2 = new Habit("Study for final");
         habit3 = new Habit("Play Dr.racket");
 
-        date1 = new Date(2020, 02, 13);
-        date2 = new Date(2020, 02, 17);
-        date3 = new Date(2020, 02, 26);
-        date4 = new Date(2021, 02, 26);
-        date5 = new Date(2020, 03, 26);
-        date6 = new Date(2020, 02, 13);
+        try {
+            date1 = new Date(2020, 02, 13);
+            date2 = new Date(2020, 02, 17);
+            date3 = new Date(2020, 02, 26);
+            date4 = new Date(2021, 02, 26);
+            date5 = new Date(2020, 03, 26);
+            date6 = new Date(2020, 02, 13);
+        } catch (DateErrorException e) {
+            fail("Date is invalid");
+        }
 
         diary1 = new Diary(date1);
         diary2 = new Diary(date2);
@@ -86,14 +91,14 @@ class DaySetTest {
         testdaySet.getDay(date5);
         assertEquals(0,testdaySet.calAnniversary(date5,testAnni));
 
+
         assertEquals(2,
-                testdaySet.calAnniversary(new Date(2022,4,18),testAnni));
+                testdaySet.calAnniversary(new Date(2022, 4, 18), testAnni));
         assertEquals(1,
-                testdaySet.calAnniversary(new Date(2022,2,10),testAnni));
+                testdaySet.calAnniversary(new Date(2022, 2, 10), testAnni));
 
         assertEquals(9,
-                testdaySet.calAnniversary(new Date(2030,1,26),testAnni));
-
+                testdaySet.calAnniversary(new Date(2030, 1, 26), testAnni));
 
     }
 

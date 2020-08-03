@@ -1,5 +1,6 @@
 package ui;
 
+import exceptions.DateErrorException;
 import model.Date;
 import model.Day;
 import model.DaySet;
@@ -71,7 +72,12 @@ public class DaysApp {
         int tdYear = Calendar.getInstance().get(Calendar.YEAR);
         int tdMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
         int tdDay = Calendar.getInstance().get(Calendar.DATE);
-        today = new Date(tdYear, tdMonth, tdDay);
+
+        try {
+            today = new Date(tdYear, tdMonth, tdDay);
+        } catch (DateErrorException e) {
+            e.printStackTrace();
+        }
     }
 
     // MODIFIES: this
@@ -248,22 +254,26 @@ public class DaysApp {
         commend = input.next();
         int inputDay = Integer.parseInt(commend);
 
-        Date anniDate = new Date(inputYear, inputMonth, inputDay);
-        System.out.println("Enter Anniversary Name:");
-        input = new Scanner(System.in);
-        String l = input.nextLine();
-        if (l.equals("")) {
-            l = "No label";
-        }
+        try {
+            Date anniDate = new Date(inputYear, inputMonth, inputDay);
+            System.out.println("Enter Anniversary Name:");
+            input = new Scanner(System.in);
+            String l = input.nextLine();
+            if (l.equals("")) {
+                l = "No label";
+            }
 
-        System.out.println("Enter Anniversary Comment:");
-        String c = input.nextLine();
-        if (c.equals("")) {
-            c = " ";
+            System.out.println("Enter Anniversary Comment:");
+            String c = input.nextLine();
+            if (c.equals("")) {
+                c = " ";
+            }
+            Anniversary anniversary = new Anniversary(anniDate, l, c);
+            anniversary.setAnniversary();
+            dayset.getDay(anniDate).setDayAnniversary(anniversary);
+        } catch (DateErrorException e) {
+            System.out.println("Date Entered is invalid");
         }
-        Anniversary anniversary = new Anniversary(anniDate, l, c);
-        anniversary.setAnniversary();
-        dayset.getDay(anniDate).setDayAnniversary(anniversary);
     }
 
     // view all anniversary
@@ -282,7 +292,7 @@ public class DaysApp {
     }
 
 
-    // remove one anniversary with given name
+    // remove one anniversary with given date
     private void removeAnniversary() {
         input = new Scanner(System.in);
         System.out.println("Enter Anniversary's date: ");
@@ -294,8 +304,13 @@ public class DaysApp {
 
         commend = input.next();
         int inputDay = Integer.parseInt(commend);
-        Date date = new Date(inputYear, inputMonth, inputDay);
-        dayset.getDay(date).removeDayAnniversary();
+
+        try {
+            Date date = new Date(inputYear, inputMonth, inputDay);
+            dayset.getDay(date).removeDayAnniversary();
+        } catch (DateErrorException e) {
+            System.out.println("Date Entered is invalid");
+        }
     }
 
     // edit the Anniversary's comment with given name
@@ -387,13 +402,18 @@ public class DaysApp {
 
         commend = input.next();
         int inputDay = Integer.parseInt(commend);
-        Date diaryDate = new Date(inputYear, inputMonth, inputDay);
 
-        System.out.println("Modify your diary:");
-        input = new Scanner(System.in);
-        String s = input.nextLine();
-        dayset.getDay(diaryDate).getDiary().setContent(s);
-        System.out.println("Diary has been modified");
+        try {
+            Date diaryDate = new Date(inputYear, inputMonth, inputDay);
+
+            System.out.println("Modify your diary:");
+            input = new Scanner(System.in);
+            String s = input.nextLine();
+            dayset.getDay(diaryDate).getDiary().setContent(s);
+            System.out.println("Diary has been modified");
+        } catch (DateErrorException e) {
+            System.out.println("Date Entered is invalid");
+        }
     }
 
     // view the diary in the given day
@@ -409,11 +429,16 @@ public class DaysApp {
 
         commend = input.next();
         int inputDay = Integer.parseInt(commend);
-        Date diaryDate = new Date(inputYear, inputMonth, inputDay);
 
-        System.out.println(inputYear + "." + inputMonth + "." + inputDay);
-        System.out.println("Tag: " + dayset.getDay(diaryDate).getDiary().getTag());
-        System.out.println(dayset.getDay(diaryDate).getDiary().getContent());
+        try {
+            Date diaryDate = new Date(inputYear, inputMonth, inputDay);
+
+            System.out.println(inputYear + "." + inputMonth + "." + inputDay);
+            System.out.println("Tag: " + dayset.getDay(diaryDate).getDiary().getTag());
+            System.out.println(dayset.getDay(diaryDate).getDiary().getContent());
+        } catch (DateErrorException e) {
+            System.out.println("Date Entered is invalid");
+        }
     }
 
     // diary tag control
@@ -459,12 +484,17 @@ public class DaysApp {
 
         commend = input.next();
         int inputDay = Integer.parseInt(commend);
-        Date diaryDate = new Date(inputYear, inputMonth, inputDay);
 
-        System.out.println("Enter your tag below: ");
-        String s = input.next();
-        dayset.getDay(diaryDate).getDiary().setTag(s);
-        System.out.println("Your tag has been changed to " + s);
+        try {
+            Date diaryDate = new Date(inputYear, inputMonth, inputDay);
+
+            System.out.println("Enter your tag below: ");
+            String s = input.next();
+            dayset.getDay(diaryDate).getDiary().setTag(s);
+            System.out.println("Your tag has been changed to " + s);
+        } catch (DateErrorException e) {
+            System.out.println("Date Entered is invalid");
+        }
     }
 
     // view diary with given tag
@@ -590,18 +620,23 @@ public class DaysApp {
 
         commend = input.next();
         int inputDay = Integer.parseInt(commend);
-        Date habitDate = new Date(inputYear, inputMonth, inputDay);
 
-        System.out.println("Enter an habit: ");
-        input = new Scanner(System.in);
-        String s = input.nextLine();
+        try {
+            Date habitDate = new Date(inputYear, inputMonth, inputDay);
 
-        for (Habit h : dayset.getDay(habitDate).getDailyHabitList().getHabitList()) {
-            if (h.getLabel().equals(s)) {
-                h.flipDone();
+            System.out.println("Enter an habit: ");
+            input = new Scanner(System.in);
+            String s = input.nextLine();
+
+            for (Habit h : dayset.getDay(habitDate).getDailyHabitList().getHabitList()) {
+                if (h.getLabel().equals(s)) {
+                    h.flipDone();
+                }
             }
+            viewDateHabit(habitDate);
+        } catch (DateErrorException e) {
+            System.out.println("Date Entered is invalid");
         }
-        viewDateHabit(habitDate);
 
     }
 
@@ -620,9 +655,14 @@ public class DaysApp {
 
         commend = input.next();
         int inputDay = Integer.parseInt(commend);
-        Date habitDate = new Date(inputYear, inputMonth, inputDay);
 
-        viewDateHabit(habitDate);
+        try {
+            Date habitDate = new Date(inputYear, inputMonth, inputDay);
+
+            viewDateHabit(habitDate);
+        } catch (DateErrorException e) {
+            System.out.println("Date Entered is invalid");
+        }
     }
 
     // change the name of one habit
@@ -750,14 +790,19 @@ public class DaysApp {
 
         commend = input.next();
         int inputDay = Integer.parseInt(commend);
-        Date moodDate = new Date(inputYear, inputMonth, inputDay);
+
+        try {
+            Date moodDate = new Date(inputYear, inputMonth, inputDay);
 
 
-        System.out.println("What's your mood:");
-        commend = input.next();
+            System.out.println("What's your mood:");
+            commend = input.next();
 
 
-        dayset.getDay(moodDate).setMood(selectMood(commend));
+            dayset.getDay(moodDate).setMood(selectMood(commend));
+        } catch (DateErrorException e) {
+            System.out.println("Date Entered is invalid");
+        }
     }
 
     // select Mood
@@ -801,9 +846,14 @@ public class DaysApp {
 
         commend = input.next();
         int inputDay = Integer.parseInt(commend);
-        Date moodDate = new Date(inputYear, inputMonth, inputDay);
 
-        dayset.getDay(moodDate).removeMood();
+        try {
+            Date moodDate = new Date(inputYear, inputMonth, inputDay);
+
+            dayset.getDay(moodDate).removeMood();
+        } catch (DateErrorException e) {
+            System.out.println("Date Entered is invalid");
+        }
     }
 
     // view a mood in a particular day
@@ -819,9 +869,14 @@ public class DaysApp {
 
         commend = input.next();
         int inputDay = Integer.parseInt(commend);
-        Date moodDate = new Date(inputYear, inputMonth, inputDay);
 
-        System.out.println("Your mood in that day is: " + dayset.getDay(moodDate).getMood().name());
+        try {
+            Date moodDate = new Date(inputYear, inputMonth, inputDay);
+
+            System.out.println("Your mood in that day is: " + dayset.getDay(moodDate).getMood().name());
+        } catch (DateErrorException e) {
+            System.out.println("Date Entered is invalid");
+        }
     }
 
     // view the statistic data in one particular month
@@ -899,21 +954,25 @@ public class DaysApp {
         commend = input.next();
         int inputDay = Integer.parseInt(commend);
 
-        Date eventDate = new Date(inputYear, inputMonth, inputDay);
+        try {
+            Date eventDate = new Date(inputYear, inputMonth, inputDay);
 
-        System.out.println("Enter Event Name:");
-        input = new Scanner(System.in);
-        String l = input.nextLine();
+            System.out.println("Enter Event Name:");
+            input = new Scanner(System.in);
+            String l = input.nextLine();
 
-        System.out.println("Enter Event Time hour:");
-        commend = input.next();
-        int inputHour = Integer.parseInt(commend);
+            System.out.println("Enter Event Time hour:");
+            commend = input.next();
+            int inputHour = Integer.parseInt(commend);
 
-        System.out.println("Enter Event Time minute:");
-        commend = input.next();
-        int inputMin = Integer.parseInt(commend);
+            System.out.println("Enter Event Time minute:");
+            commend = input.next();
+            int inputMin = Integer.parseInt(commend);
 
-        dayset.getDay(eventDate).addEvent(new TodoEvent(eventDate, l, inputHour, inputMin));
+            dayset.getDay(eventDate).addEvent(new TodoEvent(eventDate, l, inputHour, inputMin));
+        } catch (DateErrorException e) {
+            System.out.println("Date Entered is invalid");
+        }
     }
 
     // view all todoevent in a particular day
@@ -930,12 +989,16 @@ public class DaysApp {
         System.out.println("Enter Event Date:");
         commend = input.next();
         int inputDay = Integer.parseInt(commend);
-        Date eventDate = new Date(inputYear, inputMonth, inputDay);
+        try {
+            Date eventDate = new Date(inputYear, inputMonth, inputDay);
 
-        for (TodoEvent event : dayset.getDay(eventDate).getTodoEventList()) {
-            System.out.println(event.getLabel());
-            System.out.println(event.getHour() + ":" + event.getMin());
-            System.out.println();
+            for (TodoEvent event : dayset.getDay(eventDate).getTodoEventList()) {
+                System.out.println(event.getLabel());
+                System.out.println(event.getHour() + ":" + event.getMin());
+                System.out.println();
+            }
+        } catch (DateErrorException e) {
+            System.out.println("Date Entered is invalid");
         }
 
     }
@@ -956,17 +1019,21 @@ public class DaysApp {
         commend = input.next();
         int inputDay = Integer.parseInt(commend);
 
-        Date eventDate = new Date(inputYear, inputMonth, inputDay);
+        try {
+            Date eventDate = new Date(inputYear, inputMonth, inputDay);
 
-        System.out.println("Enter Event Time hour:");
-        commend = input.next();
-        int inputHour = Integer.parseInt(commend);
+            System.out.println("Enter Event Time hour:");
+            commend = input.next();
+            int inputHour = Integer.parseInt(commend);
 
-        System.out.println("Enter Event Time minute:");
-        commend = input.next();
-        int inputMin = Integer.parseInt(commend);
+            System.out.println("Enter Event Time minute:");
+            commend = input.next();
+            int inputMin = Integer.parseInt(commend);
 
-        dayset.getDay(eventDate).removeEvent(inputHour, inputMin);
+            dayset.getDay(eventDate).removeEvent(inputHour, inputMin);
+        } catch (DateErrorException e) {
+            System.out.println("Date Entered is invalid");
+        }
 
     }
 
@@ -986,25 +1053,27 @@ public class DaysApp {
         commend = input.next();
         int inputDay = Integer.parseInt(commend);
 
-        Date eventDate = new Date(inputYear, inputMonth, inputDay);
+        try {
+            Date eventDate = new Date(inputYear, inputMonth, inputDay);
 
-        System.out.println("Enter Event Time hour:");
-        commend = input.next();
-        int inputHour = Integer.parseInt(commend);
+            System.out.println("Enter Event Time hour:");
+            commend = input.next();
+            int inputHour = Integer.parseInt(commend);
 
-        System.out.println("Enter Event Time minute:");
-        commend = input.next();
-        int inputMin = Integer.parseInt(commend);
+            System.out.println("Enter Event Time minute:");
+            commend = input.next();
+            int inputMin = Integer.parseInt(commend);
 
-        System.out.println("Enter New Event Time hour and minute:");
-        commend = input.next();
-        int newHour = Integer.parseInt(commend);
+            System.out.println("Enter New Event Time hour and minute:");
+            commend = input.next();
+            int newHour = Integer.parseInt(commend);
 
-        commend = input.next();
-        int newMin = Integer.parseInt(commend);
+            commend = input.next();
+            int newMin = Integer.parseInt(commend);
 
-        dayset.getDay(eventDate).getEvent(inputHour, inputMin).setTime(newHour, newMin);
+            dayset.getDay(eventDate).getEvent(inputHour, inputMin).setTime(newHour, newMin);
+        } catch (DateErrorException e) {
+            System.out.println("Date Entered is invalid");
+        }
     }
-
-
 }

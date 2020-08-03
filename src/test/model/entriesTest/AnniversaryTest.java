@@ -1,5 +1,6 @@
 package model.entriesTest;
 
+import exceptions.DateErrorException;
 import model.Date;
 import model.entries.Anniversary;
 import org.junit.jupiter.api.BeforeEach;
