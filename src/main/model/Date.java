@@ -24,7 +24,7 @@ public class Date implements Saveable {
             throw new DateErrorException();
         } else if (month == 2 && (day == 30 || day == 31)) {
             throw new DateErrorException();
-        } else if (month == 2 && year % 4 != 0 && day == 29) {
+        } else if (month == 2 && day == 29 && year % 4 != 0) {
             throw new DateErrorException();
         } else if ((month == 4 || month == 6 || month == 9 || month == 11) && (day == 31)) {
             throw new DateErrorException();
