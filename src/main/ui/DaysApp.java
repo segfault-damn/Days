@@ -7,6 +7,10 @@ import model.DaySet;
 import model.entries.*;
 import persistence.*;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,56 +19,213 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
 
-// The main app
-public class DaysApp {
-    private DaySet dayset;
-    private Scanner input;
-    private Date today;
+import static javax.swing.SwingConstants.LEFT;
 
+// The main app
+public class DaysApp extends JFrame implements ActionListener {
     private static final String DATE_FILE = "./data/dates.txt";
     private static final String ANNI_FILE = "./data/anniversary.txt";
     private static final String DIARY_FILE = "./data/diary.txt";
     private static final String MOOD_FILE = "./data/mood.txt";
     private static final String HABIT_FILE = "./data/habit.txt";
     private static final String EVENTS_FILE = "./data/events.txt";
-
     private static final String SETHABIT_FILE = "./data/sethabit.txt";
+    public static final int WIDTH = 2000;
+    public static final int HEIGHT = 1600;
+
+
+    private DaySet dayset;
+    private Scanner input;
+    private Date today;
+
+    private JLabel dayLabel;
+    private JLabel label;
+
+    private JPanel mainDisplay;
+    private JPanel main;
+    private JPanel mainBtn;
+    private JPanel anniPanel;
+    private JPanel diaryPanel;
+    private JPanel habitPanel;
+    private JPanel moodPanel;
+    private JPanel eventPanel;
+
+    private JButton anniButton;
+    private JButton diaryButton;
+    private JButton moodButton;
+    private JButton eventButton;
+    private JButton habitButton;
+    private JButton backButton;
+
+    private Font labelFont;
+    private Font btnFont;
 
     public DaysApp() {
-        runDays();
+        super("Days");
+        loadDays();
+        setToday();
+
+        labelFont = new Font("",Font.ITALIC,150);
+        btnFont = new Font("",Font.BOLD,45);
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setPreferredSize(new Dimension(WIDTH,HEIGHT));
+        setLocation(100,100);
+
+
+        initializePanel();
+        initializeAnniRemider();
+        initializeMain();
+        initializeBack();
+
+        setResizable(false);
+        pack();
+        setVisible(true);
     }
 
-    // run the program
-    public void runDays() {
-        boolean keepGoing = true;
-        String command;
+    private void initializePanel() {
+        anniPanel = new JPanel();
+        diaryPanel = new JPanel();
+        habitPanel = new JPanel();
+        moodPanel = new JPanel();
+        eventPanel = new JPanel();
+    }
 
-        input = new Scanner(System.in);
-        loadDays();
-        while (keepGoing) {
-            setToday();
+    private void initializeBack() {
+        backButton = new JButton("Back");
+        backButton.setFont(new Font("",Font.PLAIN,20));
+        backButton.addActionListener(this);
+    }
 
-            System.out.println("Today is: " + today.getYear() + "." + today.getMonth() + "." + today.getDay());
+    private void initializeMain() {
+        main = new JPanel();
+        main.setLayout(new BorderLayout(0, 0));
 
-            System.out.println("You want days to: ");
-            System.out.println("a: anniversary");
-            System.out.println("d: diary");
-            System.out.println("h: habit");
-            System.out.println("m: mood");
-            System.out.println("e: event");
-            System.out.println("q: quit");
+        setMainDisplay();
+        setMainBtn();
+        main.add(mainDisplay,BorderLayout.CENTER);
+        main.add(mainBtn,BorderLayout.SOUTH);
 
-            command = input.next();
-            command = command.toLowerCase();
+        main.setVisible(true);
+        setContentPane(main);
 
-            if (command.equals("q")) {
-                keepGoing = false;
-                saveDays();
-            } else {
-                processCommand(command);
+    }
+
+    private void initializeAnniRemider() {
+        label = new JLabel("Today is:");
+        label.setFont(labelFont);
+        for (Day day : dayset.getDays()) {
+            if (day.getAnniversary().getDate().getDay() == today.getDay()
+                    && day.getAnniversary().getDate().getMonth() == today.getMonth()
+                    && day.getAnniversary().getIsAnniversary()) {
+                label.setText("Today is:  " + day.getAnniversary().getLabel());
             }
         }
+    }
 
+
+    private void setMainDisplay() {
+
+        dayLabel = new JLabel(" Days");
+        dayLabel.setFont(new Font("",Font.ITALIC,250));
+        main.add(dayLabel,BorderLayout.NORTH);
+
+        mainDisplay = new JPanel();
+        mainDisplay.setLayout(new BoxLayout(mainDisplay,1));
+
+        mainDisplay.add(label,BoxLayout.X_AXIS);
+
+
+
+        JLabel todayLabel = new JLabel("         "
+                + today.getMonth() + "." + today.getDay());
+        todayLabel.setFont(new Font("",Font.PLAIN,300));
+        mainDisplay.add(todayLabel,BoxLayout.Y_AXIS);
+
+        JLabel yearLabel = new JLabel("                        ----"
+                + today.getYear());
+        yearLabel.setFont(new Font("",Font.ITALIC,150));
+        mainDisplay.add(yearLabel,BoxLayout.LINE_AXIS);
+    }
+
+    private void setMainBtn() {
+        mainBtn = new JPanel();
+        mainBtn.setLayout(new FlowLayout());
+
+        anniButton = new JButton("Anniversary");
+        anniButton.setPreferredSize(new Dimension(350,200));
+        anniButton.setFont(btnFont);
+
+        diaryButton = new JButton("Diary");
+        diaryButton.setPreferredSize(new Dimension(350,200));
+        diaryButton.setFont(btnFont);
+
+        habitButton = new JButton("Habit");
+        habitButton.setPreferredSize(new Dimension(350,200));
+        habitButton.setFont(btnFont);
+
+        moodButton = new JButton("Mood");
+        moodButton.setPreferredSize(new Dimension(350,200));
+        moodButton.setFont(btnFont);
+
+        eventButton = new JButton("Event");
+        eventButton.setPreferredSize(new Dimension(350,200));
+        eventButton.setFont(btnFont);
+
+
+        anniButton.addActionListener(this);
+        diaryButton.addActionListener(this);
+        habitButton.addActionListener(this);
+        moodButton.addActionListener(this);
+        eventButton.addActionListener(this);
+
+        mainBtn.add(anniButton,FlowLayout.LEFT);
+        mainBtn.add(diaryButton,FlowLayout.CENTER);
+        mainBtn.add(habitButton,FlowLayout.RIGHT);
+        mainBtn.add(moodButton,FlowLayout.LEADING);
+        mainBtn.add(eventButton,FlowLayout.TRAILING);
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Object source = e.getSource();
+        if (source == anniButton) {
+            main.setVisible(false);
+            anniPanel = new AnniversaryApp(dayset,today);
+            anniPanel.add(backButton,BorderLayout.EAST);
+            anniPanel.setVisible(true);
+            setContentPane(anniPanel);
+        } else if (source == diaryButton) {
+            main.setVisible(false);
+            diaryPanel = new DiaryApp(dayset,today);
+            diaryPanel.add(backButton,BorderLayout.EAST);
+            diaryPanel.setVisible(true);
+            setContentPane(diaryPanel);
+        } else if (source == habitButton) {
+            main.setVisible(false);
+            habitPanel = new HabitApp(dayset);
+            habitPanel.add(backButton,BorderLayout.EAST);
+            habitPanel.setVisible(true);
+            setContentPane(habitPanel);
+        } else if (source == moodButton) {
+            main.setVisible(false);
+            moodPanel = new MoodApp(dayset);
+            moodPanel.add(backButton,BorderLayout.EAST);
+            moodPanel.setVisible(true);
+            setContentPane(moodPanel);
+        } else if (source == eventButton) {
+            main.setVisible(false);
+            eventPanel = new EventApp(dayset);
+            eventPanel.add(backButton,BorderLayout.EAST);
+            eventPanel.setVisible(true);
+            setContentPane(eventPanel);
+        } else if (source == backButton) {
+            anniPanel.setVisible(false);
+            setContentPane(main);
+            main.setVisible(true);
+//            saveDays();
+        }
     }
 
     // grab today's yyyy-MM-dd
@@ -178,340 +339,6 @@ public class DaysApp {
         dayset.getDay(today);
     }
 
-    // control the days app
-    private void processCommand(String command) {
-
-        switch (command) {
-            case "a":
-                doAnniversary();
-                break;
-            case "d":
-                doDiary();
-                break;
-            case "h":
-                doHabit();
-                break;
-            case "m":
-                doMood();
-                break;
-            case "e":
-                doEvent();
-                break;
-            default:
-                System.out.println("Selection not valid...");
-                break;
-        }
-    }
-
-    // anniversary control
-    private void doAnniversary() {
-        boolean keepGoing = true;
-        input = new Scanner(System.in);
-        while (keepGoing) {
-            System.out.println("Select Anniversary function:");
-            String s = input.next();
-            if (s.equals("q")) {
-                keepGoing = false;
-            } else {
-                doAnniversaryHelper(s);
-            }
-
-        }
-    }
-
-    // checkstyle
-    private void doAnniversaryHelper(String s) {
-
-        switch (s) {
-            case "set":
-                setAnniversary();
-                break;
-            case "view":
-                viewAnniversary();
-                break;
-            case "remove":
-                removeAnniversary();
-                break;
-            case "edit":
-                editAnniversary();
-                break;
-            default:
-                System.out.println("Selection not valid...");
-                break;
-        }
-    }
-
-    // set anniversary in given day
-    private void setAnniversary() {
-        input = new Scanner(System.in);
-        System.out.println("Enter Anniversary Date:");
-        String commend = input.next();
-        int inputYear = Integer.parseInt(commend);
-
-        commend = input.next();
-        int inputMonth = Integer.parseInt(commend);
-
-        commend = input.next();
-        int inputDay = Integer.parseInt(commend);
-
-        try {
-            Date anniDate = new Date(inputYear, inputMonth, inputDay);
-            System.out.println("Enter Anniversary Name:");
-            input = new Scanner(System.in);
-            String l = input.nextLine();
-            if (l.equals("")) {
-                l = "No label";
-            }
-
-            System.out.println("Enter Anniversary Comment:");
-            String c = input.nextLine();
-            if (c.equals("")) {
-                c = " ";
-            }
-            Anniversary anniversary = new Anniversary(anniDate, l, c);
-            anniversary.setAnniversary();
-            dayset.getDay(anniDate).setDayAnniversary(anniversary);
-        } catch (DateErrorException e) {
-            System.out.println("Date Entered is invalid");
-        }
-    }
-
-    // view all anniversary
-    private void viewAnniversary() {
-        for (Day day : dayset.getDays()) {
-            if (day.getAnniversary().getIsAnniversary()) {
-                System.out.println(day.getAnniversary().getDate().getMonth() + "."
-                        + day.getAnniversary().getDate().getDay());
-
-                System.out.println(day.getAnniversary().getLabel());
-                System.out.println("Comment: " + day.getAnniversary().getComment());
-                System.out.println("You have passed " + dayset.calAnniversary(today, day.getAnniversary())
-                        + " anniversary - start from " + day.getAnniversary().getDate().getYear());
-            }
-        }
-    }
-
-
-    // remove one anniversary with given date
-    private void removeAnniversary() {
-        input = new Scanner(System.in);
-        System.out.println("Enter Anniversary's date: ");
-        String commend = input.next();
-        int inputYear = Integer.parseInt(commend);
-
-        commend = input.next();
-        int inputMonth = Integer.parseInt(commend);
-
-        commend = input.next();
-        int inputDay = Integer.parseInt(commend);
-
-        try {
-            Date date = new Date(inputYear, inputMonth, inputDay);
-            dayset.getDay(date).removeDayAnniversary();
-        } catch (DateErrorException e) {
-            System.out.println("Date Entered is invalid");
-        }
-    }
-
-    // edit the Anniversary's comment with given name
-    private void editAnniversary() {
-        input = new Scanner(System.in);
-        System.out.println("Enter Anniversary's name: ");
-        String s = input.nextLine();
-        for (Day day : dayset.getDays()) {
-            if (day.getAnniversary().getLabel().equals(s)) {
-                System.out.println("Enter a new comment: ");
-                s = input.nextLine();
-                day.getAnniversary().editComment(s);
-                System.out.println("New comment: " + day.getAnniversary().getComment());
-            }
-        }
-    }
-
-
-    // Diary Control
-    private void doDiary() {
-        boolean keepGoing = true;
-        input = new Scanner(System.in);
-        while (keepGoing) {
-            System.out.println("Select Diary function:");
-            String s = input.next();
-            if (s.equals("q")) {
-                keepGoing = false;
-            } else {
-                doDiaryHelper(s);
-            }
-
-        }
-    }
-
-    //checkstyle
-    private void doDiaryHelper(String s) {
-
-        switch (s) {
-            case "write":
-                writeDiary();
-                break;
-            case "modify":
-                modifyDiary();
-                break;
-            case "view":
-                viewDiary();
-                break;
-            case "tag":
-                diaryTag();
-                break;
-            default:
-                System.out.println("Selection not valid...");
-                break;
-        }
-    }
-
-
-    // write diary in given date
-    private void writeDiary() {
-        input = new Scanner(System.in);
-        setToday();
-        System.out.println("Write your diary here:");
-        String s = input.nextLine();
-        Diary d = new Diary(today);
-        d.setContent(s);
-        dayset.getDay(today).setDiary(d);
-
-        System.out.println("Add tag or not:");
-        s = input.next();
-        if (s.equals("y")) {
-            System.out.println("Enter your tag:");
-            s = input.next();
-            d.setTag(s);
-        } else {
-            System.out.println("This diary is created without tag.");
-        }
-    }
-
-    // modify the diary in the given day
-    private void modifyDiary() {
-
-        input = new Scanner(System.in);
-        System.out.println("Modify diary in which day: ");
-        String commend = input.next();
-        int inputYear = Integer.parseInt(commend);
-
-        commend = input.next();
-        int inputMonth = Integer.parseInt(commend);
-
-        commend = input.next();
-        int inputDay = Integer.parseInt(commend);
-
-        try {
-            Date diaryDate = new Date(inputYear, inputMonth, inputDay);
-
-            System.out.println("Modify your diary:");
-            input = new Scanner(System.in);
-            String s = input.nextLine();
-            dayset.getDay(diaryDate).getDiary().setContent(s);
-            System.out.println("Diary has been modified");
-        } catch (DateErrorException e) {
-            System.out.println("Date Entered is invalid");
-        }
-    }
-
-    // view the diary in the given day
-    private void viewDiary() {
-
-        input = new Scanner(System.in);
-        System.out.println("View diary in day: ");
-        String commend = input.next();
-        int inputYear = Integer.parseInt(commend);
-
-        commend = input.next();
-        int inputMonth = Integer.parseInt(commend);
-
-        commend = input.next();
-        int inputDay = Integer.parseInt(commend);
-
-        try {
-            Date diaryDate = new Date(inputYear, inputMonth, inputDay);
-
-            System.out.println(inputYear + "." + inputMonth + "." + inputDay);
-            System.out.println("Tag: " + dayset.getDay(diaryDate).getDiary().getTag());
-            System.out.println(dayset.getDay(diaryDate).getDiary().getContent());
-        } catch (DateErrorException e) {
-            System.out.println("Date Entered is invalid");
-        }
-    }
-
-    // diary tag control
-    private void diaryTag() {
-
-        input = new Scanner(System.in);
-
-        boolean keepGoing = true;
-        while (keepGoing) {
-
-            System.out.println("You want to ");
-            System.out.println("1: change tag");
-            System.out.println("2: view diary with selected tag");
-
-            String s = input.next();
-            switch (s) {
-                case "1":
-                    changeTag();
-                    break;
-                case "2":
-                    viewTag();
-                    break;
-                case "q":
-                    keepGoing = false;
-                    break;
-                default:
-                    System.out.println("Selection not valid...");
-                    break;
-            }
-        }
-
-    }
-
-    // change a diary's tag
-    private void changeTag() {
-        input = new Scanner(System.in);
-        System.out.println("Change tag on day: ");
-        String commend = input.next();
-        int inputYear = Integer.parseInt(commend);
-
-        commend = input.next();
-        int inputMonth = Integer.parseInt(commend);
-
-        commend = input.next();
-        int inputDay = Integer.parseInt(commend);
-
-        try {
-            Date diaryDate = new Date(inputYear, inputMonth, inputDay);
-
-            System.out.println("Enter your tag below: ");
-            String s = input.next();
-            dayset.getDay(diaryDate).getDiary().setTag(s);
-            System.out.println("Your tag has been changed to " + s);
-        } catch (DateErrorException e) {
-            System.out.println("Date Entered is invalid");
-        }
-    }
-
-    // view diary with given tag
-    private void viewTag() {
-
-        input = new Scanner(System.in);
-
-        System.out.println("Search diary with tag: ");
-        String s = input.next();
-        System.out.println(s + " result:");
-        for (Diary d : dayset.searchByTag(s)) {
-            System.out.println(d.getDate().getYear() + "." + d.getDate().getMonth() + "." + d.getDate().getDay());
-            System.out.println();
-            System.out.println(d.getContent());
-            System.out.println();
-        }
-    }
 
 
     // Habit Control

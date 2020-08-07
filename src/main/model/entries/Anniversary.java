@@ -20,6 +20,15 @@ public class Anniversary implements Saveable {
         this.label = label;
         this.comment = comment;
         this.isAnniversary = false;
+        if (label.equals("")) {
+            this.label = "No label";
+        }
+
+        if (comment.equals("")) {
+            this.comment = " ";
+        }
+
+
     }
 
 
@@ -33,17 +42,6 @@ public class Anniversary implements Saveable {
     // EFFECT: remove anniversary
     public void removeAnniversary() {
         isAnniversary = false;
-    }
-
-    // MODIFIER: this
-    // EFFECT: change the comment, to avoid save "" into file, all empty input will switch to " "
-    public void editComment(String s) {
-        if (s.equals("")) {
-            comment = " ";
-        } else {
-            comment = s;
-        }
-
     }
 
 

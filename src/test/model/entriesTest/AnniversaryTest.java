@@ -18,13 +18,13 @@ public class AnniversaryTest {
         testAnni = new Anniversary(testDate, "confession", "Love Laisen");
     }
 
-    @Test
-    public void testEditComment() {
-        testAnni.editComment("Love Daisy");
-        assertEquals("Love Daisy", testAnni.getComment());
-        testAnni.editComment("");
-        assertEquals(" ", testAnni.getComment());
-    }
+//    @Test
+//    public void testEditComment() {
+//        testAnni.editComment("Love Daisy");
+//        assertEquals("Love Daisy", testAnni.getComment());
+//        testAnni.editComment("");
+//        assertEquals(" ", testAnni.getComment());
+//    }
 
     @Test
     public void testSetAnniversary() {

@@ -18,11 +18,12 @@ public class DaySet {
     }
 
 
-    // REQUIRE: the anniversary must be bigger than today
     // EFFECT: calculate the anniversary
     public int calAnniversary(Date today, Anniversary a) {
         int result;
-        if (a.getDate().getMonth() < today.getMonth()) {
+        if (a.getDate().getYear() >= today.getYear()) {
+            result = 0;
+        } else if (a.getDate().getMonth() < today.getMonth()) {
             result = today.getYear() - a.getDate().getYear();
         } else if (a.getDate().getMonth() == today.getMonth() && a.getDate().getDay() <= today.getDay()) {
             result = today.getYear() - a.getDate().getYear();
@@ -44,12 +45,7 @@ public class DaySet {
 
 
     // EFFECT: get a day from the daylist with given date
-    //         if that day does not exist, creat a new date in that given list
     public Day getDay(Date d) {
-//        if (d.getYear() < 1900 || d.getMonth() > 12 || d.getMonth() < 1
-//                || d.getDay() > 31 ||d.getDay() < 1) {
-//            throw new DateEnterException();
-//        } else {
         for (Day day : days) {
             if (day.getDate().getDay() == d.getDay() && day.getDate().getMonth() == d.getMonth()
                     && day.getDate().getYear() == d.getYear()) {
@@ -59,7 +55,6 @@ public class DaySet {
         Day targetDay = new Day(d);
         addDay(targetDay);
         return targetDay;
-//        }
     }
 
     // EFFECT: get all diary with tag "tag"
