@@ -50,20 +50,23 @@ public class DaysApp extends JFrame implements ActionListener {
     private JPanel moodPanel;
     private JPanel eventPanel;
 
+    private JPanel saveLoadPanel;
+
     private JButton anniButton;
     private JButton diaryButton;
     private JButton moodButton;
     private JButton eventButton;
     private JButton habitButton;
     private JButton backButton;
+    private JButton saveButton;
+    private JButton loadButton;
 
     private Font labelFont;
     private Font btnFont;
 
     public DaysApp() {
         super("Days");
-        loadDays();
-        setToday();
+        init();
 
         labelFont = new Font("",Font.ITALIC,150);
         btnFont = new Font("",Font.BOLD,45);
@@ -74,7 +77,7 @@ public class DaysApp extends JFrame implements ActionListener {
 
 
         initializePanel();
-        initializeAnniRemider();
+
         initializeMain();
         initializeBack();
 
@@ -93,7 +96,7 @@ public class DaysApp extends JFrame implements ActionListener {
 
     private void initializeBack() {
         backButton = new JButton("Back");
-        backButton.setFont(new Font("",Font.PLAIN,20));
+        backButton.setFont(new Font("",Font.PLAIN,30));
         backButton.addActionListener(this);
     }
 
@@ -103,8 +106,8 @@ public class DaysApp extends JFrame implements ActionListener {
 
         setMainDisplay();
         setMainBtn();
-        main.add(mainDisplay,BorderLayout.CENTER);
-        main.add(mainBtn,BorderLayout.SOUTH);
+        initializeSaveLoadBtn();
+
 
         main.setVisible(true);
         setContentPane(main);
@@ -123,19 +126,35 @@ public class DaysApp extends JFrame implements ActionListener {
         }
     }
 
+    private void initializeSaveLoadBtn() {
+        saveLoadPanel = new JPanel();
+        saveLoadPanel.setLayout(new GridLayout(2,1));
+        saveLoadPanel.setPreferredSize(new Dimension(100,500));
+
+        saveButton = new JButton("Save");
+        loadButton = new JButton("Load");
+        saveButton.setFont(new Font("",Font.BOLD,25));
+        loadButton.setFont(new Font("",Font.BOLD,25));
+
+        saveButton.addActionListener(this);
+        loadButton.addActionListener(this);
+
+        saveLoadPanel.add(saveButton);
+        saveLoadPanel.add(loadButton);
+        main.add(saveLoadPanel,BorderLayout.EAST);
+    }
+
 
     private void setMainDisplay() {
+        mainDisplay = new JPanel();
 
         dayLabel = new JLabel(" Days");
         dayLabel.setFont(new Font("",Font.ITALIC,250));
         main.add(dayLabel,BorderLayout.NORTH);
 
-        mainDisplay = new JPanel();
         mainDisplay.setLayout(new BoxLayout(mainDisplay,1));
-
+        initializeAnniRemider();
         mainDisplay.add(label,BoxLayout.X_AXIS);
-
-
 
         JLabel todayLabel = new JLabel("         "
                 + today.getMonth() + "." + today.getDay());
@@ -146,6 +165,8 @@ public class DaysApp extends JFrame implements ActionListener {
                 + today.getYear());
         yearLabel.setFont(new Font("",Font.ITALIC,150));
         mainDisplay.add(yearLabel,BoxLayout.LINE_AXIS);
+
+        main.add(mainDisplay,BorderLayout.CENTER);
     }
 
     private void setMainBtn() {
@@ -185,6 +206,8 @@ public class DaysApp extends JFrame implements ActionListener {
         mainBtn.add(moodButton,FlowLayout.LEADING);
         mainBtn.add(eventButton,FlowLayout.TRAILING);
 
+        main.add(mainBtn,BorderLayout.SOUTH);
+
     }
 
     @Override
@@ -210,7 +233,7 @@ public class DaysApp extends JFrame implements ActionListener {
             setContentPane(habitPanel);
         } else if (source == moodButton) {
             main.setVisible(false);
-            moodPanel = new MoodApp(dayset);
+            moodPanel = new MoodApp(dayset,today);
             moodPanel.add(backButton,BorderLayout.EAST);
             moodPanel.setVisible(true);
             setContentPane(moodPanel);
@@ -221,10 +244,12 @@ public class DaysApp extends JFrame implements ActionListener {
             eventPanel.setVisible(true);
             setContentPane(eventPanel);
         } else if (source == backButton) {
-            anniPanel.setVisible(false);
             setContentPane(main);
             main.setVisible(true);
-//            saveDays();
+        } else if (source == saveButton) {
+            saveDays();
+        } else if (source == loadButton) {
+            loadDays();
         }
     }
 
@@ -272,9 +297,11 @@ public class DaysApp extends JFrame implements ActionListener {
             }
 
             initLoading(savedDayset, setHabitList);
+            System.out.println("Days has been loaded");
 
         } catch (IOException e) {
             init();
+            System.out.println("No record find! Create a new days");
         }
     }
 
@@ -551,179 +578,7 @@ public class DaysApp extends JFrame implements ActionListener {
     }
 
 
-    // Mood Control
-    private void doMood() {
 
-        boolean keepGoing = true;
-        input = new Scanner(System.in);
-        while (keepGoing) {
-
-            System.out.println("Select Mood function:");
-            String s = input.next();
-            if (s.equals("q")) {
-                keepGoing = false;
-            } else {
-                doMoodHelper(s);
-            }
-
-        }
-    }
-
-    //checkstyle
-    private void doMoodHelper(String s) {
-
-        switch (s) {
-            case "today":
-                setTodayMood();
-                break;
-            case "modify":
-                setMood();
-                break;
-            case "remove":
-                removeMood();
-                break;
-            case "view":
-                viewMood();
-                break;
-            case "month":
-                viewMonthMood();
-                break;
-            default:
-                System.out.println("Selection not valid...");
-                break;
-        }
-    }
-
-    // set today's mood
-    private void setTodayMood() {
-        input = new Scanner(System.in);
-        System.out.println("What's your mood today:");
-        String commend = input.next();
-
-
-        dayset.getDay(today).setMood(selectMood(commend));
-    }
-
-
-    // set mood to one particular date
-    private void setMood() {
-        input = new Scanner(System.in);
-        System.out.println("Add mood to day: ");
-        String commend = input.next();
-        int inputYear = Integer.parseInt(commend);
-
-        commend = input.next();
-        int inputMonth = Integer.parseInt(commend);
-
-        commend = input.next();
-        int inputDay = Integer.parseInt(commend);
-
-        try {
-            Date moodDate = new Date(inputYear, inputMonth, inputDay);
-
-
-            System.out.println("What's your mood:");
-            commend = input.next();
-
-
-            dayset.getDay(moodDate).setMood(selectMood(commend));
-        } catch (DateErrorException e) {
-            System.out.println("Date Entered is invalid");
-        }
-    }
-
-    // select Mood
-    private Mood selectMood(String commend) {
-
-        Mood mood = Mood.Default;
-        switch (commend) {
-            case "1":
-                mood = Mood.Cheerful;
-                break;
-            case "2":
-                mood = Mood.Calm;
-                break;
-            case "3":
-                mood = Mood.Angry;
-                break;
-            case "4":
-                mood = Mood.Depressed;
-                break;
-            case "5":
-                mood = Mood.Energetic;
-                break;
-            case "6":
-                mood = Mood.Sad;
-                break;
-        }
-        return mood;
-
-    }
-
-    // remove mood on one particular day
-    private void removeMood() {
-
-        input = new Scanner(System.in);
-        System.out.println("Remove mood in date: ");
-        String commend = input.next();
-        int inputYear = Integer.parseInt(commend);
-
-        commend = input.next();
-        int inputMonth = Integer.parseInt(commend);
-
-        commend = input.next();
-        int inputDay = Integer.parseInt(commend);
-
-        try {
-            Date moodDate = new Date(inputYear, inputMonth, inputDay);
-
-            dayset.getDay(moodDate).removeMood();
-        } catch (DateErrorException e) {
-            System.out.println("Date Entered is invalid");
-        }
-    }
-
-    // view a mood in a particular day
-    private void viewMood() {
-
-        input = new Scanner(System.in);
-        System.out.println("View mood in date: ");
-        String commend = input.next();
-        int inputYear = Integer.parseInt(commend);
-
-        commend = input.next();
-        int inputMonth = Integer.parseInt(commend);
-
-        commend = input.next();
-        int inputDay = Integer.parseInt(commend);
-
-        try {
-            Date moodDate = new Date(inputYear, inputMonth, inputDay);
-
-            System.out.println("Your mood in that day is: " + dayset.getDay(moodDate).getMood().name());
-        } catch (DateErrorException e) {
-            System.out.println("Date Entered is invalid");
-        }
-    }
-
-    // view the statistic data in one particular month
-    private void viewMonthMood() {
-
-        input = new Scanner(System.in);
-        System.out.println("View all moods in month: ");
-        String commend = input.next();
-        int inputYear = Integer.parseInt(commend);
-
-        commend = input.next();
-        int inputMonth = Integer.parseInt(commend);
-
-        System.out.println("Your have " + dayset.countMood(Mood.Cheerful, inputYear, inputMonth) + " cheerful days.");
-        System.out.println("Your have " + dayset.countMood(Mood.Calm, inputYear, inputMonth) + " calm days.");
-        System.out.println("Your have " + dayset.countMood(Mood.Angry, inputYear, inputMonth) + " angry days.");
-        System.out.println("Your have " + dayset.countMood(Mood.Depressed, inputYear, inputMonth) + " depressed days.");
-        System.out.println("Your have " + dayset.countMood(Mood.Energetic, inputYear, inputMonth) + " energetic days.");
-        System.out.println("Your have " + dayset.countMood(Mood.Sad, inputYear, inputMonth) + " sad days.");
-    }
 
 
     //Event control

@@ -273,22 +273,23 @@ public class AnniversaryApp extends JPanel implements ActionListener {
     }
 
     private void setAnniPerform() {
-        int inputYear = Integer.parseInt(dateField1.getText());
-        int inputMonth = Integer.parseInt(dateField2.getText());
-        int inputDate = Integer.parseInt(dateField3.getText());
+        title("Select Function:");
+
         String name = textField1.getText();
         String comment = textField2.getText();
         try {
+            int inputYear = Integer.parseInt(dateField1.getText());
+            int inputMonth = Integer.parseInt(dateField2.getText());
+            int inputDate = Integer.parseInt(dateField3.getText());
+
             Date anniDate = new Date(inputYear, inputMonth, inputDate);
 
             Anniversary anniversary = new Anniversary(anniDate, name,comment);
             anniversary.setAnniversary();
             daySet.getDay(anniDate).setDayAnniversary(anniversary);
             message("Anniversary has been set!");
-        } catch (DateErrorException a) {
+        } catch (DateErrorException | NumberFormatException a) {
             message("Date Entered is invalid");
-        } finally {
-            title("Select Function:");
         }
     }
 
@@ -319,18 +320,18 @@ public class AnniversaryApp extends JPanel implements ActionListener {
 
     // remove one anniversary with given date
     private void removeAnniPerform() {
-        int inputYear = Integer.parseInt(dateField1.getText());
-        int inputMonth = Integer.parseInt(dateField2.getText());
-        int inputDate = Integer.parseInt(dateField3.getText());
+        title("Select Function: ");
 
         try {
+            int inputYear = Integer.parseInt(dateField1.getText());
+            int inputMonth = Integer.parseInt(dateField2.getText());
+            int inputDate = Integer.parseInt(dateField3.getText());
+
             Date date = new Date(inputYear, inputMonth, inputDate);
             daySet.getDay(date).removeDayAnniversary();
             message(daySet.getDay(date).getAnniversary().getLabel() + " has been removed");
-        } catch (DateErrorException e) {
+        } catch (DateErrorException | NumberFormatException e) {
             message("Date Entered is invalid");
-        } finally {
-            title("Select Function: ");
         }
     }
 

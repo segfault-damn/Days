@@ -2,16 +2,13 @@ package ui;
 
 import exceptions.DateErrorException;
 import model.Date;
-import model.Day;
 import model.DaySet;
-import model.entries.Anniversary;
 import model.entries.Diary;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Scanner;
 
 public class DiaryApp extends JPanel implements ActionListener {
     private DaySet daySet;
@@ -188,15 +185,11 @@ public class DiaryApp extends JPanel implements ActionListener {
     }
 
 
-    // set anniversary in given day
+    // write today's diary
     private void writeDiary() {
 
         title("Write your diary Here!");
         message(today.getYear() + "/" + today.getMonth() + "/" + today.getDay());
-
-//        writingArea = new JTextArea();
-
-//        writingArea.setSize(new Dimension(1500,900));
 
         writingArea = new JTextArea(5,40);
         writingArea.setFont(new Font("",Font.PLAIN,50));
@@ -230,13 +223,10 @@ public class DiaryApp extends JPanel implements ActionListener {
     }
 
 
-    // view all anniversary
+    // modify diary
     private void modifyDiary() {
         title("Modify selected diary!");
         message("Enter Date: ");
-//        writingArea = new JTextField();
-//        writingArea.setFont(new Font("",Font.PLAIN,50));
-//        writingArea.setSize(new Dimension(1500,900));
         writingArea = new JTextArea(5,40);
         writingArea.setFont(new Font("",Font.PLAIN,60));
         writingPane = new JScrollPane(writingArea);
@@ -349,27 +339,29 @@ public class DiaryApp extends JPanel implements ActionListener {
         title("Select Function:");
         String s = writingArea.getText();
         String tag = writingTag.getText();
-        int inputYear = Integer.parseInt(dateField1.getText());
-        int inputMonth = Integer.parseInt(dateField2.getText());
-        int inputDate = Integer.parseInt(dateField3.getText());
+
 
         try {
+            int inputYear = Integer.parseInt(dateField1.getText());
+            int inputMonth = Integer.parseInt(dateField2.getText());
+            int inputDate = Integer.parseInt(dateField3.getText());
             Date diaryDate = new Date(inputYear, inputMonth, inputDate);
             daySet.getDay(diaryDate).getDiary().setContent(s);
             daySet.getDay(diaryDate).getDiary().setTag(tag);
             message("Diary has been modified on " + inputYear + "." + inputMonth + "." + inputDate);
-        } catch (DateErrorException e) {
+        } catch (DateErrorException | NumberFormatException e) {
             message("Date Entered is invalid");
         }
     }
 
     // view diary of given date
     private void viewDiaryPerform() {
-        int inputYear = Integer.parseInt(dateField1.getText());
-        int inputMonth = Integer.parseInt(dateField2.getText());
-        int inputDate = Integer.parseInt(dateField3.getText());
 
         try {
+            int inputYear = Integer.parseInt(dateField1.getText());
+            int inputMonth = Integer.parseInt(dateField2.getText());
+            int inputDate = Integer.parseInt(dateField3.getText());
+
             Date diaryDate = new Date(inputYear, inputMonth, inputDate);
             title(inputYear + "." + inputMonth + "." + inputDate);
             message("Tag: " + daySet.getDay(diaryDate).getDiary().getTag());
@@ -384,7 +376,7 @@ public class DiaryApp extends JPanel implements ActionListener {
 
             diaryDisplay.add(writingPane,BoxLayout.LINE_AXIS);
             diaryDisplay.updateUI();
-        } catch (DateErrorException e) {
+        } catch (DateErrorException | NumberFormatException e) {
             message("Date Entered is invalid");
         }
     }
