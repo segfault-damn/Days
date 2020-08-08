@@ -23,10 +23,10 @@ public class TodoEvent implements Saveable {
     }
 
 
-    // REQUIRE: the time should not be occupied
     // MODIFIER: this
     // EFFECT: change the time of an event
-    public void setTime(int hour, int min) {
+    public void setTime(Date date, int hour, int min) {
+        this.date = date;
         this.hour = hour;
         this.min = min;
     }

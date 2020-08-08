@@ -336,15 +336,18 @@ public class MoodApp extends JPanel implements ActionListener {
         datePanel = new JPanel();
         datePanel.setLayout(new FlowLayout());
 
-        dateField1 = new JTextField("YYYY",4);
+        String year = Integer.toString(today.getYear());
+        String month = Integer.toString(today.getMonth());
+        String date = Integer.toString(today.getDay());
+        dateField1 = new JTextField(year,4);
         datePanel.add(dateField1,FlowLayout.LEFT);
         dateField1.setFont(labelFont);
 
-        dateField2 = new JTextField("MM",2);
+        dateField2 = new JTextField(month,2);
         datePanel.add(dateField2,FlowLayout.CENTER);
         dateField2.setFont(labelFont);
 
-        dateField3 = new JTextField("DD",2);
+        dateField3 = new JTextField(date,2);
         datePanel.add(dateField3,FlowLayout.RIGHT);
         dateField3.setFont(labelFont);
     }
@@ -352,12 +355,14 @@ public class MoodApp extends JPanel implements ActionListener {
     private void generateMonthInput() {
         monthPanel = new JPanel();
         monthPanel.setLayout(new FlowLayout());
+        String year = Integer.toString(today.getYear());
+        String month = Integer.toString(today.getMonth());
 
-        dateField1 = new JTextField("YYYY",4);
+        dateField1 = new JTextField(year,4);
         monthPanel.add(dateField1,FlowLayout.LEFT);
         dateField1.setFont(labelFont);
 
-        dateField2 = new JTextField("MM",2);
+        dateField2 = new JTextField(month,2);
         monthPanel.add(dateField2,FlowLayout.CENTER);
         dateField2.setFont(labelFont);
     }

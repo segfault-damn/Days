@@ -1,5 +1,6 @@
 package ui;
 
+import model.Date;
 import model.DaySet;
 
 import javax.swing.*;
@@ -11,7 +12,7 @@ public class HabitApp extends JPanel {
     private Font labelFont;
     private Font btnFont;
 
-    public HabitApp(DaySet dayset) {
+    public HabitApp(DaySet dayset, Date today) {
         this.daySet = dayset;
 
 

@@ -73,15 +73,14 @@ public class Day implements Saveable {
     // REQUIRE: the time input should be one of the event
     // MODIFIER: this
     // EFFECT: remove the given event from that list
-    public void removeEvent(int hour, int min) {
-        todoEvents.removeIf(event -> hour == event.getHour() && min == event.getMin());
+    public void removeEvent(int hour, int min, String name) {
+        todoEvents.removeIf(event -> hour == event.getHour() && min == event.getMin() && name.equals(event.getLabel()));
     }
 
-    // REQUIRE: the given hour and minute should correspond to one event in the list
     // EFFECT: find the Event with given time
-    public TodoEvent getEvent(int h, int m) {
+    public TodoEvent getEvent(int h, int m, String n) {
         for (TodoEvent todoEvent : todoEvents) {
-            if (h == todoEvent.getHour() && m == todoEvent.getMin()) {
+            if (h == todoEvent.getHour() && m == todoEvent.getMin() && todoEvent.getLabel().equals(n)) {
                 return todoEvent;
             }
         }

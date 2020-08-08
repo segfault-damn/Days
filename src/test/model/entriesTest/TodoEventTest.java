@@ -15,7 +15,7 @@ public class TodoEventTest {
     public void setUp() {
 
         date = new Date(2020, 10, 20);
-        testEvent = new TodoEvent(date, "Play LOL", 20, 00);
+        testEvent = new TodoEvent(date, "Play LOL", 20, 0);
     }
 
     @Test
@@ -23,9 +23,10 @@ public class TodoEventTest {
     // MODIFIER: this
     // EFFECT: change the time of an event
     public void testSetTime() {
-        testEvent.setTime(10, 00);
+        testEvent.setTime(date,10, 0);
         assertEquals(10, testEvent.getHour());
-        assertEquals(00, testEvent.getMin());
+        assertEquals(0, testEvent.getMin());
+        assertEquals(date, testEvent.getDate());
     }
 
     @Test

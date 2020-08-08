@@ -227,7 +227,7 @@ public class DaysApp extends JFrame implements ActionListener {
             setContentPane(diaryPanel);
         } else if (source == habitButton) {
             main.setVisible(false);
-            habitPanel = new HabitApp(dayset);
+            habitPanel = new HabitApp(dayset,today);
             habitPanel.add(backButton,BorderLayout.EAST);
             habitPanel.setVisible(true);
             setContentPane(habitPanel);
@@ -239,7 +239,7 @@ public class DaysApp extends JFrame implements ActionListener {
             setContentPane(moodPanel);
         } else if (source == eventButton) {
             main.setVisible(false);
-            eventPanel = new EventApp(dayset);
+            eventPanel = new EventApp(dayset,today);
             eventPanel.add(backButton,BorderLayout.EAST);
             eventPanel.setVisible(true);
             setContentPane(eventPanel);
@@ -575,187 +575,5 @@ public class DaysApp extends JFrame implements ActionListener {
                 + i + " times in: " + inputYear + "." + inputMonth);
 
 
-    }
-
-
-
-
-
-    //Event control
-    public void doEvent() {
-        boolean keepGoing = true;
-        input = new Scanner(System.in);
-        while (keepGoing) {
-
-            System.out.println("Select TodoEvent function:");
-            String s = input.next();
-            if (s.equals("q")) {
-                keepGoing = false;
-            } else {
-                doEventHelper(s);
-            }
-
-        }
-
-    }
-
-    //checkstyle
-    private void doEventHelper(String s) {
-
-        switch (s) {
-            case "set":
-                setEvent();
-                break;
-            case "view":
-                viewEvent();
-                break;
-            case "remove":
-                removeEvent();
-                break;
-            case "edit":
-                editEventTime();
-                break;
-            default:
-                System.out.println("Selection not valid...");
-                break;
-        }
-    }
-
-    // add an event in a particular day and particular time
-    private void setEvent() {
-        input = new Scanner(System.in);
-        System.out.println("Enter Event Year:");
-        String commend = input.next();
-        int inputYear = Integer.parseInt(commend);
-
-        System.out.println("Enter Event Month:");
-        commend = input.next();
-        int inputMonth = Integer.parseInt(commend);
-
-        System.out.println("Enter Event Date:");
-        commend = input.next();
-        int inputDay = Integer.parseInt(commend);
-
-        try {
-            Date eventDate = new Date(inputYear, inputMonth, inputDay);
-
-            System.out.println("Enter Event Name:");
-            input = new Scanner(System.in);
-            String l = input.nextLine();
-
-            System.out.println("Enter Event Time hour:");
-            commend = input.next();
-            int inputHour = Integer.parseInt(commend);
-
-            System.out.println("Enter Event Time minute:");
-            commend = input.next();
-            int inputMin = Integer.parseInt(commend);
-
-            dayset.getDay(eventDate).addEvent(new TodoEvent(eventDate, l, inputHour, inputMin));
-        } catch (DateErrorException e) {
-            System.out.println("Date Entered is invalid");
-        }
-    }
-
-    // view all todoevent in a particular day
-    private void viewEvent() {
-        input = new Scanner(System.in);
-        System.out.println("Enter Event Year:");
-        String commend = input.next();
-        int inputYear = Integer.parseInt(commend);
-
-        System.out.println("Enter Event Month:");
-        commend = input.next();
-        int inputMonth = Integer.parseInt(commend);
-
-        System.out.println("Enter Event Date:");
-        commend = input.next();
-        int inputDay = Integer.parseInt(commend);
-        try {
-            Date eventDate = new Date(inputYear, inputMonth, inputDay);
-
-            for (TodoEvent event : dayset.getDay(eventDate).getTodoEventList()) {
-                System.out.println(event.getLabel());
-                System.out.println(event.getHour() + ":" + event.getMin());
-                System.out.println();
-            }
-        } catch (DateErrorException e) {
-            System.out.println("Date Entered is invalid");
-        }
-
-    }
-
-    // remove one particular event in given date and time
-    private void removeEvent() {
-
-        input = new Scanner(System.in);
-        System.out.println("Enter Event Year:");
-        String commend = input.next();
-        int inputYear = Integer.parseInt(commend);
-
-        System.out.println("Enter Event Month:");
-        commend = input.next();
-        int inputMonth = Integer.parseInt(commend);
-
-        System.out.println("Enter Event Date:");
-        commend = input.next();
-        int inputDay = Integer.parseInt(commend);
-
-        try {
-            Date eventDate = new Date(inputYear, inputMonth, inputDay);
-
-            System.out.println("Enter Event Time hour:");
-            commend = input.next();
-            int inputHour = Integer.parseInt(commend);
-
-            System.out.println("Enter Event Time minute:");
-            commend = input.next();
-            int inputMin = Integer.parseInt(commend);
-
-            dayset.getDay(eventDate).removeEvent(inputHour, inputMin);
-        } catch (DateErrorException e) {
-            System.out.println("Date Entered is invalid");
-        }
-
-    }
-
-    // change an event time
-    private void editEventTime() {
-
-        input = new Scanner(System.in);
-        System.out.println("Enter Event Year:");
-        String commend = input.next();
-        int inputYear = Integer.parseInt(commend);
-
-        System.out.println("Enter Event Month:");
-        commend = input.next();
-        int inputMonth = Integer.parseInt(commend);
-
-        System.out.println("Enter Event Date:");
-        commend = input.next();
-        int inputDay = Integer.parseInt(commend);
-
-        try {
-            Date eventDate = new Date(inputYear, inputMonth, inputDay);
-
-            System.out.println("Enter Event Time hour:");
-            commend = input.next();
-            int inputHour = Integer.parseInt(commend);
-
-            System.out.println("Enter Event Time minute:");
-            commend = input.next();
-            int inputMin = Integer.parseInt(commend);
-
-            System.out.println("Enter New Event Time hour and minute:");
-            commend = input.next();
-            int newHour = Integer.parseInt(commend);
-
-            commend = input.next();
-            int newMin = Integer.parseInt(commend);
-
-            dayset.getDay(eventDate).getEvent(inputHour, inputMin).setTime(newHour, newMin);
-        } catch (DateErrorException e) {
-            System.out.println("Date Entered is invalid");
-        }
     }
 }

@@ -38,8 +38,8 @@ class DayTest {
         habit2 = new Habit("Study for final");
         habit3 = new Habit("Play Dr.racket");
 
-        event1 = new TodoEvent(testDate, "birthday party", 20, 00);
-        event2 = new TodoEvent(testDate, "cpsc110 final", 18, 00);
+        event1 = new TodoEvent(testDate, "birthday party", 20, 0);
+        event2 = new TodoEvent(testDate, "cpsc110 final", 18, 0);
         event3 = new TodoEvent(testDate, "chat with Gregor", 12, 20);
         event4 = new TodoEvent(testDate, "chat with Gregor", 18, 30);
 
@@ -176,14 +176,14 @@ class DayTest {
         testDay.addEvent(event2);
         testDay.addEvent(event3);
         testDay.addEvent(event4);
-        testDay.removeEvent(20,00);
+        testDay.removeEvent(20,0,event1.getLabel());
         assertTrue(testDay.getTodoEventList().contains(event2));
         assertTrue(testDay.getTodoEventList().contains(event4));
         assertFalse(testDay.getTodoEventList().contains(event1));
         assertTrue(testDay.getTodoEventList().contains(event3));
         assertEquals(3, testDay.getTodoEventList().size());
 
-        testDay.removeEvent(18,00);
+        testDay.removeEvent(18,0,event2.getLabel());
         assertFalse(testDay.getTodoEventList().contains(event2));
         assertTrue(testDay.getTodoEventList().contains(event4));
         assertFalse(testDay.getTodoEventList().contains(event1));
@@ -212,13 +212,15 @@ class DayTest {
     public void testGetEvent() {
         testDay.addEvent(event1);
         testDay.addEvent(event2);
-        assertEquals(event1, testDay.getEvent(20, 00));
+        assertEquals(event1, testDay.getEvent(20, 0,event1.getLabel()));
 
 
         testDay.addEvent(event3);
-        assertEquals(event3, testDay.getEvent(12, 20));
+        assertEquals(event3, testDay.getEvent(12, 20,event3.getLabel()));
 
-        assertNull(testDay.getEvent(12, 30));
+        assertNull(testDay.getEvent(12, 30,"nothing"));
+        assertNull(testDay.getEvent(12, 20,"nothing"));
+        assertNull(testDay.getEvent(12, 10,event3.getLabel()));
     }
 
     @Test

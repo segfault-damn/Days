@@ -257,19 +257,20 @@ public class AnniversaryApp extends JPanel implements ActionListener {
         datePanel = new JPanel();
         datePanel.setLayout(new FlowLayout());
 
-        dateField1 = new JTextField("YYYY",4);
+        String year = Integer.toString(today.getYear());
+        String month = Integer.toString(today.getMonth());
+        String date = Integer.toString(today.getDay());
+        dateField1 = new JTextField(year,4);
         datePanel.add(dateField1,FlowLayout.LEFT);
         dateField1.setFont(labelFont);
 
-        dateField2 = new JTextField("MM",2);
+        dateField2 = new JTextField(month,2);
         datePanel.add(dateField2,FlowLayout.CENTER);
         dateField2.setFont(labelFont);
 
-        dateField3 = new JTextField("DD",2);
+        dateField3 = new JTextField(date,2);
         datePanel.add(dateField3,FlowLayout.RIGHT);
         dateField3.setFont(labelFont);
-
-
     }
 
     private void setAnniPerform() {
