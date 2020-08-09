@@ -176,6 +176,27 @@ class DayTest {
         testDay.addEvent(event2);
         testDay.addEvent(event3);
         testDay.addEvent(event4);
+        testDay.removeEvent(19,0,event1.getLabel());
+        assertTrue(testDay.getTodoEventList().contains(event2));
+        assertTrue(testDay.getTodoEventList().contains(event4));
+        assertTrue(testDay.getTodoEventList().contains(event1));
+        assertTrue(testDay.getTodoEventList().contains(event3));
+        assertEquals(4, testDay.getTodoEventList().size());
+
+        testDay.removeEvent(20,30,event1.getLabel());
+        assertTrue(testDay.getTodoEventList().contains(event2));
+        assertTrue(testDay.getTodoEventList().contains(event4));
+        assertTrue(testDay.getTodoEventList().contains(event1));
+        assertTrue(testDay.getTodoEventList().contains(event3));
+        assertEquals(4, testDay.getTodoEventList().size());
+
+        testDay.removeEvent(20,00,"oh yeah");
+        assertTrue(testDay.getTodoEventList().contains(event2));
+        assertTrue(testDay.getTodoEventList().contains(event4));
+        assertTrue(testDay.getTodoEventList().contains(event1));
+        assertTrue(testDay.getTodoEventList().contains(event3));
+        assertEquals(4, testDay.getTodoEventList().size());
+
         testDay.removeEvent(20,0,event1.getLabel());
         assertTrue(testDay.getTodoEventList().contains(event2));
         assertTrue(testDay.getTodoEventList().contains(event4));
@@ -191,6 +212,7 @@ class DayTest {
         assertEquals(2, testDay.getTodoEventList().size());
     }
 
+    @Test
     // MODIFIER: this
     // EFFECT: set todoEvent list
     public void TestSetTodoEvents() {
@@ -200,7 +222,7 @@ class DayTest {
         testDay.setTodoEvents(todoEvents);
         assertEquals(2,testDay.getTodoEventList().size());
         assertEquals(event1,testDay.getTodoEventList().get(0));
-        assertEquals(event1,testDay.getTodoEventList().get(1));
+        assertEquals(event2,testDay.getTodoEventList().get(1));
     }
 
 
