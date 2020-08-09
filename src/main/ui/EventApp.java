@@ -91,6 +91,11 @@ public class EventApp extends JPanel implements ActionListener {
         initializeDisplay();
         setEventBtn();
 
+        initializeTodayEvent();
+
+
+        eventDisplay.add(viewEventPane,BoxLayout.LINE_AXIS);
+
         add(eventLabel,BorderLayout.NORTH);
         add(eventDisplay,BorderLayout.CENTER);
         add(eventBtn,BorderLayout.SOUTH);
@@ -101,7 +106,35 @@ public class EventApp extends JPanel implements ActionListener {
         eventDisplay.removeAll();
         title("Select Function: ");
         message(" ");
+
         eventDisplay.updateUI();
+    }
+
+    private void initializeTodayEvent() {
+        message("Your events today:");
+        JTextArea viewArea = new JTextArea(5,40);
+        viewArea.setFont(new Font("",Font.PLAIN,60));
+        viewArea.setText(" ");
+        viewArea.setEditable(false);
+
+        viewEventPane = new JScrollPane(viewArea);
+        viewEventPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        viewEventPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+        for (TodoEvent event : daySet.getDay(today).getTodoEventList()) {
+            if (event.getHour() < 10 && event.getMin() < 10) {
+                viewArea.append(event.getLabel() + "\n0" + event.getHour() + ":0" + event.getMin());
+            } else if (event.getHour() < 10) {
+                viewArea.append(event.getLabel() + "\n0" + event.getHour() + ":" + event.getMin());
+            } else if (event.getMin() < 10) {
+                viewArea.append(event.getLabel() + "\n" + event.getHour() + ":0" + event.getMin());
+            } else {
+                viewArea.append(event.getLabel() + "\n" + event.getHour() + ":" + event.getMin());
+            }
+            viewArea.append("  \n");
+        }
+
+        eventDisplay.add(viewEventPane);
     }
 
     private void setEventBtn() {

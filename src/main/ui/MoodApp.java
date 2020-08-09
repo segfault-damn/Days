@@ -9,7 +9,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Scanner;
 
 public class MoodApp extends JPanel implements ActionListener {
     private DaySet daySet;
@@ -88,7 +87,7 @@ public class MoodApp extends JPanel implements ActionListener {
     private void initializeMood() {
         setLayout(new BorderLayout());
 
-        moodLabel = new JLabel("Mood: ");
+        moodLabel = new JLabel("Mood");
         moodLabel.setFont(labelFont);
 
         moodDisplay = new JPanel();

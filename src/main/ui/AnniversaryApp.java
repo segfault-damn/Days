@@ -74,13 +74,28 @@ public class AnniversaryApp extends JPanel implements ActionListener {
     private void initializeAnni() {
         setLayout(new BorderLayout());
 
-        aniLabel = new JLabel("Anniversary: ");
+        aniLabel = new JLabel("Anniversary");
         aniLabel.setFont(labelFont);
 
         aniDisplay = new JPanel();
         aniDisplay.setLayout(new BoxLayout(aniDisplay,1));
 
         initializeDisplay();
+
+        // this is anniversary reminder
+        for (Day day : daySet.getDays()) {
+            if (day.getAnniversary().getIsAnniversary() && day.getAnniversary().getDate().getDay() == today.getDay()
+                    && day.getAnniversary().getDate().getMonth() == today.getMonth()) {
+                JLabel anniversaryReminder = new JLabel("Today is " + day.getAnniversary().getLabel() + "!");
+                anniversaryReminder.setFont(new Font("",Font.BOLD,100));
+
+                JLabel anniversaryComment = new JLabel(day.getAnniversary().getComment());
+                anniversaryComment.setFont(new Font("",Font.PLAIN,100));
+                aniDisplay.add(anniversaryReminder,BoxLayout.LINE_AXIS);
+                aniDisplay.add(anniversaryComment,BoxLayout.PAGE_AXIS);
+            }
+        }
+
         setAnniversaryBtn();
         add(aniLabel,BorderLayout.NORTH);
         add(aniDisplay,BorderLayout.CENTER);
@@ -92,6 +107,7 @@ public class AnniversaryApp extends JPanel implements ActionListener {
         aniDisplay.removeAll();
         title("Select Function: ");
         message(" ");
+
         aniDisplay.updateUI();
     }
 
@@ -115,8 +131,6 @@ public class AnniversaryApp extends JPanel implements ActionListener {
         editBtn = new JButton("Edit");
         editBtn.setFont(btnFont);
         editBtn.setPreferredSize(new Dimension(350,200));
-
-
 
         anniBtn.add(setBtn,FlowLayout.LEFT);
         anniBtn.add(viewBtn,FlowLayout.CENTER);
@@ -232,15 +246,15 @@ public class AnniversaryApp extends JPanel implements ActionListener {
         title("Edit Anniversary!");
         message("Select by name: ");
 
-        textField1.setText("NAME");
+        textField1.setText("Name");
         aniDisplay.add(textField1,BoxLayout.LINE_AXIS);
 
         anniEditConfirm();
         aniDisplay.add(confirmEdit,BoxLayout.PAGE_AXIS);
 
-        textField3.setText("NEW COMMENT");
+        textField3.setText("New Comment");
         aniDisplay.add(textField3,BoxLayout.PAGE_AXIS);
-        textField2.setText("NEW NAME");
+        textField2.setText("New Name");
         aniDisplay.add(textField2,BoxLayout.PAGE_AXIS);
 
         aniDisplay.updateUI();

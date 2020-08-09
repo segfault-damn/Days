@@ -70,7 +70,7 @@ public class DiaryApp extends JPanel implements ActionListener {
     private void initializeDiary() {
         setLayout(new BorderLayout());
 
-        diaryLabel = new JLabel("Diary: ");
+        diaryLabel = new JLabel("Diary");
         diaryLabel.setFont(labelFont);
 
         diaryDisplay = new JPanel();
