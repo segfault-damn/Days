@@ -4,13 +4,11 @@ import exceptions.DateErrorException;
 import model.Date;
 import model.DaySet;
 import model.entries.Habit;
-import model.entries.Mood;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Scanner;
 
 
 public class HabitApp extends JPanel implements ActionListener {

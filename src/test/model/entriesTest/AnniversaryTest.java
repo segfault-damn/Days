@@ -14,17 +14,16 @@ public class AnniversaryTest {
 
     @BeforeEach
     public void setUp() {
-        testDate = new Date(2020, 02, 13);
+        testDate = new Date(2020, 2, 13);
         testAnni = new Anniversary(testDate, "confession", "Love Laisen");
     }
 
-//    @Test
-//    public void testEditComment() {
-//        testAnni.editComment("Love Daisy");
-//        assertEquals("Love Daisy", testAnni.getComment());
-//        testAnni.editComment("");
-//        assertEquals(" ", testAnni.getComment());
-//    }
+    @Test
+    public void testComment() {
+        testAnni = new Anniversary(testDate,"","");
+        assertEquals(" ", testAnni.getComment());
+        assertEquals("No label", testAnni.getLabel());
+    }
 
     @Test
     public void testSetAnniversary() {
