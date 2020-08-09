@@ -58,15 +58,12 @@ public class MoodApp extends JPanel implements ActionListener {
     private ImageIcon sadImage;
 
 
-
-
-
-    public MoodApp(DaySet dayset,Date today) {
+    public MoodApp(DaySet dayset, Date today) {
         this.daySet = dayset;
 
-        labelFont = new Font("",Font.ITALIC,150);
-        btnFont = new Font("",Font.BOLD,45);
-        contentFont = new Font("",Font.PLAIN,80);
+        labelFont = new Font("", Font.ITALIC, 150);
+        btnFont = new Font("", Font.BOLD, 45);
+        contentFont = new Font("", Font.PLAIN, 80);
 
         message = new JLabel("");
         title = new JLabel("");
@@ -91,15 +88,15 @@ public class MoodApp extends JPanel implements ActionListener {
         moodLabel.setFont(labelFont);
 
         moodDisplay = new JPanel();
-        moodDisplay.setLayout(new BoxLayout(moodDisplay,1));
+        moodDisplay.setLayout(new BoxLayout(moodDisplay, 1));
 
         loadImages();
         initializeDisplay();
         setMoodBtn();
 
-        add(moodLabel,BorderLayout.NORTH);
-        add(moodDisplay,BorderLayout.CENTER);
-        add(moodBtn,BorderLayout.SOUTH);
+        add(moodLabel, BorderLayout.NORTH);
+        add(moodDisplay, BorderLayout.CENTER);
+        add(moodBtn, BorderLayout.SOUTH);
     }
 
     private void initializeDisplay() {
@@ -116,26 +113,25 @@ public class MoodApp extends JPanel implements ActionListener {
 
         setBtn = new JButton("Set");
         setBtn.setFont(btnFont);
-        setBtn.setPreferredSize(new Dimension(350,200));
+        setBtn.setPreferredSize(new Dimension(350, 200));
 
         removeBtn = new JButton("Remove");
         removeBtn.setFont(btnFont);
-        removeBtn.setPreferredSize(new Dimension(350,200));
+        removeBtn.setPreferredSize(new Dimension(350, 200));
 
         viewBtn = new JButton("View");
         viewBtn.setFont(btnFont);
-        viewBtn.setPreferredSize(new Dimension(350,200));
+        viewBtn.setPreferredSize(new Dimension(350, 200));
 
         monthBtn = new JButton("Month");
         monthBtn.setFont(btnFont);
-        monthBtn.setPreferredSize(new Dimension(350,200));
+        monthBtn.setPreferredSize(new Dimension(350, 200));
 
 
-
-        moodBtn.add(setBtn,FlowLayout.LEFT);
-        moodBtn.add(removeBtn,FlowLayout.CENTER);
-        moodBtn.add(viewBtn,FlowLayout.RIGHT);
-        moodBtn.add(monthBtn,FlowLayout.LEADING);
+        moodBtn.add(setBtn, FlowLayout.LEFT);
+        moodBtn.add(removeBtn, FlowLayout.CENTER);
+        moodBtn.add(viewBtn, FlowLayout.RIGHT);
+        moodBtn.add(monthBtn, FlowLayout.LEADING);
 
         setBtn.addActionListener(this);
         removeBtn.addActionListener(this);
@@ -148,7 +144,7 @@ public class MoodApp extends JPanel implements ActionListener {
         title = new JLabel(s);
         title.setFont(contentFont);
 
-        moodDisplay.add(title,BoxLayout.X_AXIS);
+        moodDisplay.add(title, BoxLayout.X_AXIS);
         moodDisplay.updateUI();
     }
 
@@ -158,7 +154,7 @@ public class MoodApp extends JPanel implements ActionListener {
 
         message.setFont(contentFont);
 
-        moodDisplay.add(message,BoxLayout.Y_AXIS);
+        moodDisplay.add(message, BoxLayout.Y_AXIS);
         moodDisplay.updateUI();
     }
 
@@ -177,7 +173,13 @@ public class MoodApp extends JPanel implements ActionListener {
         } else if (source == monthBtn) {
             initializeDisplay();
             monthMood();
-        } else if (source == confirmRemove) {
+        } else {
+            confirmPerformed(source);
+        }
+    }
+
+    private void confirmPerformed(Object source) {
+        if (source == confirmRemove) {
             removeMoodPerform();
             moodDisplay.remove(confirmRemove);
         } else if (source == confirmView) {
@@ -223,8 +225,8 @@ public class MoodApp extends JPanel implements ActionListener {
         title("How are you feeling today?");
         message("Today is: " + today.getYear() + "/" + today.getMonth() + "/" + today.getDay());
 
-        setMoodPanel = new JPanel(new GridLayout(2,3));
-        setMoodPanel.setSize(new Dimension(1000,500));
+        setMoodPanel = new JPanel(new GridLayout(2, 3));
+        setMoodPanel.setSize(new Dimension(1000, 500));
 
         initializeMoodButton();
 
@@ -234,7 +236,7 @@ public class MoodApp extends JPanel implements ActionListener {
         setMoodPanel.add(depressed);
         setMoodPanel.add(energetic);
         setMoodPanel.add(sad);
-        moodDisplay.add(setMoodPanel,BoxLayout.LINE_AXIS);
+        moodDisplay.add(setMoodPanel, BoxLayout.LINE_AXIS);
 
         moodDisplay.updateUI();
     }
@@ -242,27 +244,27 @@ public class MoodApp extends JPanel implements ActionListener {
     private void initializeMoodButton() {
         cheerful = new JButton("Cheerful");
         cheerful.setFont(btnFont);
-        cheerful.setPreferredSize(new Dimension(350,200));
+        cheerful.setPreferredSize(new Dimension(350, 200));
 
         calm = new JButton("Calm");
         calm.setFont(btnFont);
-        calm.setPreferredSize(new Dimension(350,200));
+        calm.setPreferredSize(new Dimension(350, 200));
 
         angry = new JButton("Angry");
         angry.setFont(btnFont);
-        angry.setPreferredSize(new Dimension(350,200));
+        angry.setPreferredSize(new Dimension(350, 200));
 
         depressed = new JButton("Depressed");
         depressed.setFont(btnFont);
-        depressed.setPreferredSize(new Dimension(350,200));
+        depressed.setPreferredSize(new Dimension(350, 200));
 
         energetic = new JButton("Energetic");
         energetic.setFont(btnFont);
-        energetic.setPreferredSize(new Dimension(350,200));
+        energetic.setPreferredSize(new Dimension(350, 200));
 
         sad = new JButton("Sad");
         sad.setFont(btnFont);
-        sad.setPreferredSize(new Dimension(350,200));
+        sad.setPreferredSize(new Dimension(350, 200));
 
         addMoodsListener();
     }
@@ -281,7 +283,7 @@ public class MoodApp extends JPanel implements ActionListener {
         title("Remove today's mood?");
         message(" ");
         removeConfirm();
-        moodDisplay.add(confirmRemove,BoxLayout.LINE_AXIS);
+        moodDisplay.add(confirmRemove, BoxLayout.LINE_AXIS);
 
         moodDisplay.updateUI();
     }
@@ -289,7 +291,7 @@ public class MoodApp extends JPanel implements ActionListener {
     private void removeConfirm() {
         confirmRemove = new JButton("Confirm");
         confirmRemove.setFont(btnFont);
-        confirmRemove.setPreferredSize(new Dimension(350,200));
+        confirmRemove.setPreferredSize(new Dimension(350, 200));
         confirmRemove.addActionListener(this);
     }
 
@@ -297,17 +299,17 @@ public class MoodApp extends JPanel implements ActionListener {
         title("View Mood on date:");
         message(" ");
 
-        moodDisplay.add(datePanel,BoxLayout.LINE_AXIS);
+        moodDisplay.add(datePanel, BoxLayout.LINE_AXIS);
 
         viewConfirm();
-        moodDisplay.add(confirmView,BoxLayout.PAGE_AXIS);
+        moodDisplay.add(confirmView, BoxLayout.PAGE_AXIS);
         moodDisplay.updateUI();
     }
 
     private void viewConfirm() {
         confirmView = new JButton("Confirm");
         confirmView.setFont(btnFont);
-        confirmView.setPreferredSize(new Dimension(350,200));
+        confirmView.setPreferredSize(new Dimension(350, 200));
         confirmView.addActionListener(this);
     }
 
@@ -316,10 +318,10 @@ public class MoodApp extends JPanel implements ActionListener {
         message("Enter Month: ");
 
         generateMonthInput();
-        moodDisplay.add(monthPanel,BoxLayout.LINE_AXIS);
+        moodDisplay.add(monthPanel, BoxLayout.LINE_AXIS);
 
         monthConfirm();
-        moodDisplay.add(confirmMonth,BoxLayout.PAGE_AXIS);
+        moodDisplay.add(confirmMonth, BoxLayout.PAGE_AXIS);
 
         moodDisplay.updateUI();
     }
@@ -327,7 +329,7 @@ public class MoodApp extends JPanel implements ActionListener {
     private void monthConfirm() {
         confirmMonth = new JButton("Confirm");
         confirmMonth.setFont(btnFont);
-        confirmMonth.setPreferredSize(new Dimension(350,200));
+        confirmMonth.setPreferredSize(new Dimension(350, 200));
         confirmMonth.addActionListener(this);
     }
 
@@ -338,16 +340,16 @@ public class MoodApp extends JPanel implements ActionListener {
         String year = Integer.toString(today.getYear());
         String month = Integer.toString(today.getMonth());
         String date = Integer.toString(today.getDay());
-        dateField1 = new JTextField(year,4);
-        datePanel.add(dateField1,FlowLayout.LEFT);
+        dateField1 = new JTextField(year, 4);
+        datePanel.add(dateField1, FlowLayout.LEFT);
         dateField1.setFont(labelFont);
 
-        dateField2 = new JTextField(month,2);
-        datePanel.add(dateField2,FlowLayout.CENTER);
+        dateField2 = new JTextField(month, 2);
+        datePanel.add(dateField2, FlowLayout.CENTER);
         dateField2.setFont(labelFont);
 
-        dateField3 = new JTextField(date,2);
-        datePanel.add(dateField3,FlowLayout.RIGHT);
+        dateField3 = new JTextField(date, 2);
+        datePanel.add(dateField3, FlowLayout.RIGHT);
         dateField3.setFont(labelFont);
     }
 
@@ -357,12 +359,12 @@ public class MoodApp extends JPanel implements ActionListener {
         String year = Integer.toString(today.getYear());
         String month = Integer.toString(today.getMonth());
 
-        dateField1 = new JTextField(year,4);
-        monthPanel.add(dateField1,FlowLayout.LEFT);
+        dateField1 = new JTextField(year, 4);
+        monthPanel.add(dateField1, FlowLayout.LEFT);
         dateField1.setFont(labelFont);
 
-        dateField2 = new JTextField(month,2);
-        monthPanel.add(dateField2,FlowLayout.CENTER);
+        dateField2 = new JTextField(month, 2);
+        monthPanel.add(dateField2, FlowLayout.CENTER);
         dateField2.setFont(labelFont);
     }
 
@@ -386,30 +388,35 @@ public class MoodApp extends JPanel implements ActionListener {
             message("Your mood on " + inputYear + "." + inputMonth + "." + inputDate
                     + " is: " + daySet.getDay(moodDate).getMood().name());
             imageAsLabel = new JLabel();
-            switch (daySet.getDay(moodDate).getMood().name()) {
-                case "Cheerful":
-                    imageAsLabel = new JLabel(cheerfulImage);
-                    break;
-                case "Calm":
-                    imageAsLabel = new JLabel(calmImage);
-                    break;
-                case "Angry":
-                    imageAsLabel = new JLabel(angryImage);
-                    break;
-                case "Depressed":
-                    imageAsLabel = new JLabel(depressedImage);
-                    break;
-                case "Energetic":
-                    imageAsLabel = new JLabel(energeticImage);
-                    break;
-                case "Sad":
-                    imageAsLabel = new JLabel(sadImage);
-                    break;
-            }
-            moodDisplay.add(imageAsLabel,BoxLayout.LINE_AXIS);
+            selectImage(moodDate);
+
+            moodDisplay.add(imageAsLabel, BoxLayout.LINE_AXIS);
 
         } catch (DateErrorException | NumberFormatException e) {
             message("Date Entered is invalid");
+        }
+    }
+
+    private void selectImage(Date moodDate) {
+        switch (daySet.getDay(moodDate).getMood().name()) {
+            case "Cheerful":
+                imageAsLabel = new JLabel(cheerfulImage);
+                break;
+            case "Calm":
+                imageAsLabel = new JLabel(calmImage);
+                break;
+            case "Angry":
+                imageAsLabel = new JLabel(angryImage);
+                break;
+            case "Depressed":
+                imageAsLabel = new JLabel(depressedImage);
+                break;
+            case "Energetic":
+                imageAsLabel = new JLabel(energeticImage);
+                break;
+            case "Sad":
+                imageAsLabel = new JLabel(sadImage);
+                break;
         }
     }
 

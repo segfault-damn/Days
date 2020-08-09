@@ -1,7 +1,6 @@
 package ui;
 
 import exceptions.DateErrorException;
-import jdk.nashorn.internal.objects.NativeUint8Array;
 import model.Date;
 import model.DaySet;
 import model.entries.TodoEvent;
@@ -10,7 +9,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Scanner;
 
 public class EventApp extends JPanel implements ActionListener {
     private DaySet daySet;
@@ -58,13 +56,13 @@ public class EventApp extends JPanel implements ActionListener {
     private int oldMin;
     private String oldName;
 
-    public EventApp(DaySet dayset,Date today) {
+    public EventApp(DaySet dayset, Date today) {
         this.daySet = dayset;
         this.today = today;
 
-        labelFont = new Font("",Font.ITALIC,150);
-        btnFont = new Font("",Font.BOLD,45);
-        contentFont = new Font("",Font.PLAIN,80);
+        labelFont = new Font("", Font.ITALIC, 150);
+        btnFont = new Font("", Font.BOLD, 45);
+        contentFont = new Font("", Font.PLAIN, 80);
 
         message = new JLabel("");
         title = new JLabel("");
@@ -86,7 +84,7 @@ public class EventApp extends JPanel implements ActionListener {
         eventLabel.setFont(labelFont);
 
         eventDisplay = new JPanel();
-        eventDisplay.setLayout(new BoxLayout(eventDisplay,1));
+        eventDisplay.setLayout(new BoxLayout(eventDisplay, 1));
 
         initializeDisplay();
         setEventBtn();
@@ -94,11 +92,11 @@ public class EventApp extends JPanel implements ActionListener {
         initializeTodayEvent();
 
 
-        eventDisplay.add(viewEventPane,BoxLayout.LINE_AXIS);
+        eventDisplay.add(viewEventPane, BoxLayout.LINE_AXIS);
 
-        add(eventLabel,BorderLayout.NORTH);
-        add(eventDisplay,BorderLayout.CENTER);
-        add(eventBtn,BorderLayout.SOUTH);
+        add(eventLabel, BorderLayout.NORTH);
+        add(eventDisplay, BorderLayout.CENTER);
+        add(eventBtn, BorderLayout.SOUTH);
     }
 
     private void initializeDisplay() {
@@ -112,8 +110,8 @@ public class EventApp extends JPanel implements ActionListener {
 
     private void initializeTodayEvent() {
         message("Your events today:");
-        JTextArea viewArea = new JTextArea(5,40);
-        viewArea.setFont(new Font("",Font.PLAIN,60));
+        JTextArea viewArea = new JTextArea(5, 40);
+        viewArea.setFont(new Font("", Font.PLAIN, 60));
         viewArea.setText(" ");
         viewArea.setEditable(false);
 
@@ -143,24 +141,24 @@ public class EventApp extends JPanel implements ActionListener {
 
         addBtn = new JButton("Add");
         addBtn.setFont(btnFont);
-        addBtn.setPreferredSize(new Dimension(350,200));
+        addBtn.setPreferredSize(new Dimension(350, 200));
 
         modifyBtn = new JButton("Modify");
         modifyBtn.setFont(btnFont);
-        modifyBtn.setPreferredSize(new Dimension(350,200));
+        modifyBtn.setPreferredSize(new Dimension(350, 200));
 
         viewBtn = new JButton("View");
         viewBtn.setFont(btnFont);
-        viewBtn.setPreferredSize(new Dimension(350,200));
+        viewBtn.setPreferredSize(new Dimension(350, 200));
 
         removeBtn = new JButton("Remove");
         removeBtn.setFont(btnFont);
-        removeBtn.setPreferredSize(new Dimension(350,200));
+        removeBtn.setPreferredSize(new Dimension(350, 200));
 
-        eventBtn.add(addBtn,FlowLayout.LEFT);
-        eventBtn.add(modifyBtn,FlowLayout.CENTER);
-        eventBtn.add(viewBtn,FlowLayout.RIGHT);
-        eventBtn.add(removeBtn,FlowLayout.LEADING);
+        eventBtn.add(addBtn, FlowLayout.LEFT);
+        eventBtn.add(modifyBtn, FlowLayout.CENTER);
+        eventBtn.add(viewBtn, FlowLayout.RIGHT);
+        eventBtn.add(removeBtn, FlowLayout.LEADING);
 
         addBtn.addActionListener(this);
         modifyBtn.addActionListener(this);
@@ -173,7 +171,7 @@ public class EventApp extends JPanel implements ActionListener {
         title = new JLabel(s);
         title.setFont(contentFont);
 
-        eventDisplay.add(title,BoxLayout.X_AXIS);
+        eventDisplay.add(title, BoxLayout.X_AXIS);
         eventDisplay.updateUI();
     }
 
@@ -183,7 +181,7 @@ public class EventApp extends JPanel implements ActionListener {
 
         message.setFont(contentFont);
 
-        eventDisplay.add(message,BoxLayout.Y_AXIS);
+        eventDisplay.add(message, BoxLayout.Y_AXIS);
         eventDisplay.updateUI();
     }
 
@@ -196,13 +194,24 @@ public class EventApp extends JPanel implements ActionListener {
         } else if (source == modifyBtn) {
             initializeDisplay();
             modifyEvent();
+        } else if (source == confirmNewTime) {
+            eventDisplay.remove(timePanel);
+            eventDisplay.remove(datePanel);
+            eventDisplay.remove(confirmNewTime);
+            modifyEventPerform();
         } else if (source == viewBtn) {
             initializeDisplay();
             viewEvent();
         } else if (source == removeBtn) {
             initializeDisplay();
             removeEvent();
-        } else if (source == confirmAdd) {
+        } else {
+            confirmPerform(source);
+        }
+    }
+
+    private void confirmPerform(Object source) {
+        if (source == confirmAdd) {
             eventDisplay.remove(timePanel);
             eventDisplay.remove(eventName);
             eventDisplay.remove(datePanel);
@@ -216,12 +225,6 @@ public class EventApp extends JPanel implements ActionListener {
             eventDisplay.remove(confirmModify);
             changeEventTime();
 
-        } else if (source == confirmNewTime) {
-            eventDisplay.remove(timePanel);
-            eventDisplay.remove(datePanel);
-            eventDisplay.remove(confirmNewTime);
-            modifyEventPerform();
-
         } else if (source == confirmView) {
             eventDisplay.remove(datePanel);
             eventDisplay.remove(confirmView);
@@ -233,10 +236,8 @@ public class EventApp extends JPanel implements ActionListener {
             eventDisplay.remove(datePanel);
             eventDisplay.remove(confirmRemove);
             removeEventPerform();
-
         }
     }
-
 
     // write today's diary
     private void addEvent() {
@@ -249,10 +250,10 @@ public class EventApp extends JPanel implements ActionListener {
 
         addConfirm();
 
-        eventDisplay.add(datePanel,BoxLayout.LINE_AXIS);
-        eventDisplay.add(confirmAdd,BoxLayout.PAGE_AXIS);
-        eventDisplay.add(eventName,BoxLayout.PAGE_AXIS);
-        eventDisplay.add(timePanel,BoxLayout.PAGE_AXIS);
+        eventDisplay.add(datePanel, BoxLayout.LINE_AXIS);
+        eventDisplay.add(confirmAdd, BoxLayout.PAGE_AXIS);
+        eventDisplay.add(eventName, BoxLayout.PAGE_AXIS);
+        eventDisplay.add(timePanel, BoxLayout.PAGE_AXIS);
 
         eventDisplay.updateUI();
 
@@ -261,7 +262,7 @@ public class EventApp extends JPanel implements ActionListener {
     private void addConfirm() {
         confirmAdd = new JButton("Confirm");
         confirmAdd.setFont(btnFont);
-        confirmAdd.setPreferredSize(new Dimension(350,200));
+        confirmAdd.setPreferredSize(new Dimension(350, 200));
         confirmAdd.addActionListener(this);
     }
 
@@ -276,10 +277,10 @@ public class EventApp extends JPanel implements ActionListener {
 
         selectConfirm();
 
-        eventDisplay.add(datePanel,BoxLayout.LINE_AXIS);
-        eventDisplay.add(confirmModify,BoxLayout.PAGE_AXIS);
-        eventDisplay.add(eventName,BoxLayout.PAGE_AXIS);
-        eventDisplay.add(timePanel,BoxLayout.PAGE_AXIS);
+        eventDisplay.add(datePanel, BoxLayout.LINE_AXIS);
+        eventDisplay.add(confirmModify, BoxLayout.PAGE_AXIS);
+        eventDisplay.add(eventName, BoxLayout.PAGE_AXIS);
+        eventDisplay.add(timePanel, BoxLayout.PAGE_AXIS);
 
         eventDisplay.updateUI();
     }
@@ -287,7 +288,7 @@ public class EventApp extends JPanel implements ActionListener {
     private void selectConfirm() {
         confirmModify = new JButton("Confirm");
         confirmModify.setFont(btnFont);
-        confirmModify.setPreferredSize(new Dimension(350,200));
+        confirmModify.setPreferredSize(new Dimension(350, 200));
         confirmModify.addActionListener(this);
     }
 
@@ -295,7 +296,7 @@ public class EventApp extends JPanel implements ActionListener {
     // change event to new time
     private void changeEventTime() {
         try {
-
+            title("Select Function:");
             oldYear = Integer.parseInt(dateField1.getText());
             oldMonth = Integer.parseInt(dateField2.getText());
             oldDate = Integer.parseInt(dateField3.getText());
@@ -313,13 +314,11 @@ public class EventApp extends JPanel implements ActionListener {
                 eventDisplay.add(timePanel, BoxLayout.PAGE_AXIS);
 
             } else {
-                title("Select Function:");
                 message("Event not found");
             }
 
             eventDisplay.updateUI();
         } catch (DateErrorException | NumberFormatException e) {
-            title("Select Function:");
             message("Date Entered is invalid");
         }
     }
@@ -327,7 +326,7 @@ public class EventApp extends JPanel implements ActionListener {
     private void newTimeConfirm() {
         confirmNewTime = new JButton("Confirm");
         confirmNewTime.setFont(btnFont);
-        confirmNewTime.setPreferredSize(new Dimension(350,200));
+        confirmNewTime.setPreferredSize(new Dimension(350, 200));
         confirmNewTime.addActionListener(this);
     }
 
@@ -335,17 +334,17 @@ public class EventApp extends JPanel implements ActionListener {
         title("View Events on date:");
         message(" ");
 
-        eventDisplay.add(datePanel,BoxLayout.LINE_AXIS);
+        eventDisplay.add(datePanel, BoxLayout.LINE_AXIS);
 
         viewConfirm();
-        eventDisplay.add(confirmView,BoxLayout.PAGE_AXIS);
+        eventDisplay.add(confirmView, BoxLayout.PAGE_AXIS);
         eventDisplay.updateUI();
     }
 
     private void viewConfirm() {
         confirmView = new JButton("Confirm");
         confirmView.setFont(btnFont);
-        confirmView.setPreferredSize(new Dimension(350,200));
+        confirmView.setPreferredSize(new Dimension(350, 200));
         confirmView.addActionListener(this);
     }
 
@@ -358,10 +357,10 @@ public class EventApp extends JPanel implements ActionListener {
 
         removeConfirm();
 
-        eventDisplay.add(datePanel,BoxLayout.LINE_AXIS);
-        eventDisplay.add(confirmRemove,BoxLayout.PAGE_AXIS);
-        eventDisplay.add(eventName,BoxLayout.PAGE_AXIS);
-        eventDisplay.add(timePanel,BoxLayout.PAGE_AXIS);
+        eventDisplay.add(datePanel, BoxLayout.LINE_AXIS);
+        eventDisplay.add(confirmRemove, BoxLayout.PAGE_AXIS);
+        eventDisplay.add(eventName, BoxLayout.PAGE_AXIS);
+        eventDisplay.add(timePanel, BoxLayout.PAGE_AXIS);
 
         eventDisplay.updateUI();
     }
@@ -369,7 +368,7 @@ public class EventApp extends JPanel implements ActionListener {
     private void removeConfirm() {
         confirmRemove = new JButton("Confirm");
         confirmRemove.setFont(btnFont);
-        confirmRemove.setPreferredSize(new Dimension(350,200));
+        confirmRemove.setPreferredSize(new Dimension(350, 200));
         confirmRemove.addActionListener(this);
     }
 
@@ -380,16 +379,16 @@ public class EventApp extends JPanel implements ActionListener {
         String year = Integer.toString(today.getYear());
         String month = Integer.toString(today.getMonth());
         String date = Integer.toString(today.getDay());
-        dateField1 = new JTextField(year,4);
-        datePanel.add(dateField1,FlowLayout.LEFT);
+        dateField1 = new JTextField(year, 4);
+        datePanel.add(dateField1, FlowLayout.LEFT);
         dateField1.setFont(labelFont);
 
-        dateField2 = new JTextField(month,2);
-        datePanel.add(dateField2,FlowLayout.CENTER);
+        dateField2 = new JTextField(month, 2);
+        datePanel.add(dateField2, FlowLayout.CENTER);
         dateField2.setFont(labelFont);
 
-        dateField3 = new JTextField(date,2);
-        datePanel.add(dateField3,FlowLayout.RIGHT);
+        dateField3 = new JTextField(date, 2);
+        datePanel.add(dateField3, FlowLayout.RIGHT);
         dateField3.setFont(labelFont);
     }
 
@@ -397,16 +396,16 @@ public class EventApp extends JPanel implements ActionListener {
         timePanel = new JPanel();
         timePanel.setLayout(new FlowLayout());
 
-        timeField1 = new JTextField("HH",2);
-        timePanel.add(timeField1,FlowLayout.LEFT);
+        timeField1 = new JTextField("HH", 2);
+        timePanel.add(timeField1, FlowLayout.LEFT);
         timeField1.setFont(labelFont);
 
         JLabel semicolon = new JLabel(":");
-        timePanel.add(semicolon,FlowLayout.CENTER);
+        timePanel.add(semicolon, FlowLayout.CENTER);
         semicolon.setFont(labelFont);
 
-        timeField2 = new JTextField("MM",2);
-        timePanel.add(timeField2,FlowLayout.RIGHT);
+        timeField2 = new JTextField("MM", 2);
+        timePanel.add(timeField2, FlowLayout.RIGHT);
         timeField2.setFont(labelFont);
     }
 
@@ -448,7 +447,7 @@ public class EventApp extends JPanel implements ActionListener {
 
             String name = eventName.getText();
 
-            daySet.getDay(eventDate).getEvent(oldHour, oldMin,oldName).setTime(eventDate,newHour, newMin);
+            daySet.getDay(eventDate).getEvent(oldHour, oldMin, oldName).setTime(eventDate, newHour, newMin);
             message(name + " has been modified to a new time!");
         } catch (DateErrorException | NumberFormatException e) {
             message("Date Entered is invalid");
@@ -464,17 +463,12 @@ public class EventApp extends JPanel implements ActionListener {
             int inputDate = Integer.parseInt(dateField3.getText());
 
             Date eventDate = new Date(inputYear, inputMonth, inputDate);
-            title("Your events on : ");
+
             message(inputYear + "." + inputMonth + "." + inputDate);
 
-            JTextArea viewArea = new JTextArea(5,40);
-            viewArea.setFont(new Font("",Font.PLAIN,60));
-            viewArea.setText(" ");
-            viewArea.setEditable(false);
+            JTextArea viewArea = new JTextArea(5, 40);
 
-            viewEventPane = new JScrollPane(viewArea);
-            viewEventPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-            viewEventPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+            viewEventPerformHelper(viewArea);
 
             for (TodoEvent event : daySet.getDay(eventDate).getTodoEventList()) {
                 if (event.getHour() < 10 && event.getMin() < 10) {
@@ -488,13 +482,25 @@ public class EventApp extends JPanel implements ActionListener {
                 }
                 viewArea.append("  \n");
             }
-
-            eventDisplay.add(viewEventPane,BoxLayout.LINE_AXIS);
-            eventDisplay.updateUI();
         } catch (DateErrorException | NumberFormatException e) {
             message("Date Entered is invalid");
         }
     }
+
+    private void viewEventPerformHelper(JTextArea viewArea) {
+        title("Your events on : ");
+        viewArea.setFont(new Font("", Font.PLAIN, 60));
+        viewArea.setText(" ");
+        viewArea.setEditable(false);
+
+        viewEventPane = new JScrollPane(viewArea);
+
+        viewEventPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        viewEventPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        eventDisplay.add(viewEventPane, BoxLayout.LINE_AXIS);
+
+    }
+
 
     // view diary with given tag
     private void removeEventPerform() {
@@ -510,11 +516,10 @@ public class EventApp extends JPanel implements ActionListener {
             Date eventDate = new Date(inputYear, inputMonth, inputDate);
 
             String name = eventName.getText();
-            daySet.getDay(eventDate).removeEvent(inputHour, inputMin,name);
+            daySet.getDay(eventDate).removeEvent(inputHour, inputMin, name);
             message(name + " has been removed");
         } catch (DateErrorException | NumberFormatException e) {
             message("Date Entered is invalid");
         }
-
     }
 }

@@ -15,7 +15,7 @@ public class HabitListReader {
     public static final String DELIMITER1 = ",";
     public static final String DELIMITER2 = ";";
 
-    // constuct a habit list reader
+    // construct a habit list reader
     public HabitListReader() {
     }
 

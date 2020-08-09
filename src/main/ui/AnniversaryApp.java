@@ -44,13 +44,13 @@ public class AnniversaryApp extends JPanel implements ActionListener {
     private DaySet daySet;
     private Date today;
 
-    public AnniversaryApp(DaySet dayset,Date today) {
+    public AnniversaryApp(DaySet dayset, Date today) {
         this.daySet = dayset;
         this.today = today;
 
-        labelFont = new Font("",Font.ITALIC,150);
-        btnFont = new Font("",Font.BOLD,45);
-        contentFont = new Font("",Font.PLAIN,80);
+        labelFont = new Font("", Font.ITALIC, 150);
+        btnFont = new Font("", Font.BOLD, 45);
+        contentFont = new Font("", Font.PLAIN, 80);
 
         textField1 = new JTextField();
         textField1.setFont(contentFont);
@@ -78,7 +78,7 @@ public class AnniversaryApp extends JPanel implements ActionListener {
         aniLabel.setFont(labelFont);
 
         aniDisplay = new JPanel();
-        aniDisplay.setLayout(new BoxLayout(aniDisplay,1));
+        aniDisplay.setLayout(new BoxLayout(aniDisplay, 1));
 
         initializeDisplay();
 
@@ -87,19 +87,19 @@ public class AnniversaryApp extends JPanel implements ActionListener {
             if (day.getAnniversary().getIsAnniversary() && day.getAnniversary().getDate().getDay() == today.getDay()
                     && day.getAnniversary().getDate().getMonth() == today.getMonth()) {
                 JLabel anniversaryReminder = new JLabel("Today is " + day.getAnniversary().getLabel() + "!");
-                anniversaryReminder.setFont(new Font("",Font.BOLD,100));
+                anniversaryReminder.setFont(new Font("", Font.BOLD, 100));
 
                 JLabel anniversaryComment = new JLabel(day.getAnniversary().getComment());
-                anniversaryComment.setFont(new Font("",Font.PLAIN,100));
-                aniDisplay.add(anniversaryReminder,BoxLayout.LINE_AXIS);
-                aniDisplay.add(anniversaryComment,BoxLayout.PAGE_AXIS);
+                anniversaryComment.setFont(new Font("", Font.PLAIN, 100));
+                aniDisplay.add(anniversaryReminder, BoxLayout.LINE_AXIS);
+                aniDisplay.add(anniversaryComment, BoxLayout.PAGE_AXIS);
             }
         }
 
         setAnniversaryBtn();
-        add(aniLabel,BorderLayout.NORTH);
-        add(aniDisplay,BorderLayout.CENTER);
-        add(anniBtn,BorderLayout.SOUTH);
+        add(aniLabel, BorderLayout.NORTH);
+        add(aniDisplay, BorderLayout.CENTER);
+        add(anniBtn, BorderLayout.SOUTH);
     }
 
     private void initializeDisplay() {
@@ -117,25 +117,25 @@ public class AnniversaryApp extends JPanel implements ActionListener {
 
         setBtn = new JButton("Set");
         setBtn.setFont(btnFont);
-        setBtn.setPreferredSize(new Dimension(350,200));
+        setBtn.setPreferredSize(new Dimension(350, 200));
 
 
         viewBtn = new JButton("View");
         viewBtn.setFont(btnFont);
-        viewBtn.setPreferredSize(new Dimension(350,200));
+        viewBtn.setPreferredSize(new Dimension(350, 200));
 
         removeBtn = new JButton("Remove");
         removeBtn.setFont(btnFont);
-        removeBtn.setPreferredSize(new Dimension(350,200));
+        removeBtn.setPreferredSize(new Dimension(350, 200));
 
         editBtn = new JButton("Edit");
         editBtn.setFont(btnFont);
-        editBtn.setPreferredSize(new Dimension(350,200));
+        editBtn.setPreferredSize(new Dimension(350, 200));
 
-        anniBtn.add(setBtn,FlowLayout.LEFT);
-        anniBtn.add(viewBtn,FlowLayout.CENTER);
-        anniBtn.add(removeBtn,FlowLayout.RIGHT);
-        anniBtn.add(editBtn,FlowLayout.LEADING);
+        anniBtn.add(setBtn, FlowLayout.LEFT);
+        anniBtn.add(viewBtn, FlowLayout.CENTER);
+        anniBtn.add(removeBtn, FlowLayout.RIGHT);
+        anniBtn.add(editBtn, FlowLayout.LEADING);
 
         setBtn.addActionListener(this);
         viewBtn.addActionListener(this);
@@ -148,7 +148,7 @@ public class AnniversaryApp extends JPanel implements ActionListener {
         title = new JLabel(s);
         title.setFont(contentFont);
 
-        aniDisplay.add(title,BoxLayout.X_AXIS);
+        aniDisplay.add(title, BoxLayout.X_AXIS);
         aniDisplay.updateUI();
     }
 
@@ -158,7 +158,7 @@ public class AnniversaryApp extends JPanel implements ActionListener {
 
         message.setFont(contentFont);
 
-        aniDisplay.add(message,BoxLayout.Y_AXIS);
+        aniDisplay.add(message, BoxLayout.Y_AXIS);
         aniDisplay.updateUI();
     }
 
@@ -174,11 +174,16 @@ public class AnniversaryApp extends JPanel implements ActionListener {
         } else if (source == removeBtn) {
             initializeDisplay();
             removeAnniversary();
-
         } else if (source == editBtn) {
             initializeDisplay();
             editAnniversary();
-        } else if (source == confirmSet) {
+        } else {
+            confirmPerformed(source);
+        }
+    }
+
+    private void confirmPerformed(Object source) {
+        if (source == confirmSet) {
             setAnniPerform();
             aniDisplay.remove(confirmSet);
         } else if (source == confirmRemove) {
@@ -206,21 +211,20 @@ public class AnniversaryApp extends JPanel implements ActionListener {
 
         setAnniSetConfirm();
 
-        aniDisplay.add(datePanel,BoxLayout.LINE_AXIS);
-        aniDisplay.add(confirmSet,BoxLayout.PAGE_AXIS);
-        aniDisplay.add(textField2,BoxLayout.PAGE_AXIS);
-        aniDisplay.add(textField1,BoxLayout.PAGE_AXIS);
+        aniDisplay.add(datePanel, BoxLayout.LINE_AXIS);
+        aniDisplay.add(confirmSet, BoxLayout.PAGE_AXIS);
+        aniDisplay.add(textField2, BoxLayout.PAGE_AXIS);
+        aniDisplay.add(textField1, BoxLayout.PAGE_AXIS);
 
 
         aniDisplay.updateUI();
     }
 
 
-
     private void setAnniSetConfirm() {
         confirmSet = new JButton("Confirm");
         confirmSet.setFont(btnFont);
-        confirmSet.setPreferredSize(new Dimension(350,200));
+        confirmSet.setPreferredSize(new Dimension(350, 200));
         confirmSet.addActionListener(this);
     }
 
@@ -231,14 +235,14 @@ public class AnniversaryApp extends JPanel implements ActionListener {
         aniDisplay.add(datePanel);
 
         anniRemoveConfirm();
-        aniDisplay.add(confirmRemove,BoxLayout.PAGE_AXIS);
+        aniDisplay.add(confirmRemove, BoxLayout.PAGE_AXIS);
         aniDisplay.updateUI();
     }
 
     private void anniRemoveConfirm() {
         confirmRemove = new JButton("Confirm");
         confirmRemove.setFont(btnFont);
-        confirmRemove.setPreferredSize(new Dimension(350,200));
+        confirmRemove.setPreferredSize(new Dimension(350, 200));
         confirmRemove.addActionListener(this);
     }
 
@@ -247,15 +251,15 @@ public class AnniversaryApp extends JPanel implements ActionListener {
         message("Select by name: ");
 
         textField1.setText("Name");
-        aniDisplay.add(textField1,BoxLayout.LINE_AXIS);
+        aniDisplay.add(textField1, BoxLayout.LINE_AXIS);
 
         anniEditConfirm();
-        aniDisplay.add(confirmEdit,BoxLayout.PAGE_AXIS);
+        aniDisplay.add(confirmEdit, BoxLayout.PAGE_AXIS);
 
         textField3.setText("New Comment");
-        aniDisplay.add(textField3,BoxLayout.PAGE_AXIS);
+        aniDisplay.add(textField3, BoxLayout.PAGE_AXIS);
         textField2.setText("New Name");
-        aniDisplay.add(textField2,BoxLayout.PAGE_AXIS);
+        aniDisplay.add(textField2, BoxLayout.PAGE_AXIS);
 
         aniDisplay.updateUI();
     }
@@ -263,7 +267,7 @@ public class AnniversaryApp extends JPanel implements ActionListener {
     private void anniEditConfirm() {
         confirmEdit = new JButton("Confirm");
         confirmEdit.setFont(btnFont);
-        confirmEdit.setPreferredSize(new Dimension(350,200));
+        confirmEdit.setPreferredSize(new Dimension(350, 200));
         confirmEdit.addActionListener(this);
     }
 
@@ -274,16 +278,16 @@ public class AnniversaryApp extends JPanel implements ActionListener {
         String year = Integer.toString(today.getYear());
         String month = Integer.toString(today.getMonth());
         String date = Integer.toString(today.getDay());
-        dateField1 = new JTextField(year,4);
-        datePanel.add(dateField1,FlowLayout.LEFT);
+        dateField1 = new JTextField(year, 4);
+        datePanel.add(dateField1, FlowLayout.LEFT);
         dateField1.setFont(labelFont);
 
-        dateField2 = new JTextField(month,2);
-        datePanel.add(dateField2,FlowLayout.CENTER);
+        dateField2 = new JTextField(month, 2);
+        datePanel.add(dateField2, FlowLayout.CENTER);
         dateField2.setFont(labelFont);
 
-        dateField3 = new JTextField(date,2);
-        datePanel.add(dateField3,FlowLayout.RIGHT);
+        dateField3 = new JTextField(date, 2);
+        datePanel.add(dateField3, FlowLayout.RIGHT);
         dateField3.setFont(labelFont);
     }
 
@@ -299,7 +303,7 @@ public class AnniversaryApp extends JPanel implements ActionListener {
 
             Date anniDate = new Date(inputYear, inputMonth, inputDate);
 
-            Anniversary anniversary = new Anniversary(anniDate, name,comment);
+            Anniversary anniversary = new Anniversary(anniDate, name, comment);
             anniversary.setAnniversary();
             daySet.getDay(anniDate).setDayAnniversary(anniversary);
             message("Anniversary has been set!");
@@ -309,9 +313,9 @@ public class AnniversaryApp extends JPanel implements ActionListener {
     }
 
     private void viewAnni() {
-        JTextArea contents = new JTextArea(10,40);
+        JTextArea contents = new JTextArea(10, 40);
         contents.setText("");
-        contents.setFont(new Font("",Font.PLAIN,50));
+        contents.setFont(new Font("", Font.PLAIN, 50));
         contents.setEditable(false);
 
         for (Day day : daySet.getDays()) {
@@ -329,7 +333,7 @@ public class AnniversaryApp extends JPanel implements ActionListener {
         viewAnniPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         viewAnniPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        aniDisplay.add(viewAnniPane,BoxLayout.LINE_AXIS);
+        aniDisplay.add(viewAnniPane, BoxLayout.LINE_AXIS);
     }
 
 
@@ -357,7 +361,7 @@ public class AnniversaryApp extends JPanel implements ActionListener {
         String comment = textField3.getText();
         for (Day day : daySet.getDays()) {
             if (day.getAnniversary().getLabel().equals(s)) {
-                Anniversary anniversary = new Anniversary(day.getDate(),name,comment);
+                Anniversary anniversary = new Anniversary(day.getDate(), name, comment);
                 anniversary.setAnniversary();
                 day.setDayAnniversary(anniversary);
                 title("Select Function: ");

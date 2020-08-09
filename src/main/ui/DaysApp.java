@@ -17,9 +17,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Scanner;
-
-import static javax.swing.SwingConstants.LEFT;
 
 // The main app
 public class DaysApp extends JFrame implements ActionListener {
@@ -33,9 +30,7 @@ public class DaysApp extends JFrame implements ActionListener {
     public static final int WIDTH = 2000;
     public static final int HEIGHT = 1600;
 
-
     private DaySet dayset;
-    private Scanner input;
     private Date today;
 
     private JLabel dayLabel;
@@ -68,12 +63,12 @@ public class DaysApp extends JFrame implements ActionListener {
         super("Days");
         init();
 
-        labelFont = new Font("",Font.ITALIC,150);
-        btnFont = new Font("",Font.BOLD,45);
+        labelFont = new Font("", Font.ITALIC, 150);
+        btnFont = new Font("", Font.BOLD, 45);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setPreferredSize(new Dimension(WIDTH,HEIGHT));
-        setLocation(100,100);
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        setLocation(100, 100);
 
 
         initializePanel();
@@ -96,7 +91,7 @@ public class DaysApp extends JFrame implements ActionListener {
 
     private void initializeBack() {
         backButton = new JButton("Back");
-        backButton.setFont(new Font("",Font.PLAIN,30));
+        backButton.setFont(new Font("", Font.BOLD, 30));
         backButton.addActionListener(this);
     }
 
@@ -114,34 +109,22 @@ public class DaysApp extends JFrame implements ActionListener {
 
     }
 
-    private void initializeAnniRemider() {
-        label = new JLabel("Today is:");
-        label.setFont(labelFont);
-        for (Day day : dayset.getDays()) {
-            if (day.getAnniversary().getDate().getDay() == today.getDay()
-                    && day.getAnniversary().getDate().getMonth() == today.getMonth()
-                    && day.getAnniversary().getIsAnniversary()) {
-                label.setText("Today is:  " + day.getAnniversary().getLabel());
-            }
-        }
-    }
-
     private void initializeSaveLoadBtn() {
         saveLoadPanel = new JPanel();
-        saveLoadPanel.setLayout(new GridLayout(2,1));
-        saveLoadPanel.setPreferredSize(new Dimension(100,500));
+        saveLoadPanel.setLayout(new GridLayout(2, 1));
+        saveLoadPanel.setPreferredSize(new Dimension(100, 500));
 
         saveButton = new JButton("Save");
         loadButton = new JButton("Load");
-        saveButton.setFont(new Font("",Font.BOLD,25));
-        loadButton.setFont(new Font("",Font.BOLD,25));
+        saveButton.setFont(new Font("", Font.BOLD, 25));
+        loadButton.setFont(new Font("", Font.BOLD, 25));
 
         saveButton.addActionListener(this);
         loadButton.addActionListener(this);
 
         saveLoadPanel.add(saveButton);
         saveLoadPanel.add(loadButton);
-        main.add(saveLoadPanel,BorderLayout.EAST);
+        main.add(saveLoadPanel, BorderLayout.EAST);
     }
 
 
@@ -149,65 +132,68 @@ public class DaysApp extends JFrame implements ActionListener {
         mainDisplay = new JPanel();
 
         dayLabel = new JLabel(" Days");
-        dayLabel.setFont(new Font("",Font.ITALIC,250));
-        main.add(dayLabel,BorderLayout.NORTH);
+        dayLabel.setFont(new Font("", Font.ITALIC, 250));
+        main.add(dayLabel, BorderLayout.NORTH);
 
-        mainDisplay.setLayout(new BoxLayout(mainDisplay,1));
-        initializeAnniRemider();
-        mainDisplay.add(label,BoxLayout.X_AXIS);
+        mainDisplay.setLayout(new BoxLayout(mainDisplay, 1));
+        label = new JLabel("Today is:");
+        label.setFont(labelFont);
+        mainDisplay.add(label, BoxLayout.X_AXIS);
 
         JLabel todayLabel = new JLabel("         "
                 + today.getMonth() + "." + today.getDay());
-        todayLabel.setFont(new Font("",Font.PLAIN,300));
-        mainDisplay.add(todayLabel,BoxLayout.Y_AXIS);
+        todayLabel.setFont(new Font("", Font.PLAIN, 300));
+        mainDisplay.add(todayLabel, BoxLayout.Y_AXIS);
 
         JLabel yearLabel = new JLabel("                        ----"
                 + today.getYear());
-        yearLabel.setFont(new Font("",Font.ITALIC,150));
-        mainDisplay.add(yearLabel,BoxLayout.LINE_AXIS);
+        yearLabel.setFont(new Font("", Font.ITALIC, 150));
+        mainDisplay.add(yearLabel, BoxLayout.LINE_AXIS);
 
-        main.add(mainDisplay,BorderLayout.CENTER);
+        main.add(mainDisplay, BorderLayout.CENTER);
     }
 
     private void setMainBtn() {
         mainBtn = new JPanel();
         mainBtn.setLayout(new FlowLayout());
 
-        anniButton = new JButton("Anniversary");
-        anniButton.setPreferredSize(new Dimension(350,200));
-        anniButton.setFont(btnFont);
-
-        diaryButton = new JButton("Diary");
-        diaryButton.setPreferredSize(new Dimension(350,200));
-        diaryButton.setFont(btnFont);
-
-        habitButton = new JButton("Habit");
-        habitButton.setPreferredSize(new Dimension(350,200));
-        habitButton.setFont(btnFont);
-
-        moodButton = new JButton("Mood");
-        moodButton.setPreferredSize(new Dimension(350,200));
-        moodButton.setFont(btnFont);
-
-        eventButton = new JButton("Event");
-        eventButton.setPreferredSize(new Dimension(350,200));
-        eventButton.setFont(btnFont);
-
-
+        setMainBtnHelper();
         anniButton.addActionListener(this);
         diaryButton.addActionListener(this);
         habitButton.addActionListener(this);
         moodButton.addActionListener(this);
         eventButton.addActionListener(this);
 
-        mainBtn.add(anniButton,FlowLayout.LEFT);
-        mainBtn.add(diaryButton,FlowLayout.CENTER);
-        mainBtn.add(habitButton,FlowLayout.RIGHT);
-        mainBtn.add(moodButton,FlowLayout.LEADING);
-        mainBtn.add(eventButton,FlowLayout.TRAILING);
+        mainBtn.add(anniButton, FlowLayout.LEFT);
+        mainBtn.add(diaryButton, FlowLayout.CENTER);
+        mainBtn.add(habitButton, FlowLayout.RIGHT);
+        mainBtn.add(moodButton, FlowLayout.LEADING);
+        mainBtn.add(eventButton, FlowLayout.TRAILING);
 
-        main.add(mainBtn,BorderLayout.SOUTH);
+        main.add(mainBtn, BorderLayout.SOUTH);
 
+    }
+
+    private void setMainBtnHelper() {
+        anniButton = new JButton("Anniversary");
+        anniButton.setPreferredSize(new Dimension(350, 200));
+        anniButton.setFont(btnFont);
+
+        diaryButton = new JButton("Diary");
+        diaryButton.setPreferredSize(new Dimension(350, 200));
+        diaryButton.setFont(btnFont);
+
+        habitButton = new JButton("Habit");
+        habitButton.setPreferredSize(new Dimension(350, 200));
+        habitButton.setFont(btnFont);
+
+        moodButton = new JButton("Mood");
+        moodButton.setPreferredSize(new Dimension(350, 200));
+        moodButton.setFont(btnFont);
+
+        eventButton = new JButton("Event");
+        eventButton.setPreferredSize(new Dimension(350, 200));
+        eventButton.setFont(btnFont);
     }
 
     @Override
@@ -215,32 +201,38 @@ public class DaysApp extends JFrame implements ActionListener {
         Object source = e.getSource();
         if (source == anniButton) {
             main.setVisible(false);
-            anniPanel = new AnniversaryApp(dayset,today);
-            anniPanel.add(backButton,BorderLayout.EAST);
+            anniPanel = new AnniversaryApp(dayset, today);
+            anniPanel.add(backButton, BorderLayout.EAST);
             anniPanel.setVisible(true);
             setContentPane(anniPanel);
         } else if (source == diaryButton) {
             main.setVisible(false);
-            diaryPanel = new DiaryApp(dayset,today);
-            diaryPanel.add(backButton,BorderLayout.EAST);
+            diaryPanel = new DiaryApp(dayset, today);
+            diaryPanel.add(backButton, BorderLayout.EAST);
             diaryPanel.setVisible(true);
             setContentPane(diaryPanel);
         } else if (source == habitButton) {
             main.setVisible(false);
-            habitPanel = new HabitApp(dayset,today);
-            habitPanel.add(backButton,BorderLayout.EAST);
+            habitPanel = new HabitApp(dayset, today);
+            habitPanel.add(backButton, BorderLayout.EAST);
             habitPanel.setVisible(true);
             setContentPane(habitPanel);
-        } else if (source == moodButton) {
+        } else {
+            actionPerformHelper(source);
+        }
+    }
+
+    private void actionPerformHelper(Object source) {
+        if (source == moodButton) {
             main.setVisible(false);
-            moodPanel = new MoodApp(dayset,today);
-            moodPanel.add(backButton,BorderLayout.EAST);
+            moodPanel = new MoodApp(dayset, today);
+            moodPanel.add(backButton, BorderLayout.EAST);
             moodPanel.setVisible(true);
             setContentPane(moodPanel);
         } else if (source == eventButton) {
             main.setVisible(false);
-            eventPanel = new EventApp(dayset,today);
-            eventPanel.add(backButton,BorderLayout.EAST);
+            eventPanel = new EventApp(dayset, today);
+            eventPanel.add(backButton, BorderLayout.EAST);
             eventPanel.setVisible(true);
             setContentPane(eventPanel);
         } else if (source == backButton) {
@@ -297,11 +289,11 @@ public class DaysApp extends JFrame implements ActionListener {
             }
 
             initLoading(savedDayset, setHabitList);
-            System.out.println("Days has been loaded");
+//            System.out.println("Days has been loaded");
 
         } catch (IOException e) {
             init();
-            System.out.println("No record find! Create a new days");
+//            System.out.println("No record find! Create a new days");
         }
     }
 
