@@ -60,7 +60,7 @@ public class HabitList implements Saveable {
         return habitList;
     }
 
-
+    // get habit's labels
     public List<String> getHabitLabel() {
         List<String> result = new ArrayList<>();
         for (Habit h : habitList) {

@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// a mood panel
 public class MoodApp extends JPanel implements ActionListener {
     private DaySet daySet;
     private Date today;
@@ -57,9 +58,10 @@ public class MoodApp extends JPanel implements ActionListener {
     private ImageIcon energeticImage;
     private ImageIcon sadImage;
 
-
+    // generate a new mood app
     public MoodApp(DaySet dayset, Date today) {
         this.daySet = dayset;
+        this.today = today;
 
         labelFont = new Font("", Font.ITALIC, 150);
         btnFont = new Font("", Font.BOLD, 45);
@@ -67,20 +69,17 @@ public class MoodApp extends JPanel implements ActionListener {
 
         message = new JLabel("");
         title = new JLabel("");
-
-        this.daySet = dayset;
-        this.today = today;
-
         runMood();
-
     }
 
+    // run mood
     private void runMood() {
         generateDateInput();
         initializeMood();
         setVisible(true);
     }
 
+    // initialze mood
     private void initializeMood() {
         setLayout(new BorderLayout());
 
@@ -99,14 +98,15 @@ public class MoodApp extends JPanel implements ActionListener {
         add(moodBtn, BorderLayout.SOUTH);
     }
 
+    // initialize mood display
     private void initializeDisplay() {
-
         moodDisplay.removeAll();
         title("Select Function: ");
         message(" ");
         moodDisplay.updateUI();
     }
 
+    // initialize mood function buttons
     private void setMoodBtn() {
         moodBtn = new JPanel();
         moodBtn.setLayout(new FlowLayout());
@@ -139,6 +139,7 @@ public class MoodApp extends JPanel implements ActionListener {
         monthBtn.addActionListener(this);
     }
 
+    // build title label
     private void title(String s) {
         moodDisplay.remove(title);
         title = new JLabel(s);
@@ -148,6 +149,7 @@ public class MoodApp extends JPanel implements ActionListener {
         moodDisplay.updateUI();
     }
 
+    // build message  label
     private void message(String s) {
         moodDisplay.remove(message);
         message = new JLabel(s);
@@ -158,6 +160,7 @@ public class MoodApp extends JPanel implements ActionListener {
         moodDisplay.updateUI();
     }
 
+    // perform action after event happens
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
@@ -178,6 +181,7 @@ public class MoodApp extends JPanel implements ActionListener {
         }
     }
 
+    // perform actions after confirm buttons are clicked
     private void confirmPerformed(Object source) {
         if (source == confirmRemove) {
             removeMoodPerform();
@@ -195,6 +199,7 @@ public class MoodApp extends JPanel implements ActionListener {
         }
     }
 
+    // perform events after one of moods button are clicked
     private void performMoodButton(Object source) {
         title("Select Function: ");
         if (source == cheerful) {
@@ -241,6 +246,7 @@ public class MoodApp extends JPanel implements ActionListener {
         moodDisplay.updateUI();
     }
 
+    // initialize mood buttons
     private void initializeMoodButton() {
         cheerful = new JButton("Cheerful");
         cheerful.setFont(btnFont);
@@ -269,6 +275,7 @@ public class MoodApp extends JPanel implements ActionListener {
         addMoodsListener();
     }
 
+    // add listener to mood buttons
     private void addMoodsListener() {
         cheerful.addActionListener(this);
         calm.addActionListener(this);
@@ -288,6 +295,7 @@ public class MoodApp extends JPanel implements ActionListener {
         moodDisplay.updateUI();
     }
 
+    // set remove confirm button
     private void removeConfirm() {
         confirmRemove = new JButton("Confirm");
         confirmRemove.setFont(btnFont);
@@ -295,6 +303,7 @@ public class MoodApp extends JPanel implements ActionListener {
         confirmRemove.addActionListener(this);
     }
 
+    // view moods
     private void viewMood() {
         title("View Mood on date:");
         message(" ");
@@ -306,6 +315,7 @@ public class MoodApp extends JPanel implements ActionListener {
         moodDisplay.updateUI();
     }
 
+    // set view moods confirm button
     private void viewConfirm() {
         confirmView = new JButton("Confirm");
         confirmView.setFont(btnFont);
@@ -313,6 +323,7 @@ public class MoodApp extends JPanel implements ActionListener {
         confirmView.addActionListener(this);
     }
 
+    // set panel of view mood in month
     private void monthMood() {
         title("View moods!");
         message("Enter Month: ");
@@ -326,6 +337,7 @@ public class MoodApp extends JPanel implements ActionListener {
         moodDisplay.updateUI();
     }
 
+    // build month confirm button
     private void monthConfirm() {
         confirmMonth = new JButton("Confirm");
         confirmMonth.setFont(btnFont);
@@ -333,6 +345,7 @@ public class MoodApp extends JPanel implements ActionListener {
         confirmMonth.addActionListener(this);
     }
 
+    // generate date input panel
     private void generateDateInput() {
         datePanel = new JPanel();
         datePanel.setLayout(new FlowLayout());
@@ -353,6 +366,7 @@ public class MoodApp extends JPanel implements ActionListener {
         dateField3.setFont(labelFont);
     }
 
+    // generate month input panel
     private void generateMonthInput() {
         monthPanel = new JPanel();
         monthPanel.setLayout(new FlowLayout());
@@ -397,6 +411,7 @@ public class MoodApp extends JPanel implements ActionListener {
         }
     }
 
+    // set image corresponding to different moods
     private void selectImage(Date moodDate) {
         switch (daySet.getDay(moodDate).getMood().name()) {
             case "Cheerful":
@@ -445,6 +460,7 @@ public class MoodApp extends JPanel implements ActionListener {
         }
     }
 
+    // load images from the file
     private void loadImages() {
         String sep = System.getProperty("file.separator");
         cheerfulImage = new ImageIcon(System.getProperty("user.dir") + sep + "lib" + sep

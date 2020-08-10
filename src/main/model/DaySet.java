@@ -116,7 +116,6 @@ public class DaySet {
         return result;
     }
 
-    // REQUIRE: Mood m should be one of the mood
     // EFFECT: count mood m in the given month and year
     public int countMood(Mood m, int year, int month) {
         int result = 0;

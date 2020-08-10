@@ -18,7 +18,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.List;
 
-// The main app
+// The main frame controls 6 panel and implement the main panel
 public class DaysApp extends JFrame implements ActionListener {
     private static final String DATE_FILE = "./data/dates.txt";
     private static final String ANNI_FILE = "./data/anniversary.txt";
@@ -59,6 +59,7 @@ public class DaysApp extends JFrame implements ActionListener {
     private Font labelFont;
     private Font btnFont;
 
+    // construct a main app
     public DaysApp() {
         super("Days");
         init();
@@ -81,6 +82,7 @@ public class DaysApp extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    // initialize all panels
     private void initializePanel() {
         anniPanel = new JPanel();
         diaryPanel = new JPanel();
@@ -89,12 +91,14 @@ public class DaysApp extends JFrame implements ActionListener {
         eventPanel = new JPanel();
     }
 
+    // initialize back button
     private void initializeBack() {
         backButton = new JButton("Back");
         backButton.setFont(new Font("", Font.BOLD, 30));
         backButton.addActionListener(this);
     }
 
+    // initialize main panel
     private void initializeMain() {
         main = new JPanel();
         main.setLayout(new BorderLayout(0, 0));
@@ -109,6 +113,7 @@ public class DaysApp extends JFrame implements ActionListener {
 
     }
 
+    // initialize the save and load button
     private void initializeSaveLoadBtn() {
         saveLoadPanel = new JPanel();
         saveLoadPanel.setLayout(new GridLayout(2, 1));
@@ -127,7 +132,7 @@ public class DaysApp extends JFrame implements ActionListener {
         main.add(saveLoadPanel, BorderLayout.EAST);
     }
 
-
+    // build the main display panel
     private void setMainDisplay() {
         mainDisplay = new JPanel();
 
@@ -153,6 +158,7 @@ public class DaysApp extends JFrame implements ActionListener {
         main.add(mainDisplay, BorderLayout.CENTER);
     }
 
+    // set main buttons in main menu
     private void setMainBtn() {
         mainBtn = new JPanel();
         mainBtn.setLayout(new FlowLayout());
@@ -174,6 +180,7 @@ public class DaysApp extends JFrame implements ActionListener {
 
     }
 
+    // initialize all button's setting
     private void setMainBtnHelper() {
         anniButton = new JButton("Anniversary");
         anniButton.setPreferredSize(new Dimension(350, 200));
@@ -196,6 +203,7 @@ public class DaysApp extends JFrame implements ActionListener {
         eventButton.setFont(btnFont);
     }
 
+    // perform something after any event happens
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
@@ -222,6 +230,7 @@ public class DaysApp extends JFrame implements ActionListener {
         }
     }
 
+    // another perform function helper
     private void actionPerformHelper(Object source) {
         if (source == moodButton) {
             main.setVisible(false);
@@ -289,11 +298,9 @@ public class DaysApp extends JFrame implements ActionListener {
             }
 
             initLoading(savedDayset, setHabitList);
-//            System.out.println("Days has been loaded");
 
         } catch (IOException e) {
             init();
-//            System.out.println("No record find! Create a new days");
         }
     }
 
@@ -303,7 +310,7 @@ public class DaysApp extends JFrame implements ActionListener {
         dayset = savedDayset;
     }
 
-    // EFFECTS: saves state of chequing and savings accounts to XXXX_FILE
+    // EFFECTS: saves state of days and their components to XXXX_FILE
     private void saveDays() {
         try {
             Writer dateWriter = new Writer(new File(DATE_FILE));
@@ -336,6 +343,7 @@ public class DaysApp extends JFrame implements ActionListener {
         }
     }
 
+    // save days helper(checkstyle)
     private void saveDaysHelper(Writer dateWriter, Writer anniWriter, Writer diaryWriter, Writer moodWriter,
                                 Writer habitWriter, Writer todoEventWriter, Writer setHabitWriter) {
         for (Habit habit : dayset.getSetHabitList().getHabitList()) {
@@ -352,6 +360,7 @@ public class DaysApp extends JFrame implements ActionListener {
         System.out.println("Days has been saved to file!");
     }
 
+    // initialize the days app
     private void init() {
         setToday();
         dayset = new DaySet();

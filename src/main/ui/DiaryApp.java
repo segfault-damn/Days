@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// diary panel
 public class DiaryApp extends JPanel implements ActionListener {
     private DaySet daySet;
     private Date today;
@@ -47,6 +48,7 @@ public class DiaryApp extends JPanel implements ActionListener {
     private JTextField writingTag;
     private JLabel writingTagLabel;
 
+    //  a new diary app
     public DiaryApp(DaySet dayset, Date today) {
         this.daySet = dayset;
         this.today = today;
@@ -61,12 +63,14 @@ public class DiaryApp extends JPanel implements ActionListener {
         runDiary();
     }
 
+    // run diary
     private void runDiary() {
         generateDateInput();
         initializeDiary();
         setVisible(true);
     }
 
+    // initialize diary panel
     private void initializeDiary() {
         setLayout(new BorderLayout());
 
@@ -84,6 +88,7 @@ public class DiaryApp extends JPanel implements ActionListener {
         add(diaryBtn, BorderLayout.SOUTH);
     }
 
+    // initialize display panel
     private void initializeDisplay() {
 
         diaryDisplay.removeAll();
@@ -92,6 +97,7 @@ public class DiaryApp extends JPanel implements ActionListener {
         diaryDisplay.updateUI();
     }
 
+    // initialize diary Button panel
     private void setDiaryBtn() {
         diaryBtn = new JPanel();
         diaryBtn.setLayout(new FlowLayout());
@@ -124,6 +130,7 @@ public class DiaryApp extends JPanel implements ActionListener {
         viewWithTagBtn.addActionListener(this);
     }
 
+    // add title label
     private void title(String s) {
         diaryDisplay.remove(title);
         title = new JLabel(s);
@@ -133,6 +140,7 @@ public class DiaryApp extends JPanel implements ActionListener {
         diaryDisplay.updateUI();
     }
 
+    // add message label
     private void message(String s) {
         diaryDisplay.remove(message);
         message = new JLabel(s);
@@ -143,6 +151,7 @@ public class DiaryApp extends JPanel implements ActionListener {
         diaryDisplay.updateUI();
     }
 
+    // perform action after buttons are clicked
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
@@ -164,6 +173,7 @@ public class DiaryApp extends JPanel implements ActionListener {
         }
     }
 
+    // perform confirm button
     private void confirmPerform(Object source) {
         if (source == confirmWrite) {
             writeDiaryPerform();
@@ -209,7 +219,7 @@ public class DiaryApp extends JPanel implements ActionListener {
         writingTag.setText("");
         writingTag.setFont(contentFont);
 
-        writeConfirm();
+        generateConfirm();
 
         diaryDisplay.add(writingPane, BoxLayout.LINE_AXIS);
         diaryDisplay.add(confirmWrite, BoxLayout.PAGE_AXIS);
@@ -220,7 +230,8 @@ public class DiaryApp extends JPanel implements ActionListener {
 
     }
 
-    private void writeConfirm() {
+    // intialize confirm write
+    private void generateConfirm() {
         confirmWrite = new JButton("Confirm");
         confirmWrite.setFont(btnFont);
         confirmWrite.setPreferredSize(new Dimension(350, 200));
@@ -256,6 +267,7 @@ public class DiaryApp extends JPanel implements ActionListener {
         diaryDisplay.updateUI();
     }
 
+    // generate confirm modify button
     private void modifyConfirm() {
         confirmModify = new JButton("Confirm");
         confirmModify.setFont(btnFont);
@@ -263,6 +275,7 @@ public class DiaryApp extends JPanel implements ActionListener {
         confirmModify.addActionListener(this);
     }
 
+    // view diary panel
     private void viewDiary() {
         title("View Diary on date:");
         message(" ");
@@ -274,6 +287,7 @@ public class DiaryApp extends JPanel implements ActionListener {
         diaryDisplay.updateUI();
     }
 
+    // generate view confirm button
     private void viewConfirm() {
         confirmView = new JButton("Confirm");
         confirmView.setFont(btnFont);
@@ -281,6 +295,7 @@ public class DiaryApp extends JPanel implements ActionListener {
         confirmView.addActionListener(this);
     }
 
+    // view with tag panel
     private void viewWithTag() {
         title("View diaries using tag!");
         message("Enter tag: ");
@@ -296,6 +311,7 @@ public class DiaryApp extends JPanel implements ActionListener {
         diaryDisplay.updateUI();
     }
 
+    // generate confirm tag button
     private void tagConfirm() {
         confirmTag = new JButton("Confirm");
         confirmTag.setFont(btnFont);
@@ -303,6 +319,7 @@ public class DiaryApp extends JPanel implements ActionListener {
         confirmTag.addActionListener(this);
     }
 
+    // generate date input panel
     private void generateDateInput() {
         datePanel = new JPanel();
         datePanel.setLayout(new FlowLayout());

@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// the anniversary panel
 public class AnniversaryApp extends JPanel implements ActionListener {
     private JPanel datePanel;
     private JPanel anniBtn;
@@ -44,6 +45,7 @@ public class AnniversaryApp extends JPanel implements ActionListener {
     private DaySet daySet;
     private Date today;
 
+    // construct a anniversary panel
     public AnniversaryApp(DaySet dayset, Date today) {
         this.daySet = dayset;
         this.today = today;
@@ -65,12 +67,14 @@ public class AnniversaryApp extends JPanel implements ActionListener {
 
     }
 
+    // run anniversary app
     private void runAnni() {
         initializeAnni();
         generateDateInput();
         setVisible(true);
     }
 
+    // initialize anniversary app
     private void initializeAnni() {
         setLayout(new BorderLayout());
 
@@ -102,6 +106,7 @@ public class AnniversaryApp extends JPanel implements ActionListener {
         add(anniBtn, BorderLayout.SOUTH);
     }
 
+    // initialize main display
     private void initializeDisplay() {
 
         aniDisplay.removeAll();
@@ -111,6 +116,7 @@ public class AnniversaryApp extends JPanel implements ActionListener {
         aniDisplay.updateUI();
     }
 
+    // set anniversary buttons
     private void setAnniversaryBtn() {
         anniBtn = new JPanel();
         anniBtn.setLayout(new FlowLayout());
@@ -143,6 +149,7 @@ public class AnniversaryApp extends JPanel implements ActionListener {
         editBtn.addActionListener(this);
     }
 
+    // build title label
     private void title(String s) {
         aniDisplay.remove(title);
         title = new JLabel(s);
@@ -152,6 +159,7 @@ public class AnniversaryApp extends JPanel implements ActionListener {
         aniDisplay.updateUI();
     }
 
+    // build message label
     private void message(String s) {
         aniDisplay.remove(message);
         message = new JLabel(s);
@@ -162,6 +170,7 @@ public class AnniversaryApp extends JPanel implements ActionListener {
         aniDisplay.updateUI();
     }
 
+    // perform something after events detected
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
@@ -170,7 +179,7 @@ public class AnniversaryApp extends JPanel implements ActionListener {
             setAnniversary();
         } else if (source == viewBtn) {
             initializeDisplay();
-            viewAnni();
+            viewAnniPerform();
         } else if (source == removeBtn) {
             initializeDisplay();
             removeAnniversary();
@@ -182,6 +191,7 @@ public class AnniversaryApp extends JPanel implements ActionListener {
         }
     }
 
+    // perform something after confirm buttons are clicked
     private void confirmPerformed(Object source) {
         if (source == confirmSet) {
             setAnniPerform();
@@ -220,7 +230,7 @@ public class AnniversaryApp extends JPanel implements ActionListener {
         aniDisplay.updateUI();
     }
 
-
+    // confirm anniversary set
     private void setAnniSetConfirm() {
         confirmSet = new JButton("Confirm");
         confirmSet.setFont(btnFont);
@@ -228,6 +238,7 @@ public class AnniversaryApp extends JPanel implements ActionListener {
         confirmSet.addActionListener(this);
     }
 
+    // remove anniversary
     private void removeAnniversary() {
         title("Remove Anniversary");
         message("on date: ");
@@ -239,6 +250,7 @@ public class AnniversaryApp extends JPanel implements ActionListener {
         aniDisplay.updateUI();
     }
 
+    // remove anniversary confirm button
     private void anniRemoveConfirm() {
         confirmRemove = new JButton("Confirm");
         confirmRemove.setFont(btnFont);
@@ -246,6 +258,7 @@ public class AnniversaryApp extends JPanel implements ActionListener {
         confirmRemove.addActionListener(this);
     }
 
+    // edit anniversary
     private void editAnniversary() {
         title("Edit Anniversary!");
         message("Select by name: ");
@@ -264,6 +277,7 @@ public class AnniversaryApp extends JPanel implements ActionListener {
         aniDisplay.updateUI();
     }
 
+    // anniversary edit confirm button
     private void anniEditConfirm() {
         confirmEdit = new JButton("Confirm");
         confirmEdit.setFont(btnFont);
@@ -271,6 +285,7 @@ public class AnniversaryApp extends JPanel implements ActionListener {
         confirmEdit.addActionListener(this);
     }
 
+    // initialize date input panel
     private void generateDateInput() {
         datePanel = new JPanel();
         datePanel.setLayout(new FlowLayout());
@@ -291,6 +306,7 @@ public class AnniversaryApp extends JPanel implements ActionListener {
         dateField3.setFont(labelFont);
     }
 
+    // perform set anniversary
     private void setAnniPerform() {
         title("Select Function:");
 
@@ -312,7 +328,8 @@ public class AnniversaryApp extends JPanel implements ActionListener {
         }
     }
 
-    private void viewAnni() {
+    // perform view anniversary
+    private void viewAnniPerform() {
         JTextArea contents = new JTextArea(10, 40);
         contents.setText("");
         contents.setFont(new Font("", Font.PLAIN, 50));

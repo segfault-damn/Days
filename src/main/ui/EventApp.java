@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// event panel
 public class EventApp extends JPanel implements ActionListener {
     private DaySet daySet;
     private Date today;
@@ -56,6 +57,7 @@ public class EventApp extends JPanel implements ActionListener {
     private int oldMin;
     private String oldName;
 
+    // construct a new event app
     public EventApp(DaySet dayset, Date today) {
         this.daySet = dayset;
         this.today = today;
@@ -70,6 +72,7 @@ public class EventApp extends JPanel implements ActionListener {
         runEvent();
     }
 
+    // run event
     private void runEvent() {
         generateDateInput();
         generateTimeInput();
@@ -77,6 +80,7 @@ public class EventApp extends JPanel implements ActionListener {
         setVisible(true);
     }
 
+    //initialize events
     private void initializeEvent() {
         setLayout(new BorderLayout());
 
@@ -99,6 +103,7 @@ public class EventApp extends JPanel implements ActionListener {
         add(eventBtn, BorderLayout.SOUTH);
     }
 
+    // initialize event display
     private void initializeDisplay() {
 
         eventDisplay.removeAll();
@@ -108,6 +113,7 @@ public class EventApp extends JPanel implements ActionListener {
         eventDisplay.updateUI();
     }
 
+    // intialize today's event
     private void initializeTodayEvent() {
         message("Your events today:");
         JTextArea viewArea = new JTextArea(5, 40);
@@ -135,6 +141,7 @@ public class EventApp extends JPanel implements ActionListener {
         eventDisplay.add(viewEventPane);
     }
 
+    // initialize evnet funtion buttons
     private void setEventBtn() {
         eventBtn = new JPanel();
         eventBtn.setLayout(new FlowLayout());
@@ -166,6 +173,7 @@ public class EventApp extends JPanel implements ActionListener {
         removeBtn.addActionListener(this);
     }
 
+    // build title label
     private void title(String s) {
         eventDisplay.remove(title);
         title = new JLabel(s);
@@ -175,6 +183,7 @@ public class EventApp extends JPanel implements ActionListener {
         eventDisplay.updateUI();
     }
 
+    // build message label
     private void message(String s) {
         eventDisplay.remove(message);
         message = new JLabel(s);
@@ -185,6 +194,7 @@ public class EventApp extends JPanel implements ActionListener {
         eventDisplay.updateUI();
     }
 
+    // perform actions after buttons are clicked
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
@@ -210,6 +220,7 @@ public class EventApp extends JPanel implements ActionListener {
         }
     }
 
+    // perform buttons after confirm buttons are clicked
     private void confirmPerform(Object source) {
         if (source == confirmAdd) {
             eventDisplay.remove(timePanel);
@@ -239,7 +250,7 @@ public class EventApp extends JPanel implements ActionListener {
         }
     }
 
-    // write today's diary
+    // add event
     private void addEvent() {
 
         title("Add Event");
@@ -259,6 +270,7 @@ public class EventApp extends JPanel implements ActionListener {
 
     }
 
+    // build add event confirm button
     private void addConfirm() {
         confirmAdd = new JButton("Confirm");
         confirmAdd.setFont(btnFont);
@@ -285,6 +297,7 @@ public class EventApp extends JPanel implements ActionListener {
         eventDisplay.updateUI();
     }
 
+    // build select event confirm button
     private void selectConfirm() {
         confirmModify = new JButton("Confirm");
         confirmModify.setFont(btnFont);
@@ -323,6 +336,7 @@ public class EventApp extends JPanel implements ActionListener {
         }
     }
 
+    // build change to new time confirm
     private void newTimeConfirm() {
         confirmNewTime = new JButton("Confirm");
         confirmNewTime.setFont(btnFont);
@@ -330,6 +344,7 @@ public class EventApp extends JPanel implements ActionListener {
         confirmNewTime.addActionListener(this);
     }
 
+    // view events
     private void viewEvent() {
         title("View Events on date:");
         message(" ");
@@ -341,6 +356,7 @@ public class EventApp extends JPanel implements ActionListener {
         eventDisplay.updateUI();
     }
 
+    // build view events confirm
     private void viewConfirm() {
         confirmView = new JButton("Confirm");
         confirmView.setFont(btnFont);
@@ -348,6 +364,7 @@ public class EventApp extends JPanel implements ActionListener {
         confirmView.addActionListener(this);
     }
 
+    // remove events
     private void removeEvent() {
         title("Remove Event");
         message("Enter date, time and name:");
@@ -365,6 +382,7 @@ public class EventApp extends JPanel implements ActionListener {
         eventDisplay.updateUI();
     }
 
+    // build remove events confirm button
     private void removeConfirm() {
         confirmRemove = new JButton("Confirm");
         confirmRemove.setFont(btnFont);
@@ -372,6 +390,7 @@ public class EventApp extends JPanel implements ActionListener {
         confirmRemove.addActionListener(this);
     }
 
+    // build date input panel
     private void generateDateInput() {
         datePanel = new JPanel();
         datePanel.setLayout(new FlowLayout());
@@ -392,6 +411,7 @@ public class EventApp extends JPanel implements ActionListener {
         dateField3.setFont(labelFont);
     }
 
+    // build time input panel
     private void generateTimeInput() {
         timePanel = new JPanel();
         timePanel.setLayout(new FlowLayout());
@@ -487,6 +507,7 @@ public class EventApp extends JPanel implements ActionListener {
         }
     }
 
+    // view event helper
     private void viewEventPerformHelper(JTextArea viewArea) {
         title("Your events on : ");
         viewArea.setFont(new Font("", Font.PLAIN, 60));
@@ -502,7 +523,7 @@ public class EventApp extends JPanel implements ActionListener {
     }
 
 
-    // view diary with given tag
+    // remove event perform
     private void removeEventPerform() {
         title("Select Function:");
 

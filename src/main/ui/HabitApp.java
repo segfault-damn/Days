@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
+// a habit app
 public class HabitApp extends JPanel implements ActionListener {
     private DaySet daySet;
     private Date today;
@@ -60,6 +60,7 @@ public class HabitApp extends JPanel implements ActionListener {
     private int markInputMonth;
     private int markInputDate;
 
+    // construct a new habit panel
     public HabitApp(DaySet dayset, Date today) {
         this.daySet = dayset;
         this.today = today;
@@ -74,12 +75,14 @@ public class HabitApp extends JPanel implements ActionListener {
         runHabit();
     }
 
+    // run habit app
     private void runHabit() {
         generateDateInput();
         initializeHabit();
         setVisible(true);
     }
 
+    // initialize a habit panel
     private void initializeHabit() {
         setLayout(new BorderLayout());
 
@@ -100,6 +103,7 @@ public class HabitApp extends JPanel implements ActionListener {
         add(habitBtn, BorderLayout.SOUTH);
     }
 
+    // initialize habit panel display
     private void initializeDisplay() {
 
         habitDisplay.removeAll();
@@ -109,6 +113,7 @@ public class HabitApp extends JPanel implements ActionListener {
         habitDisplay.updateUI();
     }
 
+    // initialize habit function buttons
     private void setHabitBtn() {
         habitBtn = new JPanel();
         habitBtn.setLayout(new FlowLayout());
@@ -139,6 +144,7 @@ public class HabitApp extends JPanel implements ActionListener {
         addListener();
     }
 
+    // add listeners to habit buttons
     private void addListener() {
         addList.addActionListener(this);
         removeList.addActionListener(this);
@@ -148,6 +154,7 @@ public class HabitApp extends JPanel implements ActionListener {
         monthBtn.addActionListener(this);
     }
 
+    // generate a list bar consists of add and remove items
     private void generateListBar() {
         listBar = new JMenuBar();
         listBar.setBorderPainted(true);
@@ -166,6 +173,7 @@ public class HabitApp extends JPanel implements ActionListener {
         listMenu.add(removeList);
     }
 
+    // build a title label
     private void title(String s) {
         habitDisplay.remove(title);
         title = new JLabel(s);
@@ -175,6 +183,7 @@ public class HabitApp extends JPanel implements ActionListener {
         habitDisplay.updateUI();
     }
 
+    // build a message label
     private void message(String s) {
         habitDisplay.remove(message);
         message = new JLabel(s);
@@ -183,6 +192,7 @@ public class HabitApp extends JPanel implements ActionListener {
         habitDisplay.updateUI();
     }
 
+    // perform actions after buttons are clicked
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
@@ -209,6 +219,7 @@ public class HabitApp extends JPanel implements ActionListener {
         }
     }
 
+    // perform events after confirm buttons are clicked
     public void confirmPerformed(Object source) {
         if (source == confirmAdd) {
             addHabitPerform();
@@ -229,6 +240,7 @@ public class HabitApp extends JPanel implements ActionListener {
         }
     }
 
+    // confirm perform helper
     private void confirmPerformHelper(Object source) {
         if (source == confirmMark) {
             markHabitPerform();
@@ -251,6 +263,7 @@ public class HabitApp extends JPanel implements ActionListener {
         }
     }
 
+    // generate a habit list viewer panel
     private void generateHabits() {
         JTextArea viewArea = new JTextArea(5, 10);
         viewArea.setPreferredSize(new Dimension(1000, 500));
@@ -266,6 +279,7 @@ public class HabitApp extends JPanel implements ActionListener {
         habitsPane.setPreferredSize(new Dimension(1000, 500));
     }
 
+    // generate a daily habit list viewer panel (habits in given date)
     private void generateDailyHabits(Date date) {
         JTextArea viewArea = new JTextArea(5, 10);
         viewArea.setPreferredSize(new Dimension(1000, 500));
@@ -286,7 +300,7 @@ public class HabitApp extends JPanel implements ActionListener {
     }
 
 
-    // write today's diary
+    // add habit to habitlist
     private void addHabit() {
 
         title("Add your habit!");
@@ -302,6 +316,7 @@ public class HabitApp extends JPanel implements ActionListener {
 
     }
 
+    // build add confirm button
     private void addConfirm() {
         confirmAdd = new JButton("Confirm");
         confirmAdd.setFont(btnFont);
@@ -309,7 +324,7 @@ public class HabitApp extends JPanel implements ActionListener {
         confirmAdd.addActionListener(this);
     }
 
-    // remove one habit
+    // remove one habit from habit list
     private void removeHabit() {
 
         title("Remove your habit!");
@@ -325,6 +340,7 @@ public class HabitApp extends JPanel implements ActionListener {
 
     }
 
+    // build remove confirm button
     private void removeConfirm() {
         confirmRemove = new JButton("Confirm");
         confirmRemove.setFont(btnFont);
@@ -332,7 +348,7 @@ public class HabitApp extends JPanel implements ActionListener {
         confirmRemove.addActionListener(this);
     }
 
-
+    // flip the status of one selected habit.
     private void markHabitSelectDate() {
         title("Mark habit!");
         message("Enter the date you want to mark:");
@@ -343,6 +359,7 @@ public class HabitApp extends JPanel implements ActionListener {
         habitDisplay.add(confirmDate, BoxLayout.PAGE_AXIS);
     }
 
+    // build the select date confirm button
     private void selectDateConfirm() {
         confirmDate = new JButton("Confirm");
         confirmDate.setFont(btnFont);
@@ -377,6 +394,7 @@ public class HabitApp extends JPanel implements ActionListener {
         }
     }
 
+    // build a mark confirm button
     private void markConfirm() {
         confirmMark = new JButton("Confirm");
         confirmMark.setFont(btnFont);
@@ -384,6 +402,7 @@ public class HabitApp extends JPanel implements ActionListener {
         confirmMark.addActionListener(this);
     }
 
+    // view habit in given date
     private void viewHabit() {
         title("View Habit!");
         message("Enter Date: ");
@@ -395,6 +414,7 @@ public class HabitApp extends JPanel implements ActionListener {
         habitDisplay.updateUI();
     }
 
+    // build view confirm button
     private void viewConfirm() {
         confirmView = new JButton("Confirm");
         confirmView.setFont(btnFont);
@@ -402,6 +422,7 @@ public class HabitApp extends JPanel implements ActionListener {
         confirmView.addActionListener(this);
     }
 
+    // edit one selected habit's name
     private void editHabit() {
         title("Edit Habit's name!");
         message("Enter name: ");
@@ -419,6 +440,7 @@ public class HabitApp extends JPanel implements ActionListener {
         habitDisplay.updateUI();
     }
 
+    // build edit confirm button
     private void editConfirm() {
         confirmEdit = new JButton("Confirm");
         confirmEdit.setFont(btnFont);
@@ -426,6 +448,7 @@ public class HabitApp extends JPanel implements ActionListener {
         confirmEdit.addActionListener(this);
     }
 
+    // view habits result in one month
     private void monthHabit() {
         title("View your habits record!");
         message("Enter year and month: ");
@@ -438,6 +461,7 @@ public class HabitApp extends JPanel implements ActionListener {
         habitDisplay.updateUI();
     }
 
+    // build month confirm button
     private void monthConfirm() {
         confirmMonth = new JButton("Confirm");
         confirmMonth.setFont(btnFont);
@@ -445,6 +469,7 @@ public class HabitApp extends JPanel implements ActionListener {
         confirmMonth.addActionListener(this);
     }
 
+    // generate date inputs panel
     private void generateDateInput() {
         datePanel = new JPanel();
         datePanel.setLayout(new FlowLayout());
@@ -465,6 +490,7 @@ public class HabitApp extends JPanel implements ActionListener {
         dateField3.setFont(labelFont);
     }
 
+    // generate month input panel
     private void generateMonthInput() {
         monthPanel = new JPanel();
         monthPanel.setLayout(new FlowLayout());
