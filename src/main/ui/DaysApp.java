@@ -27,8 +27,8 @@ public class DaysApp extends JFrame implements ActionListener {
     private static final String HABIT_FILE = "./data/habit.txt";
     private static final String EVENTS_FILE = "./data/events.txt";
     private static final String SETHABIT_FILE = "./data/sethabit.txt";
-    public static final int WIDTH = 2000;
-    public static final int HEIGHT = 1600;
+    public static final int WIDTH = 1000;
+    public static final int HEIGHT = 750;
 
     private DaySet dayset;
     private Date today;
@@ -59,13 +59,16 @@ public class DaysApp extends JFrame implements ActionListener {
     private Font labelFont;
     private Font btnFont;
 
+    private Dimension buttonDimension;
+
     // construct a main app
     public DaysApp() {
         super("Days");
         init();
 
-        labelFont = new Font("", Font.ITALIC, 150);
-        btnFont = new Font("", Font.BOLD, 45);
+        labelFont = new Font("", Font.ITALIC, 60);
+        btnFont = new Font("", Font.BOLD, 20);
+        buttonDimension = new Dimension(170,80);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -94,7 +97,7 @@ public class DaysApp extends JFrame implements ActionListener {
     // initialize back button
     private void initializeBack() {
         backButton = new JButton("Back");
-        backButton.setFont(new Font("", Font.BOLD, 30));
+        backButton.setFont(new Font("", Font.BOLD, 12));
         backButton.addActionListener(this);
     }
 
@@ -117,12 +120,12 @@ public class DaysApp extends JFrame implements ActionListener {
     private void initializeSaveLoadBtn() {
         saveLoadPanel = new JPanel();
         saveLoadPanel.setLayout(new GridLayout(2, 1));
-        saveLoadPanel.setPreferredSize(new Dimension(100, 500));
+        saveLoadPanel.setPreferredSize(new Dimension(60, 200));
 
         saveButton = new JButton("Save");
         loadButton = new JButton("Load");
-        saveButton.setFont(new Font("", Font.BOLD, 25));
-        loadButton.setFont(new Font("", Font.BOLD, 25));
+        saveButton.setFont(new Font("", Font.BOLD, 10));
+        loadButton.setFont(new Font("", Font.BOLD, 10));
 
         saveButton.addActionListener(this);
         loadButton.addActionListener(this);
@@ -137,7 +140,7 @@ public class DaysApp extends JFrame implements ActionListener {
         mainDisplay = new JPanel();
 
         dayLabel = new JLabel(" Days");
-        dayLabel.setFont(new Font("", Font.ITALIC, 250));
+        dayLabel.setFont(new Font("", Font.ITALIC, 130));
         main.add(dayLabel, BorderLayout.NORTH);
 
         mainDisplay.setLayout(new BoxLayout(mainDisplay, 1));
@@ -145,14 +148,14 @@ public class DaysApp extends JFrame implements ActionListener {
         label.setFont(labelFont);
         mainDisplay.add(label, BoxLayout.X_AXIS);
 
-        JLabel todayLabel = new JLabel("         "
+        JLabel todayLabel = new JLabel("              "
                 + today.getMonth() + "." + today.getDay());
-        todayLabel.setFont(new Font("", Font.PLAIN, 300));
+        todayLabel.setFont(new Font("", Font.PLAIN, 100));
         mainDisplay.add(todayLabel, BoxLayout.Y_AXIS);
 
-        JLabel yearLabel = new JLabel("                        ----"
+        JLabel yearLabel = new JLabel("                          ----"
                 + today.getYear());
-        yearLabel.setFont(new Font("", Font.ITALIC, 150));
+        yearLabel.setFont(new Font("", Font.ITALIC, 80));
         mainDisplay.add(yearLabel, BoxLayout.LINE_AXIS);
 
         main.add(mainDisplay, BorderLayout.CENTER);
@@ -183,23 +186,23 @@ public class DaysApp extends JFrame implements ActionListener {
     // initialize all button's setting
     private void setMainBtnHelper() {
         anniButton = new JButton("Anniversary");
-        anniButton.setPreferredSize(new Dimension(350, 200));
+        anniButton.setPreferredSize(buttonDimension);
         anniButton.setFont(btnFont);
 
         diaryButton = new JButton("Diary");
-        diaryButton.setPreferredSize(new Dimension(350, 200));
+        diaryButton.setPreferredSize(buttonDimension);
         diaryButton.setFont(btnFont);
 
         habitButton = new JButton("Habit");
-        habitButton.setPreferredSize(new Dimension(350, 200));
+        habitButton.setPreferredSize(buttonDimension);
         habitButton.setFont(btnFont);
 
         moodButton = new JButton("Mood");
-        moodButton.setPreferredSize(new Dimension(350, 200));
+        moodButton.setPreferredSize(buttonDimension);
         moodButton.setFont(btnFont);
 
         eventButton = new JButton("Event");
-        eventButton.setPreferredSize(new Dimension(350, 200));
+        eventButton.setPreferredSize(buttonDimension);
         eventButton.setFont(btnFont);
     }
 

@@ -47,15 +47,17 @@ public class DiaryApp extends JPanel implements ActionListener {
     private JTextArea writingArea;
     private JTextField writingTag;
     private JLabel writingTagLabel;
+    private Dimension buttonDimension;
 
     //  a new diary app
     public DiaryApp(DaySet dayset, Date today) {
         this.daySet = dayset;
         this.today = today;
 
-        labelFont = new Font("", Font.ITALIC, 150);
-        btnFont = new Font("", Font.BOLD, 45);
-        contentFont = new Font("", Font.PLAIN, 80);
+        labelFont = new Font("", Font.ITALIC, 60);
+        btnFont = new Font("", Font.BOLD, 20);
+        contentFont = new Font("", Font.PLAIN, 40);
+        buttonDimension = new Dimension(170,80);
 
         message = new JLabel("");
         title = new JLabel("");
@@ -104,19 +106,19 @@ public class DiaryApp extends JPanel implements ActionListener {
 
         writeBtn = new JButton("Write");
         writeBtn.setFont(btnFont);
-        writeBtn.setPreferredSize(new Dimension(350, 200));
+        writeBtn.setPreferredSize(buttonDimension);
 
         modifyBtn = new JButton("Modify");
         modifyBtn.setFont(btnFont);
-        modifyBtn.setPreferredSize(new Dimension(350, 200));
+        modifyBtn.setPreferredSize(buttonDimension);
 
         viewBtn = new JButton("View");
         viewBtn.setFont(btnFont);
-        viewBtn.setPreferredSize(new Dimension(350, 200));
+        viewBtn.setPreferredSize(buttonDimension);
 
         viewWithTagBtn = new JButton("Tag");
         viewWithTagBtn.setFont(btnFont);
-        viewWithTagBtn.setPreferredSize(new Dimension(350, 200));
+        viewWithTagBtn.setPreferredSize(buttonDimension);
 
 
         diaryBtn.add(writeBtn, FlowLayout.LEFT);
@@ -207,7 +209,7 @@ public class DiaryApp extends JPanel implements ActionListener {
         message(today.getYear() + "/" + today.getMonth() + "/" + today.getDay());
 
         writingArea = new JTextArea(5, 40);
-        writingArea.setFont(new Font("", Font.PLAIN, 50));
+        writingArea.setFont(new Font("", Font.PLAIN, 25));
         JScrollPane writingPane = new JScrollPane(writingArea);
         writingPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         writingPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -215,7 +217,7 @@ public class DiaryApp extends JPanel implements ActionListener {
         writingTagLabel = new JLabel("Enter tag (or leave blank): ");
         writingTagLabel.setFont(contentFont);
         writingTag = new JTextField(10);
-        writingTag.setSize(new Dimension(400, 100));
+        writingTag.setSize(new Dimension(80, 30));
         writingTag.setText("");
         writingTag.setFont(contentFont);
 
@@ -234,7 +236,7 @@ public class DiaryApp extends JPanel implements ActionListener {
     private void generateConfirm() {
         confirmWrite = new JButton("Confirm");
         confirmWrite.setFont(btnFont);
-        confirmWrite.setPreferredSize(new Dimension(350, 200));
+        confirmWrite.setPreferredSize(buttonDimension);
         confirmWrite.addActionListener(this);
     }
 
@@ -244,7 +246,7 @@ public class DiaryApp extends JPanel implements ActionListener {
         title("Modify selected diary!");
         message("Enter Date: ");
         writingArea = new JTextArea(5, 40);
-        writingArea.setFont(new Font("", Font.PLAIN, 60));
+        writingArea.setFont(new Font("", Font.PLAIN, 25));
         writingPane = new JScrollPane(writingArea);
         writingPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         writingPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -253,7 +255,7 @@ public class DiaryApp extends JPanel implements ActionListener {
         writingTagLabel = new JLabel("Enter tag (or leave blank): ");
         writingTagLabel.setFont(contentFont);
         writingTag = new JTextField(10);
-        writingTag.setSize(new Dimension(400, 100));
+        writingTag.setSize(buttonDimension);
         writingTag.setText("");
         writingTag.setFont(contentFont);
 
@@ -271,7 +273,7 @@ public class DiaryApp extends JPanel implements ActionListener {
     private void modifyConfirm() {
         confirmModify = new JButton("Confirm");
         confirmModify.setFont(btnFont);
-        confirmModify.setPreferredSize(new Dimension(350, 200));
+        confirmModify.setPreferredSize(buttonDimension);
         confirmModify.addActionListener(this);
     }
 
@@ -291,7 +293,7 @@ public class DiaryApp extends JPanel implements ActionListener {
     private void viewConfirm() {
         confirmView = new JButton("Confirm");
         confirmView.setFont(btnFont);
-        confirmView.setPreferredSize(new Dimension(350, 200));
+        confirmView.setPreferredSize(buttonDimension);
         confirmView.addActionListener(this);
     }
 
@@ -302,7 +304,7 @@ public class DiaryApp extends JPanel implements ActionListener {
 
         writingTag = new JTextField("");
         writingTag.setFont(contentFont);
-        writingTag.setSize(new Dimension(500, 200));
+        writingTag.setSize(buttonDimension);
         diaryDisplay.add(writingTag, BoxLayout.LINE_AXIS);
 
         tagConfirm();
@@ -315,7 +317,7 @@ public class DiaryApp extends JPanel implements ActionListener {
     private void tagConfirm() {
         confirmTag = new JButton("Confirm");
         confirmTag.setFont(btnFont);
-        confirmTag.setPreferredSize(new Dimension(350, 200));
+        confirmTag.setPreferredSize(buttonDimension);
         confirmTag.addActionListener(this);
     }
 
@@ -390,7 +392,7 @@ public class DiaryApp extends JPanel implements ActionListener {
             message("Tag: " + daySet.getDay(diaryDate).getDiary().getTag());
 
             JTextArea viewArea = new JTextArea(5, 40);
-            viewArea.setFont(new Font("", Font.PLAIN, 60));
+            viewArea.setFont(new Font("", Font.PLAIN, 25));
             viewArea.setText(daySet.getDay(diaryDate).getDiary().getContent());
             viewArea.setEditable(false);
             writingPane = new JScrollPane(viewArea);
@@ -411,7 +413,7 @@ public class DiaryApp extends JPanel implements ActionListener {
 
         JTextArea contents = new JTextArea(10, 40);
         contents.setText("");
-        contents.setFont(new Font("", Font.PLAIN, 60));
+        contents.setFont(new Font("", Font.PLAIN, 25));
         contents.setEditable(false);
         for (Diary d : daySet.searchByTag(tag)) {
 

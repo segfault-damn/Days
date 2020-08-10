@@ -56,15 +56,17 @@ public class EventApp extends JPanel implements ActionListener {
     private int oldHour;
     private int oldMin;
     private String oldName;
+    private Dimension buttonDimension;
 
     // construct a new event app
     public EventApp(DaySet dayset, Date today) {
         this.daySet = dayset;
         this.today = today;
 
-        labelFont = new Font("", Font.ITALIC, 150);
-        btnFont = new Font("", Font.BOLD, 45);
-        contentFont = new Font("", Font.PLAIN, 80);
+        labelFont = new Font("", Font.ITALIC, 60);
+        btnFont = new Font("", Font.BOLD, 20);
+        contentFont = new Font("", Font.PLAIN, 40);
+        buttonDimension = new Dimension(170,80);
 
         message = new JLabel("");
         title = new JLabel("");
@@ -117,7 +119,7 @@ public class EventApp extends JPanel implements ActionListener {
     private void initializeTodayEvent() {
         message("Your events today:");
         JTextArea viewArea = new JTextArea(5, 40);
-        viewArea.setFont(new Font("", Font.PLAIN, 60));
+        viewArea.setFont(new Font("", Font.PLAIN, 25));
         viewArea.setText(" ");
         viewArea.setEditable(false);
 
@@ -148,19 +150,19 @@ public class EventApp extends JPanel implements ActionListener {
 
         addBtn = new JButton("Add");
         addBtn.setFont(btnFont);
-        addBtn.setPreferredSize(new Dimension(350, 200));
+        addBtn.setPreferredSize(buttonDimension);
 
         modifyBtn = new JButton("Modify");
         modifyBtn.setFont(btnFont);
-        modifyBtn.setPreferredSize(new Dimension(350, 200));
+        modifyBtn.setPreferredSize(buttonDimension);
 
         viewBtn = new JButton("View");
         viewBtn.setFont(btnFont);
-        viewBtn.setPreferredSize(new Dimension(350, 200));
+        viewBtn.setPreferredSize(buttonDimension);
 
         removeBtn = new JButton("Remove");
         removeBtn.setFont(btnFont);
-        removeBtn.setPreferredSize(new Dimension(350, 200));
+        removeBtn.setPreferredSize(buttonDimension);
 
         eventBtn.add(addBtn, FlowLayout.LEFT);
         eventBtn.add(modifyBtn, FlowLayout.CENTER);
@@ -274,7 +276,7 @@ public class EventApp extends JPanel implements ActionListener {
     private void addConfirm() {
         confirmAdd = new JButton("Confirm");
         confirmAdd.setFont(btnFont);
-        confirmAdd.setPreferredSize(new Dimension(350, 200));
+        confirmAdd.setPreferredSize(buttonDimension);
         confirmAdd.addActionListener(this);
     }
 
@@ -301,7 +303,7 @@ public class EventApp extends JPanel implements ActionListener {
     private void selectConfirm() {
         confirmModify = new JButton("Confirm");
         confirmModify.setFont(btnFont);
-        confirmModify.setPreferredSize(new Dimension(350, 200));
+        confirmModify.setPreferredSize(buttonDimension);
         confirmModify.addActionListener(this);
     }
 
@@ -340,7 +342,7 @@ public class EventApp extends JPanel implements ActionListener {
     private void newTimeConfirm() {
         confirmNewTime = new JButton("Confirm");
         confirmNewTime.setFont(btnFont);
-        confirmNewTime.setPreferredSize(new Dimension(350, 200));
+        confirmNewTime.setPreferredSize(buttonDimension);
         confirmNewTime.addActionListener(this);
     }
 
@@ -360,7 +362,7 @@ public class EventApp extends JPanel implements ActionListener {
     private void viewConfirm() {
         confirmView = new JButton("Confirm");
         confirmView.setFont(btnFont);
-        confirmView.setPreferredSize(new Dimension(350, 200));
+        confirmView.setPreferredSize(buttonDimension);
         confirmView.addActionListener(this);
     }
 
@@ -386,7 +388,7 @@ public class EventApp extends JPanel implements ActionListener {
     private void removeConfirm() {
         confirmRemove = new JButton("Confirm");
         confirmRemove.setFont(btnFont);
-        confirmRemove.setPreferredSize(new Dimension(350, 200));
+        confirmRemove.setPreferredSize(buttonDimension);
         confirmRemove.addActionListener(this);
     }
 
@@ -510,7 +512,7 @@ public class EventApp extends JPanel implements ActionListener {
     // view event helper
     private void viewEventPerformHelper(JTextArea viewArea) {
         title("Your events on : ");
-        viewArea.setFont(new Font("", Font.PLAIN, 60));
+        viewArea.setFont(new Font("", Font.PLAIN, 25));
         viewArea.setText(" ");
         viewArea.setEditable(false);
 

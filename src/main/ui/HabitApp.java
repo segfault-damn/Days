@@ -59,15 +59,17 @@ public class HabitApp extends JPanel implements ActionListener {
     private int markInputYear;
     private int markInputMonth;
     private int markInputDate;
+    private Dimension buttonDimension;
 
     // construct a new habit panel
     public HabitApp(DaySet dayset, Date today) {
         this.daySet = dayset;
         this.today = today;
 
-        labelFont = new Font("", Font.ITALIC, 150);
-        btnFont = new Font("", Font.BOLD, 45);
-        contentFont = new Font("", Font.PLAIN, 80);
+        labelFont = new Font("", Font.ITALIC, 60);
+        btnFont = new Font("", Font.BOLD, 20);
+        contentFont = new Font("", Font.PLAIN, 40);
+        buttonDimension = new Dimension(170,80);
 
         message = new JLabel("");
         title = new JLabel("");
@@ -121,19 +123,19 @@ public class HabitApp extends JPanel implements ActionListener {
         generateListBar();
         markBtn = new JButton("Mark");
         markBtn.setFont(btnFont);
-        markBtn.setPreferredSize(new Dimension(350, 200));
+        markBtn.setPreferredSize(buttonDimension);
 
         viewBtn = new JButton("View");
         viewBtn.setFont(btnFont);
-        viewBtn.setPreferredSize(new Dimension(350, 200));
+        viewBtn.setPreferredSize(buttonDimension);
 
         editBtn = new JButton("Edit");
         editBtn.setFont(btnFont);
-        editBtn.setPreferredSize(new Dimension(350, 200));
+        editBtn.setPreferredSize(buttonDimension);
 
         monthBtn = new JButton("Month");
         monthBtn.setFont(btnFont);
-        monthBtn.setPreferredSize(new Dimension(350, 200));
+        monthBtn.setPreferredSize(buttonDimension);
 
         habitBtn.add(listBar, FlowLayout.LEFT);
         habitBtn.add(markBtn, FlowLayout.CENTER);
@@ -158,9 +160,9 @@ public class HabitApp extends JPanel implements ActionListener {
     private void generateListBar() {
         listBar = new JMenuBar();
         listBar.setBorderPainted(true);
-        listBar.setPreferredSize(new Dimension(350, 200));
+        listBar.setPreferredSize(buttonDimension);
         listMenu = new JMenu("List");
-        listMenu.setPreferredSize(new Dimension(350, 200));
+        listMenu.setPreferredSize(buttonDimension);
         listMenu.setFont(btnFont);
         addList = new JMenuItem("Add");
         addList.setFont(btnFont);
@@ -266,8 +268,8 @@ public class HabitApp extends JPanel implements ActionListener {
     // generate a habit list viewer panel
     private void generateHabits() {
         JTextArea viewArea = new JTextArea(5, 10);
-        viewArea.setPreferredSize(new Dimension(1000, 500));
-        viewArea.setFont(new Font("", Font.PLAIN, 60));
+        viewArea.setPreferredSize(new Dimension(400, 200));
+        viewArea.setFont(new Font("", Font.PLAIN, 25));
         viewArea.setText("Your current habit list: \n");
         for (String s : daySet.getSetHabitList().getHabitLabel()) {
             viewArea.append(s + "\n");
@@ -276,14 +278,14 @@ public class HabitApp extends JPanel implements ActionListener {
         habitsPane = new JScrollPane(viewArea);
         habitsPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         habitsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        habitsPane.setPreferredSize(new Dimension(1000, 500));
+        habitsPane.setPreferredSize(new Dimension(400, 200));
     }
 
     // generate a daily habit list viewer panel (habits in given date)
     private void generateDailyHabits(Date date) {
         JTextArea viewArea = new JTextArea(5, 10);
-        viewArea.setPreferredSize(new Dimension(1000, 500));
-        viewArea.setFont(new Font("", Font.PLAIN, 60));
+        viewArea.setPreferredSize(new Dimension(400, 200));
+        viewArea.setFont(new Font("", Font.PLAIN, 25));
         viewArea.setText(" Daily Habit List: \n");
         for (Habit h : daySet.getDay(date).getDailyHabitList().getHabitList()) {
             if (h.getIsDone()) {
@@ -296,7 +298,7 @@ public class HabitApp extends JPanel implements ActionListener {
         habitsPane = new JScrollPane(viewArea);
         habitsPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         habitsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        habitsPane.setPreferredSize(new Dimension(1000, 500));
+        habitsPane.setPreferredSize(new Dimension(400, 200));
     }
 
 
@@ -320,7 +322,7 @@ public class HabitApp extends JPanel implements ActionListener {
     private void addConfirm() {
         confirmAdd = new JButton("Confirm");
         confirmAdd.setFont(btnFont);
-        confirmAdd.setPreferredSize(new Dimension(350, 200));
+        confirmAdd.setPreferredSize(buttonDimension);
         confirmAdd.addActionListener(this);
     }
 
@@ -344,7 +346,7 @@ public class HabitApp extends JPanel implements ActionListener {
     private void removeConfirm() {
         confirmRemove = new JButton("Confirm");
         confirmRemove.setFont(btnFont);
-        confirmRemove.setPreferredSize(new Dimension(350, 200));
+        confirmRemove.setPreferredSize(buttonDimension);
         confirmRemove.addActionListener(this);
     }
 
@@ -363,7 +365,7 @@ public class HabitApp extends JPanel implements ActionListener {
     private void selectDateConfirm() {
         confirmDate = new JButton("Confirm");
         confirmDate.setFont(btnFont);
-        confirmDate.setPreferredSize(new Dimension(350, 200));
+        confirmDate.setPreferredSize(buttonDimension);
         confirmDate.addActionListener(this);
     }
 
@@ -398,7 +400,7 @@ public class HabitApp extends JPanel implements ActionListener {
     private void markConfirm() {
         confirmMark = new JButton("Confirm");
         confirmMark.setFont(btnFont);
-        confirmMark.setPreferredSize(new Dimension(350, 200));
+        confirmMark.setPreferredSize(buttonDimension);
         confirmMark.addActionListener(this);
     }
 
@@ -418,7 +420,7 @@ public class HabitApp extends JPanel implements ActionListener {
     private void viewConfirm() {
         confirmView = new JButton("Confirm");
         confirmView.setFont(btnFont);
-        confirmView.setPreferredSize(new Dimension(350, 200));
+        confirmView.setPreferredSize(buttonDimension);
         confirmView.addActionListener(this);
     }
 
@@ -444,7 +446,7 @@ public class HabitApp extends JPanel implements ActionListener {
     private void editConfirm() {
         confirmEdit = new JButton("Confirm");
         confirmEdit.setFont(btnFont);
-        confirmEdit.setPreferredSize(new Dimension(350, 200));
+        confirmEdit.setPreferredSize(buttonDimension);
         confirmEdit.addActionListener(this);
     }
 
@@ -465,7 +467,7 @@ public class HabitApp extends JPanel implements ActionListener {
     private void monthConfirm() {
         confirmMonth = new JButton("Confirm");
         confirmMonth.setFont(btnFont);
-        confirmMonth.setPreferredSize(new Dimension(350, 200));
+        confirmMonth.setPreferredSize(buttonDimension);
         confirmMonth.addActionListener(this);
     }
 
@@ -584,8 +586,8 @@ public class HabitApp extends JPanel implements ActionListener {
             int inputMonth = Integer.parseInt(dateField2.getText());
 
             JTextArea viewArea = new JTextArea(5, 10);
-            viewArea.setPreferredSize(new Dimension(1000, 500));
-            viewArea.setFont(new Font("", Font.PLAIN, 60));
+            viewArea.setPreferredSize(new Dimension(400, 200));
+            viewArea.setFont(new Font("", Font.PLAIN, 25));
             viewArea.setText("\n");
 
             for (Habit h : daySet.getSetHabitList().getHabitList()) {
@@ -596,7 +598,7 @@ public class HabitApp extends JPanel implements ActionListener {
             habitsPane = new JScrollPane(viewArea);
             habitsPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
             habitsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-            habitsPane.setPreferredSize(new Dimension(1000, 500));
+            habitsPane.setPreferredSize(new Dimension(400, 200));
             message("In " + inputYear + "." + inputMonth);
 
             habitDisplay.add(habitsPane);
