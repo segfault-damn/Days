@@ -370,6 +370,8 @@ public class AnniversaryApp extends JPanel implements ActionListener {
             message(daySet.getDay(date).getAnniversary().getLabel() + " has been removed");
         } catch (DateErrorException | NumberFormatException e) {
             message("Date Entered is invalid");
+        } catch (RuntimeException e) {
+            message("Input date is not an anniversary!");
         }
     }
 
@@ -379,6 +381,7 @@ public class AnniversaryApp extends JPanel implements ActionListener {
         String name = textField2.getText();
         String comment = textField3.getText();
         for (Day day : daySet.getDays()) {
+            message(s + " does not exist!");
             if (day.getAnniversary().getLabel().equals(s)) {
                 Anniversary anniversary = new Anniversary(day.getDate(), name, comment);
                 anniversary.setAnniversary();

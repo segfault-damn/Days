@@ -68,3 +68,22 @@ Click "view" and enter today's date to see different images corresponding to dif
 - You can save the state of my application by clicking "save" button on the right side of the main menu.
 
 - You can reload the state of my application by clicking "load" button on the right side of the main menu.
+
+##Phase 4: Task 2
+I choose "Test and design a class that is robust." I add five exceptions. The date error exception prevent user entering 
+invalid date such as 2020/2/30 and 2021/2/29. It is in Date class and Date constructor. UI will catch this runtime
+exception once a new date is contructed (eg. in MoodApp class, viewMoodPerform method). Also, "NumberFormatException"
+ is also caught where user input date in case users enter String in DatePanel. 
+
+In addition, RemoveAnniException works when user inputs a date that does not has an anniversary. The "removeDayAnniversary"
+method in "Day" class throws a new runtime exception and could be caught in "removeAnniPerform" method in 
+"AnniversaryApp" class.
+
+
+
+
+##Phase 4: Task 3
+
+- I found that there are some coupling in my program. Most of my days' entries have a "Date" field. While day
+also have a "date" field and all of these entries are also Day's field. So I remove entries "Date" field
+to reduce coupling.  

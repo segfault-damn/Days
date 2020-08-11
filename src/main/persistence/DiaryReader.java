@@ -57,14 +57,14 @@ public class DiaryReader {
     // day, element 3 represents the content, elements 4 represents the tag
     // EFFECTS: returns an diary constructed from components
     private static Diary parseDiary(List<String> components) {
-        int year = Integer.parseInt(components.get(0));
-        int month = Integer.parseInt(components.get(1));
-        int day = Integer.parseInt(components.get(2));
-        String content = components.get(3);
-        String tag = components.get(4);
+//        int year = Integer.parseInt(components.get(0));
+//        int month = Integer.parseInt(components.get(1));
+//        int day = Integer.parseInt(components.get(2));
+        String content = components.get(0);
+        String tag = components.get(1);
 
-        Date date = new Date(year, month, day);
-        Diary diary = new Diary(date);
+//        Date date = new Date(year, month, day);
+        Diary diary = new Diary();
         diary.setContent(content);
         diary.setTag(tag);
         return diary;

@@ -54,9 +54,9 @@ class DaySetTest {
             fail("Date is invalid");
         }
 
-        diary1 = new Diary(date1);
-        diary2 = new Diary(date2);
-        diary3 = new Diary(date3);
+        diary1 = new Diary();
+        diary2 = new Diary();
+        diary3 = new Diary();
 
         diary1.setTag("Tag1");
         diary3.setTag("Tag1");
@@ -249,7 +249,7 @@ class DaySetTest {
         testdaySet.getDay(date5).setMood(mood1);
 
 
-        assertEquals(1, testdaySet.countMood(mood2, 2020, 02));
-        assertEquals(2, testdaySet.countMood(mood1, 2020, 02));
+        assertEquals(1, testdaySet.countMood(mood2, 2020, 2));
+        assertEquals(2, testdaySet.countMood(mood1, 2020, 2));
     }
 }

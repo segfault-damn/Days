@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.HabitNotExistException;
 import model.entries.*;
 
 import java.util.ArrayList;
@@ -57,12 +58,19 @@ public class DaySet {
         return targetDay;
     }
 
+    //Modifies: this
+    // EFFECT: edit given event to given date and time
+    public void editEvent(TodoEvent e,Date date, int hour, int min) {
+        getDay(e.getDate()).getEvent(e.getHour(),e.getMin(),e.getLabel()).setTime(date,hour,min);
+    }
+
+
     // EFFECT: get all diary with tag "tag"
-    public List<Diary> searchByTag(String tag) {
-        List<Diary> diaryWithTag = new ArrayList<>();
+    public List<Day> searchByTag(String tag) {
+        List<Day> diaryWithTag = new ArrayList<>();
         for (Day day : days) {
             if (tag.equals(day.getDiary().getTag())) {
-                diaryWithTag.add(day.getDiary());
+                diaryWithTag.add(day);
             }
         }
         return diaryWithTag;
@@ -81,24 +89,32 @@ public class DaySet {
     // MODIFIER: day
     // EFFECT: remove one habit and renew all habit in days
     public void removeDailyHabitList(Habit h) {
-        for (Day day : days) {
+        if (setHabitList.getHabitLabel().contains(h.getLabel())) {
+            for (Day day : days) {
 
-            day.getDailyHabitList().getHabitList().remove(day.getDailyHabitList().getHabit(h.getLabel()));
+                day.getDailyHabitList().getHabitList().remove(day.getDailyHabitList().getHabit(h.getLabel()));
 
+            }
+            setHabitList.removeHabit(setHabitList.getHabit(h.getLabel()));
+        } else {
+            throw new HabitNotExistException();
         }
-        setHabitList.removeHabit(setHabitList.getHabit(h.getLabel()));
     }
 
 
     // MODIFIER: day
     // EFFECT: remove one habit and renew all habit in days
     public void editDailyHabitList(Habit h, String s) {
-        for (Day day : days) {
+        if (setHabitList.getHabitLabel().contains(h.getLabel())) {
+            for (Day day : days) {
 
-            day.getDailyHabitList().editOneHabit(day.getDailyHabitList().getHabit(h.getLabel()), s);
+                day.getDailyHabitList().editOneHabit(day.getDailyHabitList().getHabit(h.getLabel()), s);
 
+            }
+            setHabitList.editOneHabit(setHabitList.getHabit(h.getLabel()), s);
+        } else {
+            throw new HabitNotExistException();
         }
-        setHabitList.editOneHabit(setHabitList.getHabit(h.getLabel()), s);
     }
 
 

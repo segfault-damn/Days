@@ -1,6 +1,8 @@
 package model;
 
 
+import exceptions.EventExistException;
+import exceptions.RemoveAnniException;
 import model.entries.*;
 import persistence.Saveable;
 
@@ -23,7 +25,7 @@ public class Day implements Saveable {
 
         this.date = date;
         anniversary = new Anniversary(this.date, " ", " ");
-        diary = new Diary(date);
+        diary = new Diary();
         todoEvents = new ArrayList<>();
 
         mood = Mood.Default;
@@ -41,7 +43,12 @@ public class Day implements Saveable {
     // MODIFIER: this
     // EFFECT: remove anniversary
     public void removeDayAnniversary() {
-        anniversary.removeAnniversary();
+        if (anniversary.getIsAnniversary()) {
+            anniversary.removeAnniversary();
+        } else {
+            throw new RemoveAnniException();
+        }
+
     }
 
     // MODIFIER: this
@@ -62,13 +69,18 @@ public class Day implements Saveable {
         dailyHabitList.getHabit(h.getLabel()).flipDone();
     }
 
-
-    // REQUIRE: the event added can not have the same time as other events
     // MODIFIER: this
     // EFFECT: add a todoEvent to the list
     public void addEvent(TodoEvent e) {
+        for (TodoEvent todoEvent : todoEvents) {
+            if (todoEvent.getMin() == e.getMin() && todoEvent.getHour() == e.getHour()
+                    && todoEvent.getLabel().equals(e.getLabel())) {
+                throw new EventExistException();
+            }
+        }
         todoEvents.add(e);
     }
+
 
     // REQUIRE: the time input should be one of the event
     // MODIFIER: this

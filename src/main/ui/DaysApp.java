@@ -27,7 +27,7 @@ public class DaysApp extends JFrame implements ActionListener {
     private static final String HABIT_FILE = "./data/habit.txt";
     private static final String EVENTS_FILE = "./data/events.txt";
     private static final String SETHABIT_FILE = "./data/sethabit.txt";
-    public static final int WIDTH = 1000;
+    public static final int WIDTH = 1180;
     public static final int HEIGHT = 750;
 
     private DaySet dayset;

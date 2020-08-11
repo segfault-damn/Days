@@ -1,5 +1,6 @@
 package model.entries;
 
+import exceptions.HabitContainException;
 import persistence.HabitListReader;
 import persistence.Saveable;
 
@@ -19,11 +20,15 @@ public class HabitList implements Saveable {
         habitList = new ArrayList<>();
     }
 
-    // REQUIRE: this habit list should not have duplicated habit
+
     // MODIFIER:this
     // EFFECT:add a habit to habit list
     public void addHabit(Habit habit) {
-        habitList.add(habit);
+        if (this.getHabitLabel().contains(habit.getLabel())) {
+            throw new HabitContainException();
+        } else {
+            habitList.add(habit);
+        }
     }
 
 

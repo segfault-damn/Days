@@ -130,10 +130,10 @@ public class WriterTest {
 
     @Test
     void testWriteDiary() {
-        Diary diary1 = new Diary(date1);
+        Diary diary1 = new Diary();
         diary1.setTag("Good");
         diary1.setContent("");
-        Diary diary2 = new Diary(date2);
+        Diary diary2 = new Diary();
         diary2.setContent("Lmao");
         diary2.setTag("No tag");
         // save date to file
@@ -146,15 +146,15 @@ public class WriterTest {
             List<Diary> readBack = DiaryReader.readDiary(new File(TESTDIARY_FILE));
             Diary readBackDiary1 = readBack.get(0);
             Diary readBackDiary2 = readBack.get(1);
-            assertEquals(2000,readBackDiary1.getDate().getYear());
-            assertEquals(6,readBackDiary1.getDate().getMonth());
-            assertEquals(26,readBackDiary1.getDate().getDay());
+//            assertEquals(2000,readBackDiary1.getDate().getYear());
+//            assertEquals(6,readBackDiary1.getDate().getMonth());
+//            assertEquals(26,readBackDiary1.getDate().getDay());
             assertEquals(" ",readBackDiary1.getContent());
             assertEquals("Good",readBackDiary1.getTag());
 
-            assertEquals(2000,readBackDiary2.getDate().getYear());
-            assertEquals(10,readBackDiary2.getDate().getMonth());
-            assertEquals(29,readBackDiary2.getDate().getDay());
+//            assertEquals(2000,readBackDiary2.getDate().getYear());
+//            assertEquals(10,readBackDiary2.getDate().getMonth());
+//            assertEquals(29,readBackDiary2.getDate().getDay());
             assertEquals("Lmao",readBackDiary2.getContent());
             assertEquals("No tag",readBackDiary2.getTag());
         } catch (IOException e) {

@@ -28,21 +28,12 @@ public class DiaryReaderTest {
             Diary diary2 = diaries.get(1);
             Diary diary3 = diaries.get(2);
 
-            assertEquals(2020, diary1.getDate().getYear());
-            assertEquals(3,diary1.getDate().getMonth());
-            assertEquals(14, diary1.getDate().getDay());
             assertEquals("I love laisen",diary1.getContent());
             assertEquals("No tag", diary1.getTag());
 
-            assertEquals(2000, diary2.getDate().getYear());
-            assertEquals(10,diary2.getDate().getMonth());
-            assertEquals(29, diary2.getDate().getDay());
             assertEquals("Hahaha",diary2.getContent());
             assertEquals("testTag", diary2.getTag());
 
-            assertEquals(2000, diary3.getDate().getYear());
-            assertEquals(6,diary3.getDate().getMonth());
-            assertEquals(26, diary3.getDate().getDay());
             assertEquals(" ",diary3.getContent());
             assertEquals("No tag", diary3.getTag());
         } catch (IOException e) {

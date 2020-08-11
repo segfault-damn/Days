@@ -31,7 +31,7 @@ class DayTest {
         testDate = new Date(2020, 2, 13);
         testDay = new Day(testDate);
 
-        diary = new Diary(testDate);
+        diary = new Diary();
         diary.setContent("Love Laisen");
         testMood = Cheerful;
         habit1 = new Habit("Play LOL");
@@ -68,7 +68,6 @@ class DayTest {
     public void testSetDiary() {
         testDay.setDiary(diary);
         assertEquals(diary, testDay.getDiary());
-        assertEquals(diary.getDate(),testDay.getDate());
     }
 
     @Test

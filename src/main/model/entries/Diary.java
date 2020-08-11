@@ -13,8 +13,8 @@ public class Diary implements Saveable {
     private String tag;
 
     // construct diary with given date
-    public Diary(Date date) {
-        this.date = date;
+    public Diary() {
+ //       this.date = date;
         this.content = " ";
         this.tag = "No tag";
     }
@@ -51,9 +51,9 @@ public class Diary implements Saveable {
         return tag;
     }
 
-    public Date getDate() {
-        return date;
-    }
+//    public Date getDate() {
+//        return date;
+//    }
 
     public String getContent() {
         return content;
@@ -61,12 +61,6 @@ public class Diary implements Saveable {
 
     @Override
     public void save(PrintWriter printWriter) {
-        printWriter.print(date.getYear());
-        printWriter.print(DiaryReader.DELIMITER);
-        printWriter.print(date.getMonth());
-        printWriter.print(DiaryReader.DELIMITER);
-        printWriter.print(date.getDay());
-        printWriter.print(DiaryReader.DELIMITER);
         printWriter.print(content);
         printWriter.print(DiaryReader.DELIMITER);
         printWriter.print(tag);

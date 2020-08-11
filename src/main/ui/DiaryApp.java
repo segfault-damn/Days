@@ -2,6 +2,7 @@ package ui;
 
 import exceptions.DateErrorException;
 import model.Date;
+import model.Day;
 import model.DaySet;
 import model.entries.Diary;
 
@@ -348,7 +349,7 @@ public class DiaryApp extends JPanel implements ActionListener {
         title("Select Function: ");
         String s = writingArea.getText();
         String tag = writingTag.getText();
-        Diary d = new Diary(today);
+        Diary d = new Diary();
         d.setContent(s);
         daySet.getDay(today).setDiary(d);
         if (tag.equals("")) {
@@ -415,11 +416,11 @@ public class DiaryApp extends JPanel implements ActionListener {
         contents.setText("");
         contents.setFont(new Font("", Font.PLAIN, 25));
         contents.setEditable(false);
-        for (Diary d : daySet.searchByTag(tag)) {
+        for (Day d : daySet.searchByTag(tag)) {
 
 
             String s = d.getDate().getYear() + "." + d.getDate().getMonth() + "."
-                    + d.getDate().getDay() + "\n" + d.getContent() + "\n";
+                    + d.getDate().getDay() + "\n" + d.getDiary().getContent() + "\n";
             contents.append(s);
         }
         writingPane = new JScrollPane(contents);

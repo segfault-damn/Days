@@ -1,6 +1,8 @@
 package ui;
 
 import exceptions.DateErrorException;
+import exceptions.HabitContainException;
+import exceptions.HabitNotExistException;
 import model.Date;
 import model.DaySet;
 import model.entries.Habit;
@@ -302,7 +304,7 @@ public class HabitApp extends JPanel implements ActionListener {
     }
 
 
-    // add habit to habitlist
+    // add habit to habit list
     private void addHabit() {
 
         title("Add your habit!");
@@ -515,8 +517,12 @@ public class HabitApp extends JPanel implements ActionListener {
         String s = habitName.getText();
 
         Habit habit = new Habit(s);
-        daySet.addDailyHabitList(habit);
-        message(s + " has been added to your habit list!");
+        try {
+            daySet.addDailyHabitList(habit);
+            message(s + " has been added to your habit list!");
+        } catch (HabitContainException e) {
+            message("Fail to add! " + s + " already exists in your habit list!");
+        }
     }
 
     // remove the habit with a given name
@@ -525,8 +531,12 @@ public class HabitApp extends JPanel implements ActionListener {
         String s = habitName.getText();
 
         Habit habit = new Habit(s);
-        daySet.removeDailyHabitList(habit);
-        message(s + " has been removed from your habit list!");
+        try {
+            daySet.removeDailyHabitList(habit);
+            message(s + " has been removed from your habit list!");
+        } catch (HabitNotExistException e) {
+            message(s + " is not in your habit list. Fail to remove!");
+        }
     }
 
     // flip the state of one particular day
@@ -534,11 +544,11 @@ public class HabitApp extends JPanel implements ActionListener {
         title("Select Function:");
         Date habitDate = new Date(markInputYear, markInputMonth, markInputDate);
         String s = habitName.getText();
-
+        message(s + " is not in your habit list. Please add habit first.");
         for (Habit h : daySet.getDay(habitDate).getDailyHabitList().getHabitList()) {
             if (h.getLabel().equals(s)) {
                 h.flipDone();
-                message(s + "has been changed");
+                message(s + " has been marked");
             }
         }
 
@@ -571,15 +581,17 @@ public class HabitApp extends JPanel implements ActionListener {
         String name = habitName.getText();
         String newName = newHabitName.getText();
         Habit habit = new Habit(name);
-        daySet.editDailyHabitList(habit, newName);
-        habitDisplay.updateUI();
-        message(name + " has been change to " + newName);
-
+        try {
+            daySet.editDailyHabitList(habit, newName);
+            habitDisplay.updateUI();
+            message(name + " has been changed to " + newName);
+        } catch (HabitNotExistException e) {
+            message(name + " is not in your habit list. Fail to edit!");
+        }
     }
 
     // view the statistic data of all habit done in one particular month
     private void monthPerform() {
-
         title("Select Function");
         try {
             int inputYear = Integer.parseInt(dateField1.getText());
