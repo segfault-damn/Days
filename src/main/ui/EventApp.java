@@ -3,6 +3,7 @@ package ui;
 import exceptions.DateErrorException;
 import exceptions.EventExistException;
 import model.Date;
+import model.Day;
 import model.DaySet;
 import model.entries.TodoEvent;
 
@@ -10,6 +11,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 // event panel
 public class EventApp extends JPanel implements ActionListener {
@@ -52,6 +55,7 @@ public class EventApp extends JPanel implements ActionListener {
     private JTextField eventName;
 
     private TodoEvent editEvent;
+    private Day oldEventDay;
     private Dimension buttonDimension;
 
     // construct a new event app
@@ -280,7 +284,6 @@ public class EventApp extends JPanel implements ActionListener {
     private void modifyEvent() {
         title("Change Time of events");
         message("Enter date, time and name of target event:");
-        generateTimeInput();
 
         eventName = new JTextField("Name");
         eventName.setFont(contentFont);
@@ -314,16 +317,16 @@ public class EventApp extends JPanel implements ActionListener {
 
             int oldHour = Integer.parseInt(timeField1.getText());
             int oldMin = Integer.parseInt(timeField2.getText());
-            String oldName = eventName.getText();
-            Date eventDate = new Date(oldYear, oldMonth, oldDate);
-            if (daySet.getDay(eventDate).getEvent(oldHour, oldMin, oldName) != null) {
+            String name = eventName.getText();
+            oldEventDay = daySet.getDay(new Date(oldYear, oldMonth, oldDate));
+            if (oldEventDay.getEvent(oldHour, oldMin, name) != null) {
                 title("Change event!");
                 message("Enter new date and time:");
                 newTimeConfirm();
-                eventDisplay.add(datePanel, BoxLayout.LINE_AXIS);
+                eventDisplay.add(datePanel,BoxLayout.LINE_AXIS);
                 eventDisplay.add(confirmNewTime, BoxLayout.PAGE_AXIS);
                 eventDisplay.add(timePanel, BoxLayout.PAGE_AXIS);
-                editEvent = new TodoEvent(eventDate,oldName,oldHour,oldMin);
+                editEvent = new TodoEvent(name,oldHour,oldMin);
             } else {
                 message("Event not found");
             }
@@ -441,12 +444,12 @@ public class EventApp extends JPanel implements ActionListener {
 
             String name = eventName.getText();
 
-            daySet.getDay(eventDate).addEvent(new TodoEvent(eventDate, name, inputHour, inputMin));
-            message(name + " has been added.");
+            daySet.getDay(eventDate).addEvent(new TodoEvent(name, inputHour, inputMin));
+            message(name + " has been added!");
         } catch (DateErrorException | NumberFormatException e) {
-            message("Date Entered is invalid");
+            message("Date Entered is invalid!");
         } catch (EventExistException e) {
-            message("Input event already exists");
+            message("Input event already exists!");
         }
 
     }
@@ -459,16 +462,16 @@ public class EventApp extends JPanel implements ActionListener {
             int inputMonth = Integer.parseInt(dateField2.getText());
             int inputDate = Integer.parseInt(dateField3.getText());
 
+            Date newDate = new Date(inputYear,inputMonth,inputDate);
+
             int newHour = Integer.parseInt(timeField1.getText());
             int newMin = Integer.parseInt(timeField2.getText());
-            Date eventDate = new Date(inputYear, inputMonth, inputDate);
-
-            String name = eventName.getText();
-
-            daySet.editEvent(editEvent,eventDate,newHour,newMin);
-            message(name + " has been modified to a new time!");
+            daySet.editEvent(oldEventDay,editEvent,newDate,newHour,newMin);
+            message("Event has been modified to a new time!");
         } catch (DateErrorException | NumberFormatException e) {
-            message("Date Entered is invalid");
+            message("Date Entered is invalid!");
+        } catch (EventExistException e) {
+            message("Event at new time already exists!");
         }
     }
 
@@ -501,7 +504,7 @@ public class EventApp extends JPanel implements ActionListener {
                 viewArea.append("  \n");
             }
         } catch (DateErrorException | NumberFormatException e) {
-            message("Date Entered is invalid");
+            message("Date Entered is invalid!");
         }
     }
 
@@ -534,11 +537,17 @@ public class EventApp extends JPanel implements ActionListener {
             int inputMin = Integer.parseInt(timeField2.getText());
             Date eventDate = new Date(inputYear, inputMonth, inputDate);
 
+            int size = daySet.getDay(eventDate).getTodoEventList().size();
             String name = eventName.getText();
             daySet.getDay(eventDate).removeEvent(inputHour, inputMin, name);
-            message(name + " has been removed");
+            // check whether removed event is on that list
+            if (size == daySet.getDay(eventDate).getTodoEventList().size()) {
+                message(name + " is not on your event list!");
+            } else {
+                message(name + " has been removed!");
+            }
         } catch (DateErrorException | NumberFormatException e) {
-            message("Date Entered is invalid");
+            message("Date Entered is invalid!");
         }
     }
 }

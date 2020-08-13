@@ -1,5 +1,7 @@
 package model.entriesTest;
 
+import exceptions.HabitContainException;
+import exceptions.HabitNotExistException;
 import model.entries.Habit;
 import model.entries.HabitList;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,12 +29,24 @@ public class HabitListTest {
     // MODIFIER:this
     // EFFECT:add a habit to habit list
     public void testAddHabit() {
-        testHabitList.addHabit(habit1);
-        assertTrue(testHabitList.getHabitList().contains(habit1));
-        assertEquals(1, testHabitList.getHabitList().size());
-        testHabitList.addHabit(habit2);
-        assertTrue(testHabitList.getHabitList().contains(habit2));
-        assertTrue(testHabitList.getHabitList().contains(habit1));
+        try {
+            testHabitList.addHabit(habit1);
+            assertTrue(testHabitList.getHabitList().contains(habit1));
+            assertEquals(1, testHabitList.getHabitList().size());
+            testHabitList.addHabit(habit2);
+            assertTrue(testHabitList.getHabitList().contains(habit2));
+            assertTrue(testHabitList.getHabitList().contains(habit1));
+            assertEquals(2, testHabitList.getHabitList().size());
+        } catch (HabitContainException e) {
+            fail("test should not catch exception");
+        }
+
+        try {
+            testHabitList.addHabit(habit1);
+            fail("test should catch exception");
+        } catch (HabitContainException e) {
+            // test should catch exception
+        }
         assertEquals(2, testHabitList.getHabitList().size());
     }
 
@@ -70,8 +84,20 @@ public class HabitListTest {
     // EFFECT: edit habit
     public void testEditOneHabit() {
         testHabitList.addHabit(habit1);
-        testHabitList.editOneHabit(habit1, "Play LOL with Gregor");
-        assertEquals("Play LOL with Gregor", testHabitList.getHabit("Play LOL with Gregor").getLabel());
+        testHabitList.addHabit(habit2);
+        try {
+            testHabitList.editOneHabit(habit1, "Play LOL with Gregor");
+            assertEquals("Play LOL with Gregor", habit1.getLabel());
+        } catch (HabitContainException e) {
+            fail("Test should not catch exception");
+        }
+
+        try {
+            testHabitList.editOneHabit(habit2, "Play LOL with Gregor");
+            fail("Test should catch exception");
+        } catch (HabitContainException e) {
+           //Test should catch contain exception
+        }
     }
 
     @Test

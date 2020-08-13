@@ -38,5 +38,6 @@ public class HabitTest {
         assertEquals("Play LOL", testHabit.getLabel());
         testHabit.editHabit("Study for final");
         assertEquals("Study for final", testHabit.getLabel());
+
     }
 }

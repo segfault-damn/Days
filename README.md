@@ -70,14 +70,18 @@ Click "view" and enter today's date to see different images corresponding to dif
 - You can reload the state of my application by clicking "load" button on the right side of the main menu.
 
 ##Phase 4: Task 2
-I choose "Test and design a class that is robust." I add five exceptions. The date error exception prevent user entering 
-invalid date such as 2020/2/30 and 2021/2/29. It is in Date class and Date constructor. UI will catch this runtime
-exception once a new date is contructed (eg. in MoodApp class, viewMoodPerform method). Also, "NumberFormatException"
- is also caught where user input date in case users enter String in DatePanel. 
+*Checked Exception*
 
-In addition, RemoveAnniException works when user inputs a date that does not has an anniversary. The "removeDayAnniversary"
-method in "Day" class throws a new runtime exception and could be caught in "removeAnniPerform" method in 
-"AnniversaryApp" class.
+I choose "Test and design a class that is robust." I add five exceptions. RemoveAnniException works when user inputs 
+a date that does not have an anniversary. The "removeDayAnniversary" method in "Day" class throws a new runtime 
+exception and could be caught in "removeAnniPerform" method in "AnniversaryApp" class. The test is in "DayTest" class 
+and "testRemoveAnniversary" method.
+                    
+*Unchecked Exception*                                                      
+In addition, The date error exception prevent user entering invalid date such as 2020/2/30 and 2021/2/29. It is in Date class 
+and Date constructor. UI will catch this runtimeexception once a new date is being constructed (eg. in MoodApp class, viewMoodPerform method). Also, "NumberFormatException"
+ is also caught where user input date in case users enter String in DatePanel. I test the exception in "DateTest" class.
+ All methods in test class are used to test the exception.
 
 
 

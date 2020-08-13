@@ -58,16 +58,17 @@ public class AnniversaryReader {
     // elements 5 represent the whether the anniversary is working.
     // EFFECTS: returns an anniversary constructed from components
     private static Anniversary parseAnni(List<String> components) {
-        int year = Integer.parseInt(components.get(0));
-        int month = Integer.parseInt(components.get(1));
-        int day = Integer.parseInt(components.get(2));
-        String label = components.get(3);
-        String comment = components.get(4);
-        boolean isAnni = Boolean.parseBoolean(components.get(5));
+//        int year = Integer.parseInt(components.get(0));
+//        int month = Integer.parseInt(components.get(1));
+//        int day = Integer.parseInt(components.get(2));
+
+        String label = components.get(0);
+        String comment = components.get(1);
+        boolean isAnni = Boolean.parseBoolean(components.get(2));
 
 
-        Date date = new Date(year, month, day);
-        Anniversary anniversary = new Anniversary(date, label, comment);
+//        Date date = new Date(year, month, day);
+        Anniversary anniversary = new Anniversary(label, comment);
         if (isAnni) {
             anniversary.setAnniversary();
         }

@@ -1,6 +1,7 @@
 package ui;
 
 import exceptions.DateErrorException;
+import exceptions.RemoveAnniException;
 import model.Date;
 import model.Day;
 import model.DaySet;
@@ -90,8 +91,8 @@ public class AnniversaryApp extends JPanel implements ActionListener {
 
         // this is anniversary reminder
         for (Day day : daySet.getDays()) {
-            if (day.getAnniversary().getIsAnniversary() && day.getAnniversary().getDate().getDay() == today.getDay()
-                    && day.getAnniversary().getDate().getMonth() == today.getMonth()) {
+            if (day.getAnniversary().getIsAnniversary() && day.getDate().getDay() == today.getDay()
+                    && day.getDate().getMonth() == today.getMonth()) {
                 JLabel anniversaryReminder = new JLabel("Today is " + day.getAnniversary().getLabel() + "!");
                 anniversaryReminder.setFont(new Font("", Font.BOLD, 40));
 
@@ -218,7 +219,7 @@ public class AnniversaryApp extends JPanel implements ActionListener {
         textField1.setText("Name");
         textField1.setFont(contentFont);
         textField2.setColumns(30);
-        textField2.setText("COMMENT");
+        textField2.setText("Comment");
         textField2.setFont(contentFont);
 
         setAnniSetConfirm();
@@ -321,7 +322,7 @@ public class AnniversaryApp extends JPanel implements ActionListener {
 
             Date anniDate = new Date(inputYear, inputMonth, inputDate);
 
-            Anniversary anniversary = new Anniversary(anniDate, name, comment);
+            Anniversary anniversary = new Anniversary(name, comment);
             anniversary.setAnniversary();
             daySet.getDay(anniDate).setDayAnniversary(anniversary);
             message("Anniversary has been set!");
@@ -339,12 +340,12 @@ public class AnniversaryApp extends JPanel implements ActionListener {
 
         for (Day day : daySet.getDays()) {
             if (day.getAnniversary().getIsAnniversary()) {
-                String s = day.getAnniversary().getDate().getMonth() + "."
-                        + day.getAnniversary().getDate().getDay() + "\n"
+                String s = day.getDate().getMonth() + "."
+                        + day.getDate().getDay() + "\n"
                         + day.getAnniversary().getLabel() + "\n"
                         + "Comment: " + day.getAnniversary().getComment() + "\n"
-                        + "You have passed " + daySet.calAnniversary(today, day.getAnniversary())
-                        + " anniversary - start from " + day.getAnniversary().getDate().getYear() + "\n" + "\n";
+                        + "You have passed " + daySet.calAnniversary(today, day)
+                        + " anniversary - start from " + day.getDate().getYear() + "\n" + "\n";
                 contents.append(s);
             }
         }
@@ -370,7 +371,7 @@ public class AnniversaryApp extends JPanel implements ActionListener {
             message(daySet.getDay(date).getAnniversary().getLabel() + " has been removed");
         } catch (DateErrorException | NumberFormatException e) {
             message("Date Entered is invalid");
-        } catch (RuntimeException e) {
+        } catch (RemoveAnniException e) {
             message("Input date is not an anniversary!");
         }
     }
@@ -383,7 +384,7 @@ public class AnniversaryApp extends JPanel implements ActionListener {
         for (Day day : daySet.getDays()) {
             message(s + " does not exist!");
             if (day.getAnniversary().getLabel().equals(s)) {
-                Anniversary anniversary = new Anniversary(day.getDate(), name, comment);
+                Anniversary anniversary = new Anniversary(name, comment);
                 anniversary.setAnniversary();
                 day.setDayAnniversary(anniversary);
                 title("Select Function: ");

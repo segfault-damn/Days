@@ -24,7 +24,7 @@ public class Day implements Saveable {
     public Day(Date date) {
 
         this.date = date;
-        anniversary = new Anniversary(this.date, " ", " ");
+        anniversary = new Anniversary(" ", " ");
         diary = new Diary();
         todoEvents = new ArrayList<>();
 
@@ -42,7 +42,7 @@ public class Day implements Saveable {
 
     // MODIFIER: this
     // EFFECT: remove anniversary
-    public void removeDayAnniversary() {
+    public void removeDayAnniversary() throws RemoveAnniException {
         if (anniversary.getIsAnniversary()) {
             anniversary.removeAnniversary();
         } else {
@@ -58,7 +58,7 @@ public class Day implements Saveable {
     }
 
     // MODIFIER: this
-    // EFFECT: set habitlist
+    // EFFECT: set habit list
     public void setDailyHabitList(HabitList hl) {
         dailyHabitList = hl;
     }
@@ -71,7 +71,7 @@ public class Day implements Saveable {
 
     // MODIFIER: this
     // EFFECT: add a todoEvent to the list
-    public void addEvent(TodoEvent e) {
+    public void addEvent(TodoEvent e) throws EventExistException {
         for (TodoEvent todoEvent : todoEvents) {
             if (todoEvent.getMin() == e.getMin() && todoEvent.getHour() == e.getHour()
                     && todoEvent.getLabel().equals(e.getLabel())) {
@@ -82,11 +82,12 @@ public class Day implements Saveable {
     }
 
 
-    // REQUIRE: the time input should be one of the event
     // MODIFIER: this
     // EFFECT: remove the given event from that list
     public void removeEvent(int hour, int min, String name) {
+
         todoEvents.removeIf(event -> hour == event.getHour() && min == event.getMin() && name.equals(event.getLabel()));
+
     }
 
     // EFFECT: find the Event with given time

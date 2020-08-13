@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.EventExistException;
 import exceptions.HabitNotExistException;
 import model.entries.*;
 
@@ -19,17 +20,17 @@ public class DaySet {
     }
 
 
-    // EFFECT: calculate the anniversary
-    public int calAnniversary(Date today, Anniversary a) {
+    // EFFECT: calculate the anniversary in given day
+    public int calAnniversary(Date today, Day d) {
         int result;
-        if (a.getDate().getYear() >= today.getYear()) {
+        if (d.getDate().getYear() >= today.getYear()) {
             result = 0;
-        } else if (a.getDate().getMonth() < today.getMonth()) {
-            result = today.getYear() - a.getDate().getYear();
-        } else if (a.getDate().getMonth() == today.getMonth() && a.getDate().getDay() <= today.getDay()) {
-            result = today.getYear() - a.getDate().getYear();
+        } else if (d.getDate().getMonth() < today.getMonth()) {
+            result = today.getYear() - d.getDate().getYear();
+        } else if (d.getDate().getMonth() == today.getMonth() && d.getDate().getDay() <= today.getDay()) {
+            result = today.getYear() - d.getDate().getYear();
         } else {
-            result = today.getYear() - a.getDate().getYear() - 1;
+            result = today.getYear() - d.getDate().getYear() - 1;
         }
         return result;
     }
@@ -60,10 +61,20 @@ public class DaySet {
 
     //Modifies: this
     // EFFECT: edit given event to given date and time
-    public void editEvent(TodoEvent e,Date date, int hour, int min) {
-        getDay(e.getDate()).getEvent(e.getHour(),e.getMin(),e.getLabel()).setTime(date,hour,min);
+    public void editEvent(Day d, TodoEvent e, int hour, int min) {
+        d.getEvent(e.getHour(),e.getMin(),e.getLabel()).setTime(hour,min);
     }
 
+    //Modifies: this
+    // EFFECT: edit given event to given date and time
+    public void editEvent(Day d, TodoEvent e, Date newDate, int hour, int min) throws EventExistException {
+        String label = e.getLabel();
+        TodoEvent event = new TodoEvent(label,hour,min);
+
+        getDay(newDate).addEvent(event);
+        d.getTodoEventList().remove(d.getEvent(e.getHour(), e.getMin(), e.getLabel()));
+
+    }
 
     // EFFECT: get all diary with tag "tag"
     public List<Day> searchByTag(String tag) {
@@ -88,7 +99,7 @@ public class DaySet {
 
     // MODIFIER: day
     // EFFECT: remove one habit and renew all habit in days
-    public void removeDailyHabitList(Habit h) {
+    public void removeDailyHabitList(Habit h) throws HabitNotExistException {
         if (setHabitList.getHabitLabel().contains(h.getLabel())) {
             for (Day day : days) {
 
@@ -104,7 +115,7 @@ public class DaySet {
 
     // MODIFIER: day
     // EFFECT: remove one habit and renew all habit in days
-    public void editDailyHabitList(Habit h, String s) {
+    public void editDailyHabitList(Habit h, String s) throws HabitNotExistException {
         if (setHabitList.getHabitLabel().contains(h.getLabel())) {
             for (Day day : days) {
 

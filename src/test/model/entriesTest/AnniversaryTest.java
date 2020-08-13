@@ -1,7 +1,5 @@
 package model.entriesTest;
 
-import exceptions.DateErrorException;
-import model.Date;
 import model.entries.Anniversary;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,18 +7,16 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AnniversaryTest {
-    private Date testDate;
     private Anniversary testAnni;
 
     @BeforeEach
     public void setUp() {
-        testDate = new Date(2020, 2, 13);
-        testAnni = new Anniversary(testDate, "confession", "Love Laisen");
+        testAnni = new Anniversary("confession", "Love Laisen");
     }
 
     @Test
     public void testComment() {
-        testAnni = new Anniversary(testDate,"","");
+        testAnni = new Anniversary("","");
         assertEquals(" ", testAnni.getComment());
         assertEquals("No label", testAnni.getLabel());
     }
@@ -35,11 +31,6 @@ public class AnniversaryTest {
     public void testRemoveAnniversary() {
         testAnni.removeAnniversary();
         assertFalse(testAnni.getIsAnniversary());
-    }
-
-    @Test
-    public void testGetDate() {
-        assertEquals(testDate, testAnni.getDate());
     }
 
     @Test

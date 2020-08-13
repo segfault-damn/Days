@@ -74,9 +74,9 @@ public class WriterTest {
 
     @Test
     void testWriteAnni() {
-        Anniversary anni1 = new Anniversary(date1," "," ");
+        Anniversary anni1 = new Anniversary(" "," ");
         anni1.setAnniversary();
-        Anniversary anni2 = new Anniversary(date2,"Birthday", "Hahaha");
+        Anniversary anni2 = new Anniversary("Birthday", "Hahaha");
         // save date to file
         testAnniWriter.write(anni1);
         testAnniWriter.write(anni2);
@@ -88,16 +88,14 @@ public class WriterTest {
             Anniversary readBackAnni1 = readBack.get(0);
 
             Anniversary readBackAnni2 = readBack.get(1);
-            assertEquals(2000,readBackAnni1.getDate().getYear());
-            assertEquals(6,readBackAnni1.getDate().getMonth());
-            assertEquals(26,readBackAnni1.getDate().getDay());
+//            assertEquals(2000,readBackAnni1.getDate().getYear());
+//            assertEquals(6,readBackAnni1.getDate().getMonth());
+//            assertEquals(26,readBackAnni1.getDate().getDay());
             assertEquals(" ",readBackAnni1.getLabel());
             assertEquals(" ",readBackAnni1.getComment());
             assertTrue(readBackAnni1.getIsAnniversary());
 
-            assertEquals(2000,readBackAnni2.getDate().getYear());
-            assertEquals(10,readBackAnni2.getDate().getMonth());
-            assertEquals(29,readBackAnni2.getDate().getDay());
+//
             assertEquals("Birthday",readBackAnni2.getLabel());
             assertEquals("Hahaha",readBackAnni2.getComment());
             assertFalse(readBackAnni2.getIsAnniversary());
@@ -233,9 +231,9 @@ public class WriterTest {
 
     @Test
     void testWriteTodoEvent() {
-        TodoEvent todoEvent1 = new TodoEvent(date1,"play",17,30);
-        TodoEvent todoEvent2 = new TodoEvent(date1,"study",15,30);
-        TodoEvent todoEvent3 = new TodoEvent(date2,"lunch",12,50);
+        TodoEvent todoEvent1 = new TodoEvent("play",17,30);
+        TodoEvent todoEvent2 = new TodoEvent("study",15,30);
+        TodoEvent todoEvent3 = new TodoEvent("lunch",12,50);
         List<TodoEvent> todoEventList1 = new ArrayList<>();
         List<TodoEvent> todoEventList2 = new ArrayList<>();
 
@@ -263,23 +261,23 @@ public class WriterTest {
             TodoEvent readBackEvent2 = readBackEvents1.get(1);
             TodoEvent readBackEvent3 = readBackEvents2.get(0);
             assertEquals("play",readBackEvent1.getLabel());
-            assertEquals(2000,readBackEvent1.getDate().getYear());
-            assertEquals(6,readBackEvent1.getDate().getMonth());
-            assertEquals(26,readBackEvent1.getDate().getDay());
+//            assertEquals(2000,readBackEvent1.getDate().getYear());
+//            assertEquals(6,readBackEvent1.getDate().getMonth());
+//            assertEquals(26,readBackEvent1.getDate().getDay());
             assertEquals(17,readBackEvent1.getHour());
             assertEquals(30,readBackEvent1.getMin());
 
             assertEquals("study",readBackEvent2.getLabel());
-            assertEquals(2000,readBackEvent2.getDate().getYear());
-            assertEquals(6,readBackEvent2.getDate().getMonth());
-            assertEquals(26,readBackEvent2.getDate().getDay());
+//            assertEquals(2000,readBackEvent2.getDate().getYear());
+//            assertEquals(6,readBackEvent2.getDate().getMonth());
+//            assertEquals(26,readBackEvent2.getDate().getDay());
             assertEquals(15,readBackEvent2.getHour());
             assertEquals(30,readBackEvent2.getMin());
 
             assertEquals("lunch",readBackEvent3.getLabel());
-            assertEquals(2000,readBackEvent3.getDate().getYear());
-            assertEquals(10,readBackEvent3.getDate().getMonth());
-            assertEquals(29,readBackEvent3.getDate().getDay());
+//            assertEquals(2000,readBackEvent3.getDate().getYear());
+//            assertEquals(10,readBackEvent3.getDate().getMonth());
+//            assertEquals(29,readBackEvent3.getDate().getDay());
             assertEquals(12,readBackEvent3.getHour());
             assertEquals(50,readBackEvent3.getMin());
 

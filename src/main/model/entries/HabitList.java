@@ -1,6 +1,7 @@
 package model.entries;
 
 import exceptions.HabitContainException;
+import exceptions.HabitNotExistException;
 import persistence.HabitListReader;
 import persistence.Saveable;
 
@@ -23,7 +24,7 @@ public class HabitList implements Saveable {
 
     // MODIFIER:this
     // EFFECT:add a habit to habit list
-    public void addHabit(Habit habit) {
+    public void addHabit(Habit habit) throws HabitContainException {
         if (this.getHabitLabel().contains(habit.getLabel())) {
             throw new HabitContainException();
         } else {
@@ -39,8 +40,6 @@ public class HabitList implements Saveable {
 
     }
 
-
-    //REQUIRE: l should be an existing habit's label in the list
     //EFFECT: get habit with given label
     public Habit getHabit(String l) {
         Habit resultHabit = new Habit("");
@@ -52,12 +51,14 @@ public class HabitList implements Saveable {
         return resultHabit;
     }
 
-    // REQUIRE: habit label can not pre-exist in the list and habit should exist in that list
     // MODIFIER: this
     // EFFECT: edit habit
     public void editOneHabit(Habit h, String s) {
-
-        getHabit(h.getLabel()).editHabit(s);
+        if (!getHabitLabel().contains(s)) {
+            getHabit(h.getLabel()).editHabit(s);
+        } else {
+            throw new HabitContainException();
+        }
     }
 
     //getter

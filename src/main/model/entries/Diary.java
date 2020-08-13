@@ -8,13 +8,12 @@ import java.io.PrintWriter;
 
 // the class represents the diary with date, content and its tag
 public class Diary implements Saveable {
-    private Date date;
     private String content;
     private String tag;
 
     // construct diary with given date
     public Diary() {
- //       this.date = date;
+
         this.content = " ";
         this.tag = "No tag";
     }
@@ -50,10 +49,6 @@ public class Diary implements Saveable {
     public String getTag() {
         return tag;
     }
-
-//    public Date getDate() {
-//        return date;
-//    }
 
     public String getContent() {
         return content;

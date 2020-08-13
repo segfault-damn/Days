@@ -1,4 +1,4 @@
 package exceptions;
 
-public class RemoveAnniException extends RuntimeException {
+public class RemoveAnniException extends Exception {
 }

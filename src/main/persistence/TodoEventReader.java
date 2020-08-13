@@ -43,7 +43,7 @@ public class TodoEventReader {
             ArrayList<String> lineComponents = splitHabit(line);
             for (String habit : lineComponents) {
                 ArrayList<String> eventComponents = splitString(habit);
-                if (eventComponents.size() == 6) {
+                if (eventComponents.size() == 3) {
                     todoEventList.add(parseTodoEvent(eventComponents));
                 }
             }
@@ -72,15 +72,14 @@ public class TodoEventReader {
     // element 5 represents the minute.
     // EFFECTS: returns a todoEvent constructed from components
     private static TodoEvent parseTodoEvent(List<String> components) {
-        int year = Integer.parseInt(components.get(0));
-        int month = Integer.parseInt(components.get(1));
-        int day = Integer.parseInt(components.get(2));
+//        int year = Integer.parseInt(components.get(0));
+//        int month = Integer.parseInt(components.get(1));
+//        int day = Integer.parseInt(components.get(2));
 
-        String label = components.get(3);
-        int hour = Integer.parseInt(components.get(4));
-        int min = Integer.parseInt(components.get(5));
+        String label = components.get(0);
+        int hour = Integer.parseInt(components.get(1));
+        int min = Integer.parseInt(components.get(2));
 
-        Date date = new Date(year, month, day);
-        return new TodoEvent(date, label, hour, min);
+        return new TodoEvent(label, hour, min);
     }
 }

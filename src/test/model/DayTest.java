@@ -1,5 +1,7 @@
 package model;
 
+import exceptions.EventExistException;
+import exceptions.RemoveAnniException;
 import model.entries.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,19 +40,19 @@ class DayTest {
         habit2 = new Habit("Study for final");
         habit3 = new Habit("Play Dr.racket");
 
-        event1 = new TodoEvent(testDate, "birthday party", 20, 0);
-        event2 = new TodoEvent(testDate, "cpsc110 final", 18, 0);
-        event3 = new TodoEvent(testDate, "chat with Gregor", 12, 20);
-        event4 = new TodoEvent(testDate, "chat with Gregor", 18, 30);
+        event1 = new TodoEvent("birthday party", 20, 0);
+        event2 = new TodoEvent("cpsc110 final", 18, 0);
+        event3 = new TodoEvent("chat with Gregor", 12, 20);
+        event4 = new TodoEvent("chat with Gregor", 18, 30);
 
 
         testDay.getDailyHabitList().addHabit(habit1);
         testDay.getDailyHabitList().addHabit(habit2);
         testDay.getDailyHabitList().addHabit(habit3);
 
-        testAnni = new Anniversary(testDate,"Confession", "Love Laisen");
+        testAnni = new Anniversary("Confession", "Love Laisen");
 
-
+        testAnni.setAnniversary();
 
     }
 
@@ -102,8 +104,6 @@ class DayTest {
         testDay.setDayAnniversary(testAnni);
         assertEquals("Confession", testDay.getAnniversary().getLabel());
         assertEquals("Love Laisen", testDay.getAnniversary().getComment());
-        assertFalse(testDay.getAnniversary().getIsAnniversary());
-        testDay.getAnniversary().setAnniversary();
         assertTrue(testDay.getAnniversary().getIsAnniversary());
     }
 
@@ -111,8 +111,21 @@ class DayTest {
     // MODIFIER: this
     // EFFECT: remove anniversary
     public void testRemoveAnniversary() {
+
+        try {
+            testDay.removeDayAnniversary();
+            fail("Remove anniversary should throw an exception.");
+        } catch (RemoveAnniException e) {
+            // should pass
+        }
+
         testDay.setDayAnniversary(testAnni);
-        testDay.removeDayAnniversary();
+        try {
+
+            testDay.removeDayAnniversary();
+        } catch (RemoveAnniException e) {
+            fail("should not throw exception");
+        }
         assertEquals(testDay.getAnniversary().getLabel(),"Confession");
         assertEquals(testDay.getAnniversary().getComment(),"Love Laisen");
         assertFalse(testDay.getAnniversary().getIsAnniversary());
@@ -157,13 +170,24 @@ class DayTest {
     // MODIFIER: this
     // EFFECT: add a todoEvent to the list
     public void testAddEvent() {
+        try {
+            testDay.addEvent(event1);
+            assertTrue(testDay.getTodoEventList().contains(event1));
+            assertEquals(1, testDay.getTodoEventList().size());
 
-        testDay.addEvent(event1);
-        assertTrue(testDay.getTodoEventList().contains(event1));
-        assertEquals(1, testDay.getTodoEventList().size());
+            testDay.addEvent(event2);
+            assertTrue(testDay.getTodoEventList().contains(event2));
+            assertEquals(2, testDay.getTodoEventList().size());
+        } catch (EventExistException e) {
+            fail("Test should not catch exception.");
+        }
 
-        testDay.addEvent(event2);
-        assertTrue(testDay.getTodoEventList().contains(event2));
+        try {
+            testDay.addEvent(event2);
+            fail("Test should not catch exception");
+        } catch (EventExistException e) {
+            // Test should catch exception
+        }
         assertEquals(2, testDay.getTodoEventList().size());
     }
 

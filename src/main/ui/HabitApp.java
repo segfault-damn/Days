@@ -548,7 +548,7 @@ public class HabitApp extends JPanel implements ActionListener {
         for (Habit h : daySet.getDay(habitDate).getDailyHabitList().getHabitList()) {
             if (h.getLabel().equals(s)) {
                 h.flipDone();
-                message(s + " has been marked");
+                message(s + " has been marked!");
             }
         }
 
@@ -563,7 +563,7 @@ public class HabitApp extends JPanel implements ActionListener {
             int inputDate = Integer.parseInt(dateField3.getText());
 
             Date habitDate = new Date(inputYear, inputMonth, inputDate);
-            title("Select Function");
+            title("Select Function:");
             message(inputYear + "." + inputMonth + "." + inputDate);
 
             generateDailyHabits(habitDate);
@@ -571,7 +571,7 @@ public class HabitApp extends JPanel implements ActionListener {
             habitDisplay.add(habitsPane, BoxLayout.LINE_AXIS);
             habitDisplay.updateUI();
         } catch (DateErrorException | NumberFormatException e) {
-            message("Date Entered is invalid");
+            message("Date Entered is invalid!");
         }
     }
 
@@ -587,6 +587,8 @@ public class HabitApp extends JPanel implements ActionListener {
             message(name + " has been changed to " + newName);
         } catch (HabitNotExistException e) {
             message(name + " is not in your habit list. Fail to edit!");
+        } catch (HabitContainException e) {
+            message(newName + " already exists in your habit list!");
         }
     }
 
@@ -604,7 +606,7 @@ public class HabitApp extends JPanel implements ActionListener {
 
             for (Habit h : daySet.getSetHabitList().getHabitList()) {
                 int i = daySet.countHabit(inputYear, inputMonth, h);
-                viewArea.append("You have completed " + h.getLabel() + " " + i + " times." + "\n");
+                viewArea.append("You have completed " + h.getLabel() + " " + i + " times!" + "\n");
             }
             viewArea.setEditable(false);
             habitsPane = new JScrollPane(viewArea);
@@ -615,7 +617,7 @@ public class HabitApp extends JPanel implements ActionListener {
 
             habitDisplay.add(habitsPane);
         } catch (DateErrorException | NumberFormatException e) {
-            message("Date Entered is invalid");
+            message("Date Entered is invalid!");
         }
     }
 }

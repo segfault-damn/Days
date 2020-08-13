@@ -52,18 +52,13 @@ public class DiaryReader {
     }
 
 
-    // REQUIRES: components has size 5 where element 0 represents the
-    // year, element 1 represents the month, elements 2 represents the
-    // day, element 3 represents the content, elements 4 represents the tag
+    // REQUIRES: components has size 2 where element 0 represents the
+    // content, elements 1 represents the tag
     // EFFECTS: returns an diary constructed from components
     private static Diary parseDiary(List<String> components) {
-//        int year = Integer.parseInt(components.get(0));
-//        int month = Integer.parseInt(components.get(1));
-//        int day = Integer.parseInt(components.get(2));
         String content = components.get(0);
         String tag = components.get(1);
 
-//        Date date = new Date(year, month, day);
         Diary diary = new Diary();
         diary.setContent(content);
         diary.setTag(tag);
