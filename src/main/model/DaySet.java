@@ -129,7 +129,7 @@ public class DaySet {
     }
 
 
-    // REQUIRE: habit exist in the list
+
     // EFFECT: count the numbers of completed habit in given month and year
     public int countHabit(int y, int m, Habit h) {
         int result = 0;

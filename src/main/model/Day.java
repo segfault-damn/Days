@@ -9,10 +9,12 @@ import persistence.Saveable;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 // Day represents each day with date, daily habitlist, todoEvents diary, anniversary
 // and mood.
-public class Day implements Saveable {
+public class Day implements Saveable, Observer {
     private Date date;
     private HabitList dailyHabitList;
     private List<TodoEvent> todoEvents;
@@ -154,4 +156,8 @@ public class Day implements Saveable {
     }
 
 
+    @Override
+    public void update(Observable o, Object arg) {
+
+    }
 }

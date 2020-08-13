@@ -91,3 +91,7 @@ and Date constructor. UI will catch this runtimeexception once a new date is bei
 - I found that there are some coupling in my program. Most of my days' entries have a "Date" field. While day
 also have a "date" field and all of these entries are also Day's field. So I remove entries "Date" field
 to reduce coupling.  
+- In phase 3, I found that all of my functions are implemented in one ui class which is DaysApp. It's not cohesive
+so I tried to increase cohesion when doing GUI by separating all these functions. So I created five more classes (AnniversaryApp,
+DiaryApp,EventApp,HabitApp and MoodApp). All of them extends JPanel and DaysApp switches among these five panel
+and main panel. Each class do its own job and makes UI more cohesive and readable.
