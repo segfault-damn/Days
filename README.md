@@ -75,7 +75,8 @@ Click "view" and enter today's date to see different images corresponding to dif
 I choose "Test and design a class that is robust." I add five exceptions. RemoveAnniException works when user inputs 
 a date that does not have an anniversary. The "removeDayAnniversary" method in "Day" class throws a new runtime 
 exception and could be caught in "removeAnniPerform" method in "AnniversaryApp" class. The test is in "DayTest" class 
-and "testRemoveAnniversary" method.
+and "testRemoveExistAnniversary" method test the case that exception is not thrown while "testRemoveNotExistAnniversary"
+method test the case that removing a nonexistent anniversary so the exception will be thrown.
                     
 *Unchecked Exception*                                                      
 In addition, The date error exception prevent user entering invalid date such as 2020/2/30 and 2021/2/29. It is in Date class 

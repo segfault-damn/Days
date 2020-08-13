@@ -112,14 +112,7 @@ class DayTest {
     @Test
     // MODIFIER: this
     // EFFECT: remove anniversary
-    public void testRemoveAnniversary() {
-
-        try {
-            testDay.removeDayAnniversary();
-            fail("Remove anniversary should throw an exception.");
-        } catch (RemoveAnniException e) {
-            // should pass
-        }
+    public void testRemoveExistAnniversary() {
 
         testDay.setDayAnniversary(testAnni);
         try {
@@ -131,6 +124,25 @@ class DayTest {
         assertEquals(testDay.getAnniversary().getLabel(),"Confession");
         assertEquals(testDay.getAnniversary().getComment(),"Love Laisen");
         assertFalse(testDay.getAnniversary().getIsAnniversary());
+
+    }
+
+    @Test
+    // MODIFIER: this
+    // EFFECT: remove anniversary
+    public void testRemoveNotExistAnniversary() {
+
+
+
+        testDay.setDayAnniversary(testAnni);
+        Day notAnniversaryDay = new Day(new Date(1999,9,9));
+        try {
+            notAnniversaryDay.removeDayAnniversary();
+            fail("Remove anniversary should throw an exception.");
+        } catch (RemoveAnniException e) {
+            // should pass
+        }
+        assertFalse(notAnniversaryDay.getAnniversary().getIsAnniversary());
 
     }
 
