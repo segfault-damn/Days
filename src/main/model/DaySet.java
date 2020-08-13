@@ -59,11 +59,6 @@ public class DaySet {
         return targetDay;
     }
 
-    //Modifies: this
-    // EFFECT: edit given event to given date and time
-    public void editEvent(Day d, TodoEvent e, int hour, int min) {
-        d.getEvent(e.getHour(),e.getMin(),e.getLabel()).setTime(hour,min);
-    }
 
     //Modifies: this
     // EFFECT: edit given event to given date and time

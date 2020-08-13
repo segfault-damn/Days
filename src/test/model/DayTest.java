@@ -23,6 +23,7 @@ class DayTest {
     private TodoEvent event2;
     private TodoEvent event3;
     private TodoEvent event4;
+    private TodoEvent event5;
     private Mood testMood;
 
     private Anniversary testAnni;
@@ -44,6 +45,7 @@ class DayTest {
         event2 = new TodoEvent("cpsc110 final", 18, 0);
         event3 = new TodoEvent("chat with Gregor", 12, 20);
         event4 = new TodoEvent("chat with Gregor", 18, 30);
+        event5 = new TodoEvent("chat with Gregor", 20,0);
 
 
         testDay.getDailyHabitList().addHabit(habit1);
@@ -178,6 +180,20 @@ class DayTest {
             testDay.addEvent(event2);
             assertTrue(testDay.getTodoEventList().contains(event2));
             assertEquals(2, testDay.getTodoEventList().size());
+
+            testDay.addEvent(event3);
+            assertTrue(testDay.getTodoEventList().contains(event3));
+            assertEquals(3, testDay.getTodoEventList().size());
+
+            testDay.addEvent(event4);
+            assertTrue(testDay.getTodoEventList().contains(event4));
+            assertEquals(4, testDay.getTodoEventList().size());
+
+            testDay.addEvent(event5);
+            assertTrue(testDay.getTodoEventList().contains(event5));
+            assertEquals(5, testDay.getTodoEventList().size());
+
+
         } catch (EventExistException e) {
             fail("Test should not catch exception.");
         }
@@ -188,7 +204,7 @@ class DayTest {
         } catch (EventExistException e) {
             // Test should catch exception
         }
-        assertEquals(2, testDay.getTodoEventList().size());
+        assertEquals(5, testDay.getTodoEventList().size());
     }
 
     @Test

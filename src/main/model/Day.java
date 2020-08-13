@@ -14,7 +14,7 @@ import java.util.Observer;
 
 // Day represents each day with date, daily habitlist, todoEvents diary, anniversary
 // and mood.
-public class Day implements Saveable, Observer {
+public class Day implements Saveable {
     private Date date;
     private HabitList dailyHabitList;
     private List<TodoEvent> todoEvents;
@@ -156,8 +156,4 @@ public class Day implements Saveable, Observer {
     }
 
 
-    @Override
-    public void update(Observable o, Object arg) {
-
-    }
 }

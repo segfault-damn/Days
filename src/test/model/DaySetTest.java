@@ -1,6 +1,7 @@
 package model;
 
 import exceptions.DateErrorException;
+import exceptions.EventExistException;
 import exceptions.HabitNotExistException;
 import model.entries.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,6 +23,7 @@ class DaySetTest {
     private Diary diary2;
     private Diary diary3;
 
+    private TodoEvent event1;
 
     private Habit habit1;
     private Habit habit2;
@@ -62,6 +64,8 @@ class DaySetTest {
         diary1.setTag("Tag1");
         diary3.setTag("Tag1");
 
+        event1 = new TodoEvent("birthday party", 20, 0);
+
 
         testdaySet = new DaySet();
         testdaySet.getDay(date1);
@@ -101,6 +105,18 @@ class DaySetTest {
         assertEquals(9,
                 testdaySet.calAnniversary(new Date(2030, 1, 26), testdaySet.getDay(date3)));
 
+    }
+
+    @Test
+    //Modifies: this
+    // EFFECT: edit given event to given date and time
+    public void testEditEvent() {
+
+        testdaySet.editEvent(testdaySet.getDay(date1),event1,date2,12,00);
+        assertFalse(testdaySet.getDay(date1).getTodoEventList().contains(event1));
+        assertEquals(testdaySet.getDay(date2).getTodoEventList().get(0).getLabel(),"birthday party");
+        assertEquals(testdaySet.getDay(date2).getTodoEventList().get(0).getHour(),12);
+        assertEquals(testdaySet.getDay(date2).getTodoEventList().get(0).getMin(),0);
     }
 
     @Test

@@ -13,7 +13,7 @@ import java.util.Observable;
 
 // This class represents a list of habit and its method will be used
 // in both day and dayset class. It's used to record user's habits.
-public class HabitList  extends Observable implements Saveable {
+public class HabitList implements Saveable {
 
     private List<Habit> habitList;
 
