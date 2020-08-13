@@ -69,7 +69,7 @@ Click "view" and enter today's date to see different images corresponding to dif
 
 - You can reload the state of my application by clicking "load" button on the right side of the main menu.
 
-##Phase 4: Task 2
+## Phase 4: Task 2
 *Checked Exception*
 
 I choose "Test and design a class that is robust." I add five exceptions. RemoveAnniException works when user inputs 
@@ -87,7 +87,7 @@ and Date constructor. UI will catch this runtimeexception once a new date is bei
 
 
 
-##Phase 4: Task 3
+## Phase 4: Task 3
 
 - I found that there are some coupling in my program. Most of my days' entries have a "Date" field. While day
 also have a "date" field and all of these entries are also Day's field. So I remove entries "Date" field
