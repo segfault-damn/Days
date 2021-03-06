@@ -109,7 +109,7 @@ public class AnniversaryApp extends JPanel implements ActionListener {
         add(anniBtn, BorderLayout.SOUTH);
     }
 
-    // initialize main display;
+    // initialize main display
     private void initializeDisplay() {
 
         aniDisplay.removeAll();
